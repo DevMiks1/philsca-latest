@@ -73,9 +73,15 @@ const AccountTempoId = () => {
             >
               <Stack align="center">
                 <Image src={logo} alt="Philsca Logo" boxSize="100px" />
-                <Text fontSize="md" color="yellow.400">
-                  SY-2023-2024
-                </Text>
+                {user.role === "student" ? (
+                  <>
+                    <Text fontSize="md" color="yellow.400">
+                      SY-2023-2024
+                    </Text>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Stack>
               <Stack align="center">
                 {user.picture === "" ? (
@@ -83,7 +89,15 @@ const AccountTempoId = () => {
                 ) : (
                   <Image src={user.picture} alt="profile" boxSize="150px" />
                 )}
-                
+                {user.role === "student" ? (
+                  <>
+                    <Text fontSize="md" color="yellow.400">
+                      1st Sem / 2nd Sem
+                    </Text>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Stack>
             </Stack>
 
@@ -98,7 +112,7 @@ const AccountTempoId = () => {
               mb={3}
             >
               {user.firstname === "" && user.lastname === "" ? (
-                <Text>EMPTY</Text>
+                <Text>N/A</Text>
               ) : (
                 <Heading size="md" color="black">
                   {`${user.firstname} ${user.middlename} ${user.lastname}`}
@@ -106,19 +120,34 @@ const AccountTempoId = () => {
               )}
 
               {user.schoolid === "" ? (
-                <Text>EMPTY</Text>
+                <Text>N/A</Text>
               ) : (
                 <Text fontSize="lg" color="black">
                   {user.schoolid}
                 </Text>
               )}
-
-              {user.course === "" ? (
-                <Text>EMPTY</Text>
+              {user.role === "student" ? (
+                <>
+                  {user.course === "" ? (
+                    <Text>N/A</Text>
+                  ) : (
+                    <Text fontSize="lg" color="black">
+                      {user.course}
+                    </Text>
+                  )}
+                </>
+              ) : user.role === "staff" || user.role === "faculty" ? (
+                <>
+                  {user.position === "" ? (
+                    <Text>N/A</Text>
+                  ) : (
+                    <Text fontSize="lg" color="black">
+                      {user.position}
+                    </Text>
+                  )}
+                </>
               ) : (
-                <Text fontSize="lg" color="black">
-                  {user.course}
-                </Text>
+                <></>
               )}
             </Stack>
           </Stack>
@@ -129,7 +158,9 @@ const AccountTempoId = () => {
         <CardBody px={2}>
           <div className="flex pb-2">
             <p className="w-[35%] font-[500]">DATE OF BIRTH: </p>
-            <p className="w-[65%] font-[600]">{user.birthdate ? formattedDate : 'N/A'}</p>
+            <p className="w-[65%] font-[600]">
+              {user.birthdate ? formattedDate : "N/A"}
+            </p>
           </div>
           <div className="border-2 border-black">
             <div className="bg-black text-white">
@@ -147,7 +178,7 @@ const AccountTempoId = () => {
               <div className="flex gap-2">
                 <p className=" font-[500]">Tel. No.: </p>
                 <p className=" font-[600]">
-                  {formatPhoneNumber(user?.contactpersonnumber || '' ) }
+                  {formatPhoneNumber(user?.contactpersonnumber || "")}
                 </p>
               </div>
             </div>
@@ -162,8 +193,7 @@ const AccountTempoId = () => {
           </p>
           <div className="text-center text-[.900rem] pb-[2.5rem] relative">
             <div className="absolute -top-[4rem] left-[5rem]">
-            <img src={user.signature} alt="" />
-
+              <img src={user.signature} alt="" />
             </div>
             <p class="signature ">SIGNATURE</p>
           </div>

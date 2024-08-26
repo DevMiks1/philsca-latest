@@ -101,9 +101,16 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                         boxSize="100px"
                         ml={10}
                       />
-                      <Text fontSize="md" color="yellow.400" ml={10}>
-                        SY-2023-2024
-                      </Text>
+                      {student.role === "student" ? (
+                        <>
+                          {" "}
+                          <Text fontSize="md" color="yellow.400" ml={10}>
+                            SY-2023-2024
+                          </Text>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </Stack>
                     <Stack align="center">
                       {student.picture === "" ? (
@@ -120,9 +127,15 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                           mr={4}
                         />
                       )}
-                      <Text fontSize="sm" color="yellow.400">
-                        1st Sem. / 2nd Sem.
-                      </Text>
+                      {student.role === "student" ? (
+                        <>
+                          <Text fontSize="sm" color="yellow.400">
+                            1st Sem. / 2nd Sem.
+                          </Text>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </Stack>
                   </Stack>
 
@@ -137,7 +150,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     mb={3}
                   >
                     {student.firstname === "" && student.lastname === "" ? (
-                      <Text>EMPTY</Text>
+                      <Text>N/A</Text>
                     ) : (
                       <Heading
                         size="md"
@@ -146,19 +159,35 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     )}
 
                     {student.schoolid === "" ? (
-                      <Text>EMPTY</Text>
+                      <Text>N/A</Text>
                     ) : (
                       <Text fontSize="lg" color="black">
                         {student.schoolid}
                       </Text>
                     )}
 
-                    {student.course === "" ? (
-                      <Text>EMPTY</Text>
+                    {student.role === "student" ? (
+                      <>
+                        {student.course === "" ? (
+                          <Text>N/A</Text>
+                        ) : (
+                          <Text fontSize="lg" color="black">
+                            {student.course}
+                          </Text>
+                        )}
+                      </>
+                    ) : student.role === "staff" || student.role === "faculty" ? (
+                      <>
+                        {student.position === "" ? (
+                          <Text>N/A</Text>
+                        ) : (
+                          <Text fontSize="lg" color="black">
+                            {student.position}
+                          </Text>
+                        )}
+                      </>
                     ) : (
-                      <Text fontSize="lg" color="black">
-                        {student.course}
-                      </Text>
+                      <></>
                     )}
                   </Stack>
                 </Stack>
@@ -170,7 +199,9 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
               <CardBody px={2}>
                 <div className="flex pb-2">
                   <p className="w-[35%] font-[500]">DATE OF BIRTH: </p>
-                  <p className="w-[65%] font-[600]">{student.birthdate ? formattedDate : 'EMPTY'}</p>
+                  <p className="w-[65%] font-[600]">
+                    {student.birthdate ? formattedDate : "N/A"}
+                  </p>
                 </div>
                 <div className="border-2 border-black">
                   <div className="bg-black text-white">
@@ -179,18 +210,18 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                   <div className="px-2">
                     <div className="flex gap-2">
                       <p className=" font-[500]">Name: </p>
-                      <p className=" font-[600]">{student.contactperson}</p>
+                      <p className=" font-[600]">{student.contactperson || 'N/A'}</p>
                     </div>
                     <div className="flex gap-2">
                       <p className=" font-[500]">Address: </p>
-                      <p className=" font-[600]">{student.address}</p>
+                      <p className=" font-[600]">{student.address || 'N/A'}</p>
                     </div>
                     <div className="flex gap-2">
                       <p className=" font-[500]">Tel. No.: </p>
                       <p className=" font-[600]">
                         {student.contactpersonnumber
                           ? formatPhoneNumber(student.contactpersonnumber)
-                          : "EMPTY"}
+                          : "N/A"}
                       </p>
                     </div>
                   </div>

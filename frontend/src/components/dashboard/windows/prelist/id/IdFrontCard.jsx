@@ -23,6 +23,7 @@ const IdFrontCard = forwardRef(({ student }, ref) => (
           <Stack direction="row" align="center" justify="space-between" bg="#507889" p="4" w="full">
             <Stack align="center">
               <Image src={logo} alt="Philsca Logo" boxSize="100px" ml={10} />
+              
               <Text fontSize="md" color="yellow.400" ml={10}>
                 SY-2023-2024
               </Text>
