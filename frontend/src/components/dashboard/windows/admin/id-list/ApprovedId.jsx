@@ -1,7 +1,7 @@
 /** @format */
 
 import {
-    Box,
+  Box,
   Button,
   Flex,
   Modal,
@@ -14,8 +14,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useData } from "../../context/FetchAccountContext";
-import { updateAccountAPI } from "../../api/AccountsApi";
+import { useData } from "../../../../context/FetchAccountContext";
+import { updateAccountAPI } from "../../../../api/AccountsApi";
 
 const ApprovedModal = ({ isOpen, approved, onClose }) => {
   const { data, setData } = useData();
@@ -41,7 +41,7 @@ const ApprovedModal = ({ isOpen, approved, onClose }) => {
           description: "Status Approved",
           status: "success",
           duration: 5000,
-          position: 'top',
+          position: "top",
           isClosable: true,
         });
         onClose();
@@ -65,11 +65,22 @@ const ApprovedModal = ({ isOpen, approved, onClose }) => {
         <ModalHeader>Approved Account</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text textAlign="center" fontSize="20px" pb={5}>Are you sure you want to approved?</Text>
-          <Flex justify="center"  gap={2}>
-            <Button bg="blue.500"  _hover={{bg:'blue.400'}} onClick={handleToApproved} isLoading={isLoading}>Yes</Button>
+          <Text textAlign="center" fontSize="20px" pb={5}>
+            Are you sure you want to approved?
+          </Text>
+          <Flex justify="center" gap={2}>
+            <Button
+              bg="blue.500"
+              _hover={{ bg: "blue.400" }}
+              onClick={handleToApproved}
+              isLoading={isLoading}
+            >
+              Yes
+            </Button>
 
-            <Button bg="blue.500" _hover={{bg:'blue.400'}}>No</Button>
+            <Button bg="blue.500" _hover={{ bg: "blue.400" }}>
+              No
+            </Button>
           </Flex>
         </ModalBody>
       </ModalContent>

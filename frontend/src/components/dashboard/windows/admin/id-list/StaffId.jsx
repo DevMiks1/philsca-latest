@@ -1,8 +1,10 @@
 /** @format */
 
 import {
+  CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  EmailIcon,
   ViewIcon,
 } from "@chakra-ui/icons";
 import {
@@ -18,58 +20,70 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import ReactPaginate from "react-paginate";
-import { useData } from "../../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 
-const StudentIdLost = ({
+const StaffId = ({
+  handleApprovedOpen,
   filterCriteria,
   searchQuery,
-  selectedProgram,
-  handleViewAccount,
+  handleViewClick,
   currentPage,
+  handleOpenMail,
   handlePageClick,
 }) => {
   const { data, setData } = useData();
-  const studentsPerPage = 4;
+  const staffPerPage = 4;
 
-  // Filter students based on role
-  const filteredStudentsWithAffidavit = data.filter(
-    (account) => account.role === "student" && account.affidavit
-  );
+  const filteredStaffId = data.filter((account) => account.role === "staff");
+  const pageCount = Math.ceil(filteredStaffId.length / staffPerPage);
 
-  // Apply search and filter criteria
-  const filteredStudents = filteredStudentsWithAffidavit
+  const filteredStaff = filteredStaffId
     .reverse()
-    .filter((student) => {
-      const fullName = `${student.firstname} ${student.lastname}`;
+    .filter((staff) => {
+      const fullName = `${staff.firstname} ${staff.lastname}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
     })
-    .filter((student) => {
-      if (selectedProgram === "") return true;
-      return selectedProgram === student.course ? student.course : "";
-    });
+    .filter((staff) => {
+      if (filterCriteria === "") return true;
+      return filterCriteria === "issued" ? staff.isIdIssued : !staff.isIdIssued;
+    })
+    .slice(currentPage * staffPerPage, (currentPage + 1) * staffPerPage);
 
-  // Pagination logic
-  const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
-  const displayedStudents = filteredStudents.slice(
-    currentPage * studentsPerPage,
-    (currentPage + 1) * studentsPerPage
-  );
-
-  const displayStudents = displayedStudents.map((student) => (
-    <Tr key={student._id}>
+  const displayStaff = filteredStaff.map((staff) => (
+    <Tr key={staff._id}>
       <Td>
-        {student.firstname} {student.lastname}
+        {staff.firstname} {staff.lastname}
       </Td>
-      <Td>{student.course}</Td>
+      <Td>{staff.course}</Td>
+      <Td>{staff.isIdIssued}</Td>
       <Td>
         <Button
-          mr={5}
           size="sm"
+          mr={5}
           leftIcon={<ViewIcon />}
-          onClick={() => handleViewAccount(student)}
+          onClick={() => handleViewClick(staff)}
         >
           View
         </Button>
+        {!staff.isIdIssued && (
+          <Button
+            mr={5}
+            size="sm"
+            leftIcon={<CheckIcon />}
+            onClick={() => handleApprovedOpen(staff)}
+          >
+            Approved
+          </Button>
+        )}
+        {staff.isIdIssued && (
+          <Button
+            size="sm"
+            leftIcon={<EmailIcon />}
+            onClick={() => handleOpenMail(staff)}
+          >
+            Email
+          </Button>
+        )}
       </Td>
     </Tr>
   ));
@@ -86,8 +100,8 @@ const StudentIdLost = ({
             </Tr>
           </Thead>
           <Tbody>
-            {displayStudents.length > 0 ? (
-              displayStudents
+            {displayStaff.length > 0 ? (
+              displayStaff
             ) : (
               <Tr>
                 <Td colSpan={3} textAlign="center">
@@ -121,4 +135,4 @@ const StudentIdLost = ({
   );
 };
 
-export default StudentIdLost;
+export default StaffId;

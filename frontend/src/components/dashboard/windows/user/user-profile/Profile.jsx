@@ -36,15 +36,13 @@ import {
   Select,
   Spinner,
 } from "@chakra-ui/react";
-import { fetchAccountAPI, updateAccountAPI } from "../../api/AccountsApi";
-import { useAuth } from "../../context/Auth";
+import { fetchAccountAPI, updateAccountAPI } from "../../../../api/AccountsApi";
+import { useAuth } from "../../../../context/Auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useData } from "../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 
-const StudentProfile = ({
-  
-}) => {
+const StudentProfile = ({}) => {
   const { data, setData } = useData();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -72,13 +70,13 @@ const StudentProfile = ({
   const globalUrl = process.env.REACT_APP_GLOBAL_URL;
   const auth = useAuth();
   const authId = auth.user._id;
-  
+
   const accountLogin = () => {
     return data.find((d) => d._id === authId);
   };
   const user = accountLogin();
   console.log(user);
-  
+
   useEffect(() => {
     if (user) {
       setFirstname(user.firstname || "");
@@ -99,39 +97,37 @@ const StudentProfile = ({
       setAddress(user.address || "");
       // Add other fields as necessary
     }
-  }, [user])
+  }, [user]);
   const uploadFiles = async () => {
     try {
       let cloudName = "dijhxviqe";
       const imageUrls = [];
       const signatureUrls = [];
-  
+
       // Upload images
       for (const image of images) {
         const data = new FormData();
         data.append("file", image);
         data.append("upload_preset", "uploadNews");
         const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-  
+
         const res = await axios.post(api, data);
         const secure_url = res.data.secure_url;
         imageUrls.push(secure_url);
       }
-  
+
       // Upload signatures
       for (const sig of signature) {
         const data = new FormData();
         data.append("file", sig);
         data.append("upload_preset", "uploadNews");
         const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-  
+
         const res = await axios.post(api, data);
         const secure_url = res.data.secure_url;
         signatureUrls.push(secure_url);
       }
-  
-   
-  
+
       // Prepare data to send
       const uploadData = {};
       if (imageUrls.length > 0) {
@@ -140,40 +136,36 @@ const StudentProfile = ({
       if (signatureUrls.length > 0) {
         uploadData.signature = signatureUrls[0];
       }
-  
-  
+
       // Check if uploadData is empty
       if (Object.keys(uploadData).length === 0) {
         throw new Error("No files to upload");
       }
-  
+
       // Send data to the server
       await fetchUploadImage(uploadData);
-  
+
       // Redirect after a short delay
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
-  
+
       console.log("Files upload success");
     } catch (error) {
       console.error("Upload failed:", error);
     }
   };
-  
-  
 
   const fetchUploadImage = async (uploadData) => {
-    console.log(uploadData);
     const updatedUser = {
-      picture: uploadData.picture || '',
+      picture: uploadData.picture || "",
       firstname: firstname,
       lastname: lastname,
       middlename: middlename,
       course: course,
       schoolyear: schoolyear,
       birthdate: birthdate,
-      signature: uploadData.signature || '',
+      signature: uploadData.signature || "",
       contactnumber: contactnumber,
       contactpersonnumber: contactPersonNumber,
       contactperson: contactPerson,
@@ -185,7 +177,6 @@ const StudentProfile = ({
       sss: sss,
       tin: tin,
     };
-    console.log(updatedUser);
 
     try {
       const response = await updateAccountAPI({
@@ -209,8 +200,8 @@ const StudentProfile = ({
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      // 
-      if (images.length < 1 || signature.length < 1)  {
+      //
+      if (images.length < 1 || signature.length < 1) {
         toast({
           title: "Please Fill All the Fields",
           status: "warning",
@@ -259,7 +250,6 @@ const StudentProfile = ({
   const formattedDate = date ? date.toISOString().split("T")[0] : "";
 
   return (
-    
     <Box key={user._id} h="100%">
       <SimpleGrid p={0}>
         <Card bg="#e9e8df">
@@ -391,86 +381,84 @@ const StudentProfile = ({
           <ModalHeader>Personal Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody maxW="600px">
-            
-              <FormControl isRequired pb={3}>
-                <FormLabel>Firstname:</FormLabel>
-                <Input
-                  type="text"
-                  name="firstname"
-                  value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
-                  placeholder="Firstname"
-                />
-              </FormControl>
-              <FormControl pb={3}>
-                <FormLabel>Middlename:</FormLabel>
-                <Input
-                  type="text"
-                  name="middlename"
-                  value={middlename}
-                  onChange={(e) => setMiddlename(e.target.value)}
-                  placeholder="Middlename"
-                />
-              </FormControl>
-              <FormControl isRequired pb={3}>
-                <FormLabel>Lastname:</FormLabel>
-                <Input
-                  type="text"
-                  name="name"
-                  value={lastname}
-                  onChange={(e) => setLastname(e.target.value)}
-                  placeholder="Lastname"
-                />
-              </FormControl>
+            <FormControl isRequired pb={3}>
+              <FormLabel>Firstname:</FormLabel>
+              <Input
+                type="text"
+                name="firstname"
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+                placeholder="Firstname"
+              />
+            </FormControl>
+            <FormControl pb={3}>
+              <FormLabel>Middlename:</FormLabel>
+              <Input
+                type="text"
+                name="middlename"
+                value={middlename}
+                onChange={(e) => setMiddlename(e.target.value)}
+                placeholder="Middlename"
+              />
+            </FormControl>
+            <FormControl isRequired pb={3}>
+              <FormLabel>Lastname:</FormLabel>
+              <Input
+                type="text"
+                name="name"
+                value={lastname}
+                onChange={(e) => setLastname(e.target.value)}
+                placeholder="Lastname"
+              />
+            </FormControl>
 
-            
-              {["faculty", "staff"].includes(user.role) && (
-                <FormControl isRequired>
-                  <FormLabel>Position:</FormLabel>
-                  <Input
-                    type="text"
-                    name="position"
-                    value={position}
-                    onChange={(e) => setPosition(e.target.value)}
-                    placeholder="Position"
-                  />
-                </FormControl>
-              )}
-              {["faculty", "staff"].includes(user.role) && (
-                <FormControl isRequired>
-                  <FormLabel>Designation:</FormLabel>
-                  <Input
-                    type="text"
-                    name="designation"
-                    value={designation}
-                    onChange={(e) => setDesignation(e.target.value)}
-                    placeholder="Designation"
-                  />
-                </FormControl>
-              )}
-              {["faculty", "staff"].includes(user.role) && (
-                <FormControl isRequired>
-                  <FormLabel>HGT:</FormLabel>
-                  <Input
-                    type="text"
-                    name="hgt"
-                    value={hgt}
-                    onChange={(e) => setHgt(e.target.value)}
-                    placeholder="Height"
-                  />
-                </FormControl>
-              )}
-              {user.role === "student" && (
-                <>
-                  <FormControl isRequired pb={3}>
-                    <FormLabel>Course:</FormLabel>
-                    <Select
-                      name="course"
-                      value={course}
-                      placeholder="Select Course"
-                      onChange={(e) => setCourse(e.target.value)}
-                    >
-                      <option value="BSAeE">BSAeE</option>
+            {["faculty", "staff"].includes(user.role) && (
+              <FormControl isRequired>
+                <FormLabel>Position:</FormLabel>
+                <Input
+                  type="text"
+                  name="position"
+                  value={position}
+                  onChange={(e) => setPosition(e.target.value)}
+                  placeholder="Position"
+                />
+              </FormControl>
+            )}
+            {["faculty", "staff"].includes(user.role) && (
+              <FormControl isRequired>
+                <FormLabel>Designation:</FormLabel>
+                <Input
+                  type="text"
+                  name="designation"
+                  value={designation}
+                  onChange={(e) => setDesignation(e.target.value)}
+                  placeholder="Designation"
+                />
+              </FormControl>
+            )}
+            {["faculty", "staff"].includes(user.role) && (
+              <FormControl isRequired>
+                <FormLabel>HGT:</FormLabel>
+                <Input
+                  type="text"
+                  name="hgt"
+                  value={hgt}
+                  onChange={(e) => setHgt(e.target.value)}
+                  placeholder="Height"
+                />
+              </FormControl>
+            )}
+            {user.role === "student" && (
+              <>
+                <FormControl isRequired pb={3}>
+                  <FormLabel>Course:</FormLabel>
+                  <Select
+                    name="course"
+                    value={course}
+                    placeholder="Select Course"
+                    onChange={(e) => setCourse(e.target.value)}
+                  >
+                    <option value="BSAeE">BSAeE</option>
                     <option value="BSAT">BSAT</option>
                     <option value="BSAMT">BSAMT</option>
                     <option value="BSAET">BSAET</option>
@@ -480,104 +468,104 @@ const StudentProfile = ({
                     <option value="BSAvLog">BSAvLog</option>
                     <option value="BSAvTour">BSAvTour</option>
                     <option value="BSAvSSM">BSAvSSM</option>
-                    </Select>
-                  </FormControl>
-
-                  <FormControl isRequired pb={3}>
-                    <FormLabel>Year:</FormLabel>
-                    <Select
-                      name="year"
-                      value={schoolyear}
-                      placeholder="Select Year"
-                      onChange={(e) => setSchoolyear(e.target.value)}
-                    >
-                      <option value="1st">1st</option>
-                      <option value="2nd">2nd</option>
-                      <option value="3rd">3rd</option>
-                      <option value="4th">4th</option>
-                      <option value="5th">5th</option>
-                    </Select>
-                  </FormControl>
-                </>
-              )}
-
-              {["faculty", "staff"].includes(user.role) && (
-                <FormControl isRequired pb={3}>
-                  <FormLabel>WGT:</FormLabel>
-                  <Input
-                    type="text"
-                    name="course"
-                    value={wgt}
-                    onChange={(e) => setWgt(e.target.value)}
-                    placeholder="Weight"
-                  />
+                  </Select>
                 </FormControl>
-              )}
-              {["faculty", "staff"].includes(user.role) && (
-                <FormControl isRequired pb={3}>
-                  <FormLabel>SSS:</FormLabel>
-                  <Input
-                    type="text"
-                    name="course"
-                    value={sss}
-                    onChange={(e) => setSSS(e.target.value)}
-                    placeholder="SSS"
-                  />
-                </FormControl>
-              )}
-              {["faculty", "staff"].includes(user.role) && (
-                <FormControl isRequired pb={3}>
-                  <FormLabel>TIN:</FormLabel>
-                  <Input
-                    type="text"
-                    name="course"
-                    value={tin}
-                    onChange={(e) => setTin(e.target.value)}
-                    placeholder="TIN"
-                  />
-                </FormControl>
-              )}
 
-              <FormControl pb={3}>
-                <FormLabel>Date of Birth:</FormLabel>
-                <Input
-                  type="date"
-                  name="birthdate"
-                  defaultValue={birthdate}
-                  onChange={(e) => setBirthdate(e.target.value)}
-                />
-              </FormControl>
+                <FormControl isRequired pb={3}>
+                  <FormLabel>Year:</FormLabel>
+                  <Select
+                    name="year"
+                    value={schoolyear}
+                    placeholder="Select Year"
+                    onChange={(e) => setSchoolyear(e.target.value)}
+                  >
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>
+                    <option value="3rd">3rd</option>
+                    <option value="4th">4th</option>
+                    <option value="5th">5th</option>
+                  </Select>
+                </FormControl>
+              </>
+            )}
 
+            {["faculty", "staff"].includes(user.role) && (
               <FormControl isRequired pb={3}>
-                <FormLabel>Contact No.:</FormLabel>
-                <Input
-                  type="tel"
-                  name="contactNo"
-                  value={contactnumber}
-                  onChange={(e) => setContactNumber(e.target.value)}
-                  placeholder="Contact Number"
-                />
-              </FormControl>
-              <FormControl isRequired pb={3}>
-                <FormLabel>ContactPerson:</FormLabel>
+                <FormLabel>WGT:</FormLabel>
                 <Input
                   type="text"
                   name="course"
-                  value={contactPerson}
-                  onChange={(e) => setContactPerson(e.target.value)}
-                  placeholder="Contact Person"
+                  value={wgt}
+                  onChange={(e) => setWgt(e.target.value)}
+                  placeholder="Weight"
                 />
               </FormControl>
-              <FormControl isRequired>
-                <FormLabel>ContactPerson No.:</FormLabel>
+            )}
+            {["faculty", "staff"].includes(user.role) && (
+              <FormControl isRequired pb={3}>
+                <FormLabel>SSS:</FormLabel>
                 <Input
                   type="text"
                   name="course"
-                  value={contactPersonNumber}
-                  onChange={(e) => setContactPersonNumber(e.target.value)}
-                  placeholder="Contact Person"
+                  value={sss}
+                  onChange={(e) => setSSS(e.target.value)}
+                  placeholder="SSS"
                 />
               </FormControl>
+            )}
+            {["faculty", "staff"].includes(user.role) && (
+              <FormControl isRequired pb={3}>
+                <FormLabel>TIN:</FormLabel>
+                <Input
+                  type="text"
+                  name="course"
+                  value={tin}
+                  onChange={(e) => setTin(e.target.value)}
+                  placeholder="TIN"
+                />
+              </FormControl>
+            )}
+
+            <FormControl pb={3}>
+              <FormLabel>Date of Birth:</FormLabel>
+              <Input
+                type="date"
+                name="birthdate"
+                defaultValue={birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
+              />
+            </FormControl>
+
+            <FormControl isRequired pb={3}>
+              <FormLabel>Contact No.:</FormLabel>
+              <Input
+                type="tel"
+                name="contactNo"
+                value={contactnumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                placeholder="Contact Number"
+              />
+            </FormControl>
+            <FormControl isRequired pb={3}>
+              <FormLabel>ContactPerson:</FormLabel>
+              <Input
+                type="text"
+                name="course"
+                value={contactPerson}
+                onChange={(e) => setContactPerson(e.target.value)}
+                placeholder="Contact Person"
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>ContactPerson No.:</FormLabel>
+              <Input
+                type="text"
+                name="course"
+                value={contactPersonNumber}
+                onChange={(e) => setContactPersonNumber(e.target.value)}
+                placeholder="Contact Person"
+              />
+            </FormControl>
             <FormControl isRequired>
               <FormLabel>Address:</FormLabel>
               <Input
@@ -634,7 +622,7 @@ const StudentProfile = ({
                           onChange={handleFileChange}
                         />
                       </label>
-                    </div> 
+                    </div>
                     <div className="flex flex-col justify-center items-center gap-3 p-5 border border-dashed border-black h-full w-[100%] dark:bg-white">
                       {signature.length > 0 ? (
                         <div

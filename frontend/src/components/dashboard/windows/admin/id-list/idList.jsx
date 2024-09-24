@@ -17,10 +17,10 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import IdToPrint from "./prelist/id/IdToPrint";
-import { EmailModal } from "./prelist/student/email-modal/EmailModal";
-import ApprovedModal from "./ApprovedModal";
-import { useData } from "../../context/FetchAccountContext";
+import IdToPrint from "../../admin/id-to-print/IdToPrint";
+import { EmailModal } from "../../admin/email/EmailModal";
+import ApprovedModal from "./ApprovedId";
+import { useData } from "../../../../context/FetchAccountContext";
 import StudentId from "./StudentId";
 import StaffId from "./StaffId";
 import FacultyId from "./FacultyId";

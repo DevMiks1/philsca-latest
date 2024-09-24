@@ -14,7 +14,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import ReactPaginate from "react-paginate";
-import { useData } from "../../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 
 const StaffIdLost = ({
   searchQuery,

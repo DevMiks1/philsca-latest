@@ -1,12 +1,6 @@
 /** @format */
 
-import {
-  CheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  EmailIcon,
-  ViewIcon,
-} from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -19,18 +13,14 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import ReactPaginate from "react-paginate";
-import { updateAccountAPI } from "../../api/AccountsApi";
-import { useData } from "../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 
-const StudentId = ({
+const StudentIdLost = ({
   filterCriteria,
   searchQuery,
   selectedProgram,
-  handleViewClick,
-  handleApprovedOpen,
-  handleOpenMail,
+  handleViewAccount,
   currentPage,
   handlePageClick,
 }) => {
@@ -38,22 +28,16 @@ const StudentId = ({
   const studentsPerPage = 4;
 
   // Filter students based on role
-  const filteredStudentsId = data.filter(
-    (account) => account.role === "student"
+  const filteredStudentsWithAffidavit = data.filter(
+    (account) => account.role === "student" && account.affidavit
   );
 
   // Apply search and filter criteria
-  const filteredStudents = filteredStudentsId
+  const filteredStudents = filteredStudentsWithAffidavit
     .reverse()
     .filter((student) => {
       const fullName = `${student.firstname} ${student.lastname}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
-    })
-    .filter((student) => {
-      if (filterCriteria === "") return true;
-      return filterCriteria === "issued"
-        ? student.isIdIssued
-        : !student.isIdIssued;
     })
     .filter((student) => {
       if (selectedProgram === "") return true;
@@ -78,29 +62,10 @@ const StudentId = ({
           mr={5}
           size="sm"
           leftIcon={<ViewIcon />}
-          onClick={() => handleViewClick(student)}
+          onClick={() => handleViewAccount(student)}
         >
           View
         </Button>
-        {!student.isIdIssued && (
-          <Button
-            mr={5}
-            size="sm"
-            leftIcon={<CheckIcon />}
-            onClick={() => handleApprovedOpen(student)}
-          >
-            Approved
-          </Button>
-        )}
-        {student.isIdIssued && (
-          <Button
-            size="sm"
-            leftIcon={<EmailIcon />}
-            onClick={() => handleOpenMail(student)}
-          >
-            Email
-          </Button>
-        )}
       </Td>
     </Tr>
   ));
@@ -152,4 +117,4 @@ const StudentId = ({
   );
 };
 
-export default StudentId;
+export default StudentIdLost;

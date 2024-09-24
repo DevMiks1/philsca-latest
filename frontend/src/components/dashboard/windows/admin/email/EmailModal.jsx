@@ -9,8 +9,6 @@ import {
   Toast,
   useToast,
 } from "@chakra-ui/react";
-import logo from "../../../../../../assets/philscalogo.png";
-import ReactToPrint from "react-to-print";
 import {
   Modal,
   ModalOverlay,
@@ -22,7 +20,7 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import { sendEmail } from "../../../../../api/EmailApi";
+import { sendEmail } from "../../../../api/EmailApi";
 
 export const EmailModal = ({ isOpen, onClose, data, setData, mail }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +42,7 @@ export const EmailModal = ({ isOpen, onClose, data, setData, mail }) => {
         status: "success",
         duration: 5000,
         isClosable: true,
-        position: 'top',
+        position: "top",
       });
       onClose(null);
     } catch (error) {
@@ -53,7 +51,6 @@ export const EmailModal = ({ isOpen, onClose, data, setData, mail }) => {
       setIsLoading(false);
     }
   };
-  console.log(mail);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

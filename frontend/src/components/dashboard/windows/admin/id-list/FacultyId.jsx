@@ -13,73 +13,74 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import ReactPaginate from "react-paginate";
-import { useData } from "../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 
-const StaffId = ({
-  handleApprovedOpen,
+const FacultyId = ({
+  
   filterCriteria,
   searchQuery,
   handleViewClick,
-  currentPage,
+  handleApprovedOpen,
   handleOpenMail,
+  currentPage,
   handlePageClick,
 }) => {
   const { data, setData } = useData();
-  const staffPerPage = 4;
 
-  const filteredStaffId = data.filter(
-    (account) => account.role === "staff"
+  const facultyPerPage = 4;
+
+  const filteredFacultyId = data.filter(
+    (account) => account.role === "faculty"
   );
-  const pageCount = Math.ceil(filteredStaffId.length / staffPerPage);
+  console.log(data);
+  console.log(filteredFacultyId);
+  const pageCount = Math.ceil(filteredFacultyId.length / facultyPerPage);
 
-
-  const filteredStaff = filteredStaffId
+  const filteredFacuty = filteredFacultyId
     .reverse()
-    .filter((staff) => {
-      const fullName = `${staff.firstname} ${staff.lastname}`;
+    .filter((faculty) => {
+      const fullName = `${faculty.firstname} ${faculty.lastname}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
     })
-    .filter((staff) => {
+    .filter((faculty) => {
       if (filterCriteria === "") return true;
       return filterCriteria === "issued"
-        ? staff.isIdIssued
-        : !staff.isIdIssued;
+        ? faculty.isIdIssued
+        : !faculty.isIdIssued;
     })
-    .slice(currentPage * staffPerPage, (currentPage + 1) * staffPerPage);
-
-  const displayStaff = filteredStaff.map((staff) => (
-    <Tr key={staff._id}>
+    .slice(currentPage * facultyPerPage, (currentPage + 1) * facultyPerPage);
+  console.log(filteredFacuty);
+  const displayFaculty = filteredFacuty.map((faculty) => (
+    <Tr key={faculty._id}>
       <Td>
-        {staff.firstname} {staff.lastname}
+        {faculty.firstname} {faculty.lastname}
       </Td>
-      <Td>{staff.course}</Td>
-      <Td>{staff.isIdIssued}</Td>
+      <Td>{faculty.course}</Td>
       <Td>
         <Button
           size="sm"
           mr={5}
           leftIcon={<ViewIcon />}
-          onClick={() => handleViewClick(staff)}
+          onClick={() => handleViewClick(faculty)}
         >
           View
         </Button>
-        {!staff.isIdIssued && (
+        {!faculty.isIdIssued && (
           <Button
           mr={5}
           size="sm"
           leftIcon={<CheckIcon  />}
-          onClick={() => handleApprovedOpen(staff)}
+          onClick={() => handleApprovedOpen(faculty)}
         >
           Approved
         </Button>
         )}
-        {staff.isIdIssued && (
+        {faculty.isIdIssued && (
           <Button
           size="sm"
           leftIcon={<EmailIcon />}
-          onClick={() => handleOpenMail(staff)}
+          onClick={() => handleOpenMail(faculty)}
         >
           Email
         </Button>
@@ -100,19 +101,18 @@ const StaffId = ({
             </Tr>
           </Thead>
           <Tbody>
-            {displayStaff.length > 0 ? (
-              displayStaff
+            {displayFaculty.length > 0 ? (
+              displayFaculty
             ) : (
-                <Tr>
+              <Tr>
                 <Td colSpan={3} textAlign="center">
-                    <Text fontSize="20px" fontWeight="bold" pt={20}>
-                        {filterCriteria === 'issued' 
-                            ? "There are no issued IDs for now."
-                            : "There are no non-issued IDs for now."
-                        }
-                    </Text>
+                  <Text fontSize="20px" fontWeight="bold" pt={20}>
+                    {filterCriteria === "issued"
+                      ? "There are no issued IDs for now."
+                      : "There are no non-issued IDs for now."}
+                  </Text>
                 </Td>
-            </Tr>
+              </Tr>
             )}
           </Tbody>
         </Table>
@@ -136,4 +136,4 @@ const StaffId = ({
   );
 };
 
-export default StaffId;
+export default FacultyId;

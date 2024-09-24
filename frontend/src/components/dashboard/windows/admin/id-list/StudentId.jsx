@@ -1,6 +1,12 @@
 /** @format */
 
-import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EmailIcon,
+  ViewIcon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -13,14 +19,13 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import ReactPaginate from "react-paginate";
-import { useData } from "../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 
-const FacultyId = ({
-  
+const StudentId = ({
   filterCriteria,
   searchQuery,
+  selectedProgram,
   handleViewClick,
   handleApprovedOpen,
   handleOpenMail,
@@ -28,63 +33,71 @@ const FacultyId = ({
   handlePageClick,
 }) => {
   const { data, setData } = useData();
+  const studentsPerPage = 4;
 
-  const facultyPerPage = 4;
-
-  const filteredFacultyId = data.filter(
-    (account) => account.role === "faculty"
+  // Filter students based on role
+  const filteredStudentsId = data.filter(
+    (account) => account.role === "student"
   );
-  console.log(data);
-  console.log(filteredFacultyId);
-  const pageCount = Math.ceil(filteredFacultyId.length / facultyPerPage);
 
-  const filteredFacuty = filteredFacultyId
+  // Apply search and filter criteria
+  const filteredStudents = filteredStudentsId
     .reverse()
-    .filter((faculty) => {
-      const fullName = `${faculty.firstname} ${faculty.lastname}`;
+    .filter((student) => {
+      const fullName = `${student.firstname} ${student.lastname}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
     })
-    .filter((faculty) => {
+    .filter((student) => {
       if (filterCriteria === "") return true;
       return filterCriteria === "issued"
-        ? faculty.isIdIssued
-        : !faculty.isIdIssued;
+        ? student.isIdIssued
+        : !student.isIdIssued;
     })
-    .slice(currentPage * facultyPerPage, (currentPage + 1) * facultyPerPage);
-  console.log(filteredFacuty);
-  const displayFaculty = filteredFacuty.map((faculty) => (
-    <Tr key={faculty._id}>
+    .filter((student) => {
+      if (selectedProgram === "") return true;
+      return selectedProgram === student.course ? student.course : "";
+    });
+
+  // Pagination logic
+  const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
+  const displayedStudents = filteredStudents.slice(
+    currentPage * studentsPerPage,
+    (currentPage + 1) * studentsPerPage
+  );
+
+  const displayStudents = displayedStudents.map((student) => (
+    <Tr key={student._id}>
       <Td>
-        {faculty.firstname} {faculty.lastname}
+        {student.firstname} {student.lastname}
       </Td>
-      <Td>{faculty.course}</Td>
+      <Td>{student.course}</Td>
       <Td>
         <Button
-          size="sm"
           mr={5}
+          size="sm"
           leftIcon={<ViewIcon />}
-          onClick={() => handleViewClick(faculty)}
+          onClick={() => handleViewClick(student)}
         >
           View
         </Button>
-        {!faculty.isIdIssued && (
+        {!student.isIdIssued && (
           <Button
-          mr={5}
-          size="sm"
-          leftIcon={<CheckIcon  />}
-          onClick={() => handleApprovedOpen(faculty)}
-        >
-          Approved
-        </Button>
+            mr={5}
+            size="sm"
+            leftIcon={<CheckIcon />}
+            onClick={() => handleApprovedOpen(student)}
+          >
+            Approved
+          </Button>
         )}
-        {faculty.isIdIssued && (
+        {student.isIdIssued && (
           <Button
-          size="sm"
-          leftIcon={<EmailIcon />}
-          onClick={() => handleOpenMail(faculty)}
-        >
-          Email
-        </Button>
+            size="sm"
+            leftIcon={<EmailIcon />}
+            onClick={() => handleOpenMail(student)}
+          >
+            Email
+          </Button>
         )}
       </Td>
     </Tr>
@@ -102,8 +115,8 @@ const FacultyId = ({
             </Tr>
           </Thead>
           <Tbody>
-            {displayFaculty.length > 0 ? (
-              displayFaculty
+            {displayStudents.length > 0 ? (
+              displayStudents
             ) : (
               <Tr>
                 <Td colSpan={3} textAlign="center">
@@ -137,4 +150,4 @@ const FacultyId = ({
   );
 };
 
-export default FacultyId;
+export default StudentId;

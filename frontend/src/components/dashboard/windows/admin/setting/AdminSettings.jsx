@@ -35,9 +35,9 @@ import {
   WrapItem,
   Spinner,
 } from "@chakra-ui/react";
-import { fetchAccountAPI, updateAccountAPI } from "../../api/AccountsApi";
-import { useAuth } from "../../context/Auth";
-import { useData } from "../../context/FetchAccountContext";
+import { fetchAccountAPI, updateAccountAPI } from "../../../../api/AccountsApi";
+import { useAuth } from "../../../../context/Auth";
+import { useData } from "../../../../context/FetchAccountContext";
 
 export default function Settings() {
   const [formData, setFormData] = useState({
@@ -123,9 +123,9 @@ export default function Settings() {
                     </Box>
                   </Flex>
                 </CardHeader>
-  
+
                 <Divider borderColor="gray.400" />
-  
+
                 <CardBody bg="purple.50">
                   <List spacing={3}>
                     <ListItem>
@@ -143,9 +143,9 @@ export default function Settings() {
                     </ListItem>
                   </List>
                 </CardBody>
-  
+
                 <Divider borderColor="gray.400" />
-  
+
                 <CardFooter borderBottom="8px" borderColor="purple.400">
                   <HStack>
                     <Button
@@ -160,7 +160,7 @@ export default function Settings() {
               </Card>
             </SimpleGrid>{" "}
           </>
-  
+
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -180,7 +180,7 @@ export default function Settings() {
                   />
                   <FormHelperText>Input a valid email</FormHelperText>
                 </FormControl>
-  
+
                 <FormControl isRequired>
                   <FormLabel>New Password</FormLabel>
                   <Input
@@ -229,15 +229,12 @@ export default function Settings() {
                   />
                 </FormControl>
               </ModalBody>
-  
+
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={onClose}>
                   Close
                 </Button>
-                <Button
-                  colorScheme="green"
-                  onClick={handleSubmit}
-                >
+                <Button colorScheme="green" onClick={handleSubmit}>
                   Update
                 </Button>
               </ModalFooter>

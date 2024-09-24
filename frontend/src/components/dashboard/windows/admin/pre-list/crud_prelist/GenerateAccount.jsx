@@ -1,3 +1,5 @@
+/** @format */
+
 // Inside GenerateAccount component
 import React, { useContext, useState } from "react";
 import {
@@ -20,12 +22,11 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-import { createAccountAPI } from "../../../api/AccountsApi";
-import { useData } from "../../../context/FetchAccountContext";
+import { createAccountAPI } from "../../../../../api/AccountsApi";
+import { useData } from "../../../../../context/FetchAccountContext";
 
 const GenerateAccount = React.memo(({ isOpen, onClose }) => {
   const { data, setData } = useData();
- 
 
   const [email, setEmail] = useState("");
   const [schoolid, setSchoolid] = useState("");
@@ -42,17 +43,17 @@ const GenerateAccount = React.memo(({ isOpen, onClose }) => {
       firstname: "",
       suffix: "",
       lastname: "",
-      middlename:'',
+      middlename: "",
       email,
       password,
       isIdIssued: false,
       picture: "",
       semestertype: "",
       schoolyear: "",
-      course:"",
+      course: "",
       role,
       contactnumber: "",
-      signature:'',
+      signature: "",
       contactnumberperson: "",
       birthdate: "",
       position: "",
@@ -93,7 +94,7 @@ const GenerateAccount = React.memo(({ isOpen, onClose }) => {
         // Reset form fields
         setEmail("");
         setPassword("");
-        setSchoolid("")
+        setSchoolid("");
         setRole("student"); // Reset the role to default
         // Close the modal after successful account creation
         onClose();
@@ -128,7 +129,7 @@ const GenerateAccount = React.memo(({ isOpen, onClose }) => {
         <ModalBody>
           <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
-            <FormControl id="email">
+              <FormControl id="email">
                 <FormLabel>ID Number</FormLabel>
                 <Input
                   type="text"
@@ -175,7 +176,13 @@ const GenerateAccount = React.memo(({ isOpen, onClose }) => {
                   <option value="staff">Staff</option>
                 </Select>
               </FormControl>
-              <Button type="submit" isLoading={isLoading} color="white" bg="blue.700 " _hover={{bg: "blue.600", color:"white"}}>
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                color="white"
+                bg="blue.700 "
+                _hover={{ bg: "blue.600", color: "white" }}
+              >
                 Create Account
               </Button>
             </Stack>

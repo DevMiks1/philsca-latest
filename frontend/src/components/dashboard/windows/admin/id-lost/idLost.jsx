@@ -32,13 +32,12 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { fetchAccountAPI } from "../../api/AccountsApi";
-import ModalAffidavit from "./ModalAffidavit";
-import { useData } from "../../context/FetchAccountContext";
-import StudentIdLost from "../windows/report-id-lost/StudentIdLost";
-import StaffIdLost from "../windows/report-id-lost/StaffIdLost";
-import FacultyIdLost from "./report-id-lost/FacultyIdLost";
+
+import ModalAffidavit from "./idLostDetails";
+import { useData } from "../../../../context/FetchAccountContext";
+import StudentIdLost from "./StudentIdLost";
+import StaffIdLost from "./StaffIdLost";
+import FacultyIdLost from "./FacultyIdLost";
 
 const Reports = ({}) => {
   const [currentPage, setCurrentPage] = useState(0);

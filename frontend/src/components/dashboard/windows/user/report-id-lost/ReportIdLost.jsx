@@ -1,11 +1,8 @@
 /** @format */
 
-import {
-  Box,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React from "react";
-import { Upload } from "../../Upload";
+import { Upload } from "../../../../Upload";
 
 const StudentRegistration = () => {
   return (
@@ -13,10 +10,9 @@ const StudentRegistration = () => {
       <Text pb={10} fontWeight="bold" fontSize="18px">
         Fill your reports
       </Text>
-      
-      <Box>
-      <Upload />
 
+      <Box>
+        <Upload />
       </Box>
     </Box>
   );

@@ -1,28 +1,8 @@
 /** @format */
 
 import {
-  CheckCircleIcon,
-  EditIcon,
-  Icon,
-  StarIcon,
-  ViewIcon,
-} from "@chakra-ui/icons";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Divider,
-  Flex,
-  HStack,
-  Heading,
   List,
   ListItem,
-  SimpleGrid,
-  Spacer,
   Tab,
   TabList,
   TabPanel,
@@ -30,21 +10,22 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { Spinner } from "@chakra-ui/react";
-import { fetchAccountAPI } from "../../api/AccountsApi";
-import { useData } from "../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 import ActiveUser from "./ActiveUser";
 import ActiveId from "./ActiveId";
 
 const GraphsAndAnalytics = () => {
-  const { data, loading, setData } = useData();
+  const { data } = useData();
 
   const filteredStudents = data.filter((account) => account.role === "student");
   const filteredFaculty = data.filter((account) => account.role === "faculty");
   const filteredStaff = data.filter((account) => account.role === "staff");
-  const filteredIssuedId = data.filter((account) => account.isIdIssued === true );
-  const filteredNonIssuedId = data.filter((account) => account.isIdIssued === false);
+  const filteredIssuedId = data.filter(
+    (account) => account.isIdIssued === true
+  );
+  const filteredNonIssuedId = data.filter(
+    (account) => account.isIdIssued === false
+  );
 
   return (
     <>
@@ -54,8 +35,6 @@ const GraphsAndAnalytics = () => {
             Active User
           </Tab>
           <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>ID Status</Tab>
-
-
         </TabList>
 
         <TabPanels>
@@ -74,7 +53,10 @@ const GraphsAndAnalytics = () => {
           <TabPanel>
             <List>
               <ListItem>
-              <ActiveId filteredIssuedId={filteredIssuedId} filteredNonIssuedId={filteredNonIssuedId}/>
+                <ActiveId
+                  filteredIssuedId={filteredIssuedId}
+                  filteredNonIssuedId={filteredNonIssuedId}
+                />
               </ListItem>
             </List>
           </TabPanel>

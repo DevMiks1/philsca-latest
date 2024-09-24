@@ -13,9 +13,8 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import ReactPaginate from "react-paginate";
-import { useData } from "../../../context/FetchAccountContext";
+import { useData } from "../../../../context/FetchAccountContext";
 
 const FacultyIdLost = ({
   

@@ -1,8 +1,8 @@
 /** @format */
 
 import React from "react";
-import { useData } from "../../context/FetchAccountContext";
-import { useAuth } from "../../context/Auth";
+import { useData } from "../../../../context/FetchAccountContext";
+import { useAuth } from "../../../../context/Auth";
 import {
   Avatar,
   Card,
@@ -12,7 +12,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import logo from "../../../assets/philscalogo.png";
+import logo from "../../../../../assets/philscalogo.png";
 
 const AccountTempoId = () => {
   const { data, setData } = useData();
@@ -41,7 +41,8 @@ const AccountTempoId = () => {
   });
   return (
     <div className="flex flex-wrap flex-col sm:flex-row gap-5">
-      <Card maxW="sm" bg="#050C9C" border="2px" borderRadius="lg">
+      {/* front */}
+      <Card maxW="sm" bg="#050C9C" border="2px" borderRadius="lg" w="320px">
         <CardBody p={0}>
           <Stack spacing="4" align="center" w="full">
             <Text size="xs" color="white" textAlign="center" mt="5">
@@ -153,12 +154,12 @@ const AccountTempoId = () => {
           </Stack>
         </CardBody>
       </Card>
-
-      <Card maxW="sm" border="2px" borderRadius="lg">
+      {/* back */}
+      <Card maxW="sm" border="2px" borderRadius="lg" w="320px">
         <CardBody px={2}>
-          <div className="flex pb-2">
-            <p className="w-[35%] font-[500]">DATE OF BIRTH: </p>
-            <p className="w-[65%] font-[600]">
+          <div className="flex gap-3 pb-2 items-center">
+            <span className="text-[.9rem] font-[400]">DATE OF BIRTH: </span>
+            <p className="font-bold">
               {user.birthdate ? formattedDate : "N/A"}
             </p>
           </div>
@@ -168,15 +169,15 @@ const AccountTempoId = () => {
             </div>
             <div className="px-2">
               <div className="flex gap-2">
-                <p className=" font-[500]">Name: </p>
-                <p className=" font-[600]">{user.contactperson}</p>
+                <p className="  font-[400]">Name: </p>
+                <p className=" font-[600]">{user.contactperson || "N/A"}</p>
               </div>
               <div className="flex gap-2">
-                <p className=" font-[500]">Address: </p>
-                <p className=" font-[600]">{user.address}</p>
+                <p className=" font-[400]">Address: </p>
+                <p className=" font-[600]">{user.address || "N/A"}</p>
               </div>
               <div className="flex gap-2">
-                <p className=" font-[500]">Tel. No.: </p>
+                <p className=" font-[400]">Tel. No.: </p>
                 <p className=" font-[600]">
                   {formatPhoneNumber(user?.contactpersonnumber || "")}
                 </p>
@@ -191,13 +192,19 @@ const AccountTempoId = () => {
             THIS CARD IS NON-TRANSFERABLE IT MUST BE WORN WHILE INSIDE THE
             CAMPUS PREMISES.
           </p>
-          <div className="text-center text-[.900rem] pb-[2.5rem] relative">
+          <div className="text-center text-[.900rem] pb-[4rem] relative">
             <div className="absolute -top-[4rem] left-[5rem]">
-              <img src={user.signature} alt="" />
+              <img src={user.signature} alt="signature" />
             </div>
             <p class="signature ">SIGNATURE</p>
           </div>
-          <div className="text-center">
+          <div className="text-center text-[.900rem] pb-[2.5rem] relative">
+            <div className="absolute -top-[4.5rem] left-[5rem]">
+              <img src={user.signature} alt="signature" />
+            </div>
+            <div className="absolute -top-[1.5rem] left-0 right-0 mx-auto">
+              <p className="font-bold">MR. DARBY P ESBERANZATE</p>
+            </div>
             <p class="signature-registrar text-[.700rem] ">College Registrar</p>
           </div>
         </CardBody>

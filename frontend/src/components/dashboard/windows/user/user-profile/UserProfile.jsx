@@ -1,8 +1,8 @@
 /** @format */
 
 import React from "react";
-import StudentProfile from "./StudentProfile";
-import AccountTempoId from "./AccountTempoId";
+import StudentProfile from "./Profile";
+import AccountTempoId from "./TemporaryId";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 
 const AccountSetting = () => {
@@ -15,10 +15,10 @@ const AccountSetting = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-          <StudentProfile />
+            <StudentProfile />
           </TabPanel>
           <TabPanel>
-          <AccountTempoId />
+            <AccountTempoId />
           </TabPanel>
         </TabPanels>
       </Tabs>
