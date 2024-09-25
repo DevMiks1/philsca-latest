@@ -11,7 +11,7 @@ import Face from "../pages/Face";
 
 const AllRoutes = () => {
   const { user, logout } = useAuth();
-  const [isFaceRecognized, setIsFaceRecognized] = useState(false);
+  const [isFaceRecognized, setIsFaceRecognized] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {

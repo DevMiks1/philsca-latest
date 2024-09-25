@@ -241,22 +241,34 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                   THIS CARD IS NON-TRANSFERABLE IT MUST BE WORN WHILE INSIDE THE
                   CAMPUS PREMISES.
                 </p>
-                <div className="text-center text-[.900rem] pb-[4rem] relative">
-                  <div className="absolute -top-[4rem] left-[5rem]">
-                    <img src={student.signature} alt="signature" />
+                <div className="flex flex-col">
+                  <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[70px]">
+                    <div className="absolute top-0 h-[60px]">
+                      <img
+                        src={student.signature}
+                        alt="signature"
+                        className="h-full w-full"
+                      />
+                    </div>
+                    <div className="w-full absolute bottom-0">
+                      <p class="signature text-[.700rem]">SIGNATURE</p>
+                    </div>
                   </div>
-                  <p class="signature ">SIGNATURE</p>
-                </div>
-                <div className="text-center text-[.900rem] pb-[2.5rem] relative">
-                  <div className="absolute -top-[4.5rem] left-[5rem]">
-                    <img src={student.signature} alt="signature" />
+                  <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[90px]">
+                    <div className="absolute top-0 h-[60px]">
+                      <img
+                        src={student.signature}
+                        alt="signature"
+                        className="h-full w-full"
+                      />
+                    </div>
+                    <div className="w-full absolute bottom-0">
+                      <p className="font-bold">MR. DARBY P ESBERANZATE</p>
+                      <p class="signature-registrar text-[.700rem] bottom-0">
+                        College Registrar
+                      </p>
+                    </div>
                   </div>
-                  <div className="absolute -top-[1.5rem] left-0 right-0 mx-auto">
-                    <p className="font-bold">MR. DARBY P ESBERANZATE</p>
-                  </div>
-                  <p class="signature-registrar text-[.700rem] ">
-                    College Registrar
-                  </p>
                 </div>
               </CardBody>
             </Card>
