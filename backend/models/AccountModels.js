@@ -41,7 +41,9 @@ const userSchema = new Schema({
   message: String,
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  otpCode: { type: String },
+  otpExpiresAt: { type: Date },
+  otpIsUsed: { type: Boolean, default: false },
 });
-
 
 module.exports = mongoose.model("Account", userSchema);

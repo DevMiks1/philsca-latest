@@ -18,6 +18,7 @@ import { useData } from "../../../../context/FetchAccountContext";
 import { updateAccountAPI } from "../../../../api/AccountsApi";
 
 const ApprovedModal = ({ isOpen, approved, onClose }) => {
+  console.log(approved);
   const { data, setData } = useData();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,24 +62,43 @@ const ApprovedModal = ({ isOpen, approved, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Approved Account</ModalHeader>
+      <ModalContent borderRadius="md" boxShadow="lg">
+        <ModalHeader
+          textAlign="center"
+          fontSize="24px"
+          fontWeight="bold"
+          color="blue.600"
+        >
+          Approved ID
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text textAlign="center" fontSize="20px" pb={5}>
-            Are you sure you want to approved?
+          <Text textAlign="center" fontSize="1.1rem" pb={5} color="gray.700">
+            {` Are you sure you want to approve the ID of ${approved.email}`}
           </Text>
-          <Flex justify="center" gap={2}>
+          <Flex justify="center" gap={4}>
             <Button
               bg="blue.500"
-              _hover={{ bg: "blue.400" }}
+              color="white"
+              _hover={{ bg: "orange.400", color: "white" }}
               onClick={handleToApproved}
               isLoading={isLoading}
+              borderRadius="md"
+              boxShadow="sm"
+              transition="background-color 0.2s"
             >
               Yes
             </Button>
 
-            <Button bg="blue.500" _hover={{ bg: "blue.400" }}>
+            <Button
+              bg="orange.400"
+              color="white"
+              _hover={{ bg: "orange.300" }}
+              onClick={onClose}
+              borderRadius="md"
+              boxShadow="sm"
+              transition="background-color 0.2s"
+            >
               No
             </Button>
           </Flex>

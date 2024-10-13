@@ -38,6 +38,7 @@ import {
 import { fetchAccountAPI, updateAccountAPI } from "../../../../api/AccountsApi";
 import { useAuth } from "../../../../context/Auth";
 import { useData } from "../../../../context/FetchAccountContext";
+import useAuthStore from "../../../../../modules/auth";
 
 export default function Settings() {
   const [formData, setFormData] = useState({
@@ -47,21 +48,31 @@ export default function Settings() {
     middlename: "",
     lastname: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const auth = useAuth();
-  const authId = auth.user._id;
+  const { userId } = useAuthStore();
   const { data, loading, setData } = useData();
 
   const accountLogin = () => {
-    return data.find((d) => d._id === authId);
+    return data.find((d) => d._id === userId);
   };
-
   const user = accountLogin();
-  console.log(user);
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      email: user?.email || "", // Safely set the email if user is defined
+      firstname: user?.firstname || "", // Safely set the firstname if user is defined
+      middlename: user?.middlename || "", // Safely set the middlename if user is defined
+      lastname: user?.lastname || "", // Safely set the lastname if user is defined
+      password: user?.password || "", // Safely set the password if user is defined
+    }));
+  }, [user]);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     const body = {
       email: formData.email,
       password: formData.password,
@@ -91,6 +102,8 @@ export default function Settings() {
       }
     } catch (error) {
       console.log("Error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -163,66 +176,81 @@ export default function Settings() {
 
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Personal Details</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody maxW="480px">
-                <FormControl isRequired>
-                  <FormLabel>Email</FormLabel>
+            <ModalContent borderRadius="lg" boxShadow="lg">
+              <ModalHeader
+                bg="blue.600"
+                color="white"
+                fontWeight="bold"
+                borderTopRadius="lg"
+              >
+                Personal Details
+              </ModalHeader>
+              <ModalCloseButton color="white" />
+
+              <ModalBody maxW="480px" p={6}>
+                <FormControl isRequired mb={4}>
+                  <FormLabel color="blue.600">Email</FormLabel>
                   <Input
-                    type="text"
+                    type="email"
                     name="email"
-                    placeholder="user@example.com"
+                    placeholder="Enter your email"
                     value={formData.email}
+                    focusBorderColor="orange.400"
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
                   />
-                  <FormHelperText>Input a valid email</FormHelperText>
                 </FormControl>
 
-                <FormControl isRequired>
-                  <FormLabel>New Password</FormLabel>
+                <FormControl isRequired mb={4}>
+                  <FormLabel color="blue.600">New Password</FormLabel>
                   <Input
-                    type="text"
+                    type="password"
                     name="password"
                     value={formData.password}
+                    focusBorderColor="orange.400"
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
                   />
                 </FormControl>
-                <FormControl isRequired>
-                  <FormLabel>Firstname</FormLabel>
+
+                <FormControl isRequired mb={4}>
+                  <FormLabel color="blue.600">First Name</FormLabel>
                   <Input
                     type="text"
                     name="firstname"
-                    placeholder="Enter your firstname"
+                    placeholder="Enter your first name"
                     value={formData.firstname}
+                    focusBorderColor="orange.400"
                     onChange={(e) =>
                       setFormData({ ...formData, firstname: e.target.value })
                     }
                   />
                 </FormControl>
-                <FormControl isRequired>
-                  <FormLabel>Middlename</FormLabel>
+
+                <FormControl isRequired mb={4}>
+                  <FormLabel color="blue.600">Middle Name</FormLabel>
                   <Input
                     type="text"
                     name="middlename"
-                    placeholder="Enter your middlename"
+                    placeholder="Enter your middle name"
                     value={formData.middlename}
+                    focusBorderColor="orange.400"
                     onChange={(e) =>
                       setFormData({ ...formData, middlename: e.target.value })
                     }
                   />
                 </FormControl>
-                <FormControl isRequired>
-                  <FormLabel>Lastname</FormLabel>
+
+                <FormControl isRequired mb={4}>
+                  <FormLabel color="blue.600">Last Name</FormLabel>
                   <Input
                     type="text"
                     name="lastname"
-                    placeholder="Enter your lastname"
+                    placeholder="Enter your last name"
                     value={formData.lastname}
+                    focusBorderColor="orange.400"
                     onChange={(e) =>
                       setFormData({ ...formData, lastname: e.target.value })
                     }
@@ -231,10 +259,14 @@ export default function Settings() {
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
-                  Close
-                </Button>
-                <Button colorScheme="green" onClick={handleSubmit}>
+                <Button
+                  bg="orange.400"
+                  color="white"
+                  _hover={{ bg: "orange.500" }}
+                  w="100%"
+                  isLoading={isLoading}
+                  onClick={handleSubmit}
+                >
                   Update
                 </Button>
               </ModalFooter>

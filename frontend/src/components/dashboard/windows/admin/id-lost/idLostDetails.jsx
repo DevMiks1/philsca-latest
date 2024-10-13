@@ -66,16 +66,16 @@ const ModalAffidavit = ({ isOpen, handleCloseModal, account }) => {
           </Tag>
         </Flex>
         <div className="mx-4">
-          <div class="flex">
-            <p class="w-[35%] text-[.950rem] font-[500]">Name</p>
-            <p class="w-[65%] text-[.900rem] font-[400] text-uppercase">
+          <div className="flex">
+            <p className="w-[35%] text-[.950rem] font-[500]">Name</p>
+            <p className="w-[65%] text-[.900rem] font-[400] text-uppercase">
               {`${account.firstname} ${account.middlename} ${account.lastname} ${account.suffix} ` ||
                 "EMPTY"}
             </p>
           </div>
-          <div class="flex">
-            <p class="w-[35%] text-[.950rem] font-[500]">Message</p>
-            <p class="w-[65%] text-[.900rem] font-[400]">
+          <div className="flex">
+            <p className="w-[35%] text-[.950rem] font-[500]">Message</p>
+            <p className="w-[65%] text-[.900rem] font-[400]">
               {account.message || "EMPTY"}
             </p>
           </div>

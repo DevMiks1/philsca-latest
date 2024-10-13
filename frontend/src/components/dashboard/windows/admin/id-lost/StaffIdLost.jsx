@@ -1,9 +1,11 @@
 /** @format */
 
-import {  ChevronLeftIcon, ChevronRightIcon, ViewIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon, ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Flex,
+  IconButton,
   Table,
   TableContainer,
   Tbody,
@@ -11,6 +13,7 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from "@chakra-ui/react";
 import ReactPaginate from "react-paginate";
@@ -24,64 +27,85 @@ const StaffIdLost = ({
   handlePageClick,
 }) => {
   const { data, setData } = useData();
-  const staffPerPage = 4;
+  const staffPerPage = 6;
 
   const filteredStaffId = data.filter(
     (account) => account.role === "staff" && account.affidavit
   );
   const pageCount = Math.ceil(filteredStaffId.length / staffPerPage);
 
-
-  const filteredStaff = filteredStaffId
-    .reverse()
-    .filter((staff) => {
-      const fullName = `${staff.firstname} ${staff.lastname}`;
-      return fullName.toLowerCase().includes(searchQuery.toLowerCase());
-    })
-    .slice(currentPage * staffPerPage, (currentPage + 1) * staffPerPage);
-
-  const displayStaff = filteredStaff.map((staff) => (
-    <Tr key={staff._id}>
-      <Td>
-        {staff.firstname} {staff.lastname}
-      </Td>
-      <Td>{staff.position}</Td>
-      <Td>
-        <Button
-          size="sm"
-          mr={5}
-          leftIcon={<ViewIcon />}
-          onClick={() => handleViewAccount(staff)}
-        >
-          View
-        </Button>
-        
-      </Td>
-    </Tr>
-  ));
+  const filteredStaff = filteredStaffId.reverse().filter((staff) => {
+    const fullName = `${staff.firstname} ${staff.lastname}`;
+    return fullName.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+  const displayStaff = filteredStaff.slice(
+    currentPage * staffPerPage,
+    (currentPage + 1) * staffPerPage
+  );
 
   return (
     <>
-      <TableContainer mb={4}>
-        <Table variant="simple">
-          <Thead>
+      <TableContainer
+        borderRadius="lg"
+        boxShadow="md"
+        overflow="hidden"
+        variant="simple"
+      >
+        <Table size="sm">
+          <Thead bg="blue.700">
             <Tr>
-              <Th>Name</Th>
-              <Th>Position</Th>
-              <Th>Action</Th>
+              <Th color="white" fontWeight="bold">
+                Student ID
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Name
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Course
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Actions
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
             {displayStaff.length > 0 ? (
-              displayStaff
+              displayStaff.map((account) => (
+                <Tr
+                  key={account._id}
+                  _hover={{ bg: "orange.400", color: "white" }}
+                  transition="background-color 0.2s"
+                >
+                  <Td>{account.schoolid}</Td>
+                  <Td>{`${account.firstname || ""} ${
+                    account.middlename || ""
+                  } ${account.lastname || ""} ${account.suffix || ""}`}</Td>
+                  <Td>{account.position || ""}</Td>
+                  <Td>
+                    <Flex gap={2}>
+                      <Tooltip label="View" aria-label="View">
+                        <IconButton
+                          size="sm"
+                          colorScheme="blue"
+                          icon={<ViewIcon />}
+                          onClick={() => handleViewAccount(account)}
+                          View
+                        />
+                      </Tooltip>
+                    </Flex>
+                  </Td>
+                </Tr>
+              ))
             ) : (
-                <Tr>
-                <Td colSpan={3} textAlign="center">
-                    <Text fontSize="20px" fontWeight="bold" pt={20}>
-                        There is no Report Lost ID for Staff
+              <Tr>
+                <Td colSpan={4}>
+                  <Flex justify="center" align="center" minHeight="150px">
+                    <Text fontSize="1.5rem" fontWeight="bold" color="gray.600">
+                      No Staff ID Lost Display
                     </Text>
+                  </Flex>
                 </Td>
-            </Tr>
+              </Tr>
             )}
           </Tbody>
         </Table>

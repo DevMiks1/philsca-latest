@@ -30,6 +30,8 @@ import {
   TabPanel,
   List,
   ListItem,
+  Container,
+  Spacer,
 } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 
@@ -333,108 +335,64 @@ const Reports = ({}) => {
               </Box>
             </Flex>
           </Box>
-          {/* <Box as="section">
-            <Flex px={5} py={10} fontSize="30px" fontWeight="bold">
-              Reports for Affidavit of Loss
-            </Flex>
-            <Box h="60vh" overflow="auto">
-              <Table variant="simple" w="100%">
-                <Thead>
-                  <Tr>
-                    <Th>Name</Th>
-                    <Th>Affidavit</Th>
-                    <Th>Actions</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {displayReports.length > 0 ? (
-                    <>{displayReports}</>
-                  ) : (
-                    <Tr>
-                      <Td colSpan="3" textAlign="center">
-                        <Text fontSize="1.5rem" fontWeight="bold">
-                          No Reports Display
-                        </Text>
-                      </Td>
-                    </Tr>
-                  )}
-                </Tbody>
-              </Table>
-            </Box>
-            {pageCount > 1 && (
-              <Box pt={20} mx={5}>
-                <ReactPaginate
-                  pageCount={pageCount}
-                  pageRangeDisplayed={3}
-                  marginPagesDisplayed={2}
-                  onPageChange={handlePageClick}
-                  containerClassName={"pagination"}
-                  activeClassName={"active"}
-                  previousLabel={<ChevronLeftIcon />}
-                  nextLabel={<ChevronRightIcon />}
-                />
-              </Box>
-            )}
+          <Container maxW="container.xl" p={4}>
+            <Tabs>
+              <TabList py={10} px={5} bg="blue.600" shadow="md">
+                <Tab _selected={{ borderColor: "white" }} color="white">
+                  STUDENTS
+                </Tab>
+                <Tab color="white">STAFFS</Tab>
+                <Tab color="white">FACULTIES</Tab>
+                <Spacer />
+              </TabList>
 
-            
-          </Box> */}
-          <Tabs colorScheme="purple" variant="enclosed">
-            <TabList py={10} px={5}>
-              <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>
-                Students
-              </Tab>
-              <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Staff</Tab>
-              <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>
-                Faculty
-              </Tab>
-            </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <List>
+                    <ListItem>
+                      <StudentIdLost
+                        data={data}
+                        filterCriteria={filterCriteria}
+                        selectedProgram={selectedProgram}
+                        searchQuery={searchQuery}
+                        handleViewAccount={handleViewAccount}
+                        currentPage={currentPage}
+                        handlePageClick={handlePageClick}
+                      />
+                    </ListItem>
+                  </List>
+                </TabPanel>
 
-            <TabPanels>
-              <TabPanel>
-                <List>
-                  <ListItem>
-                    <StudentIdLost
-                      data={data}
-                      filterCriteria={filterCriteria}
-                      selectedProgram={selectedProgram}
-                      searchQuery={searchQuery}
-                      handleViewAccount={handleViewAccount}
-                      currentPage={currentPage}
-                      handlePageClick={handlePageClick}
-                    />
-                  </ListItem>
-                </List>
-              </TabPanel>
+                <TabPanel>
+                  <List>
+                    <ListItem>
+                      <StaffIdLost
+                        data={data}
+                        searchQuery={searchQuery}
+                        handleViewAccount={handleViewAccount}
+                        currentPage={currentPage}
+                        handlePageClick={handlePageClick}
+                      />
+                    </ListItem>
+                  </List>
+                </TabPanel>
 
-              <TabPanel>
-                <List>
-                  <ListItem>
-                    <StaffIdLost
-                      data={data}
-                      searchQuery={searchQuery}
-                      handleViewAccount={handleViewAccount}
-                      currentPage={currentPage}
-                      handlePageClick={handlePageClick}
-                    />
-                  </ListItem>
-                </List>
-              </TabPanel>
-
-              <TabPanel>
-                <List>
-                  <ListItem>
-                    <FacultyIdLost
-                      data={data}
-                      searchQuery={searchQuery}
-                      handleViewAccount={handleViewAccount}
-                      currentPage={currentPage}
-                      handlePageClick={handlePageClick}
-                    />
-                  </ListItem>
-                </List>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+                <TabPanel>
+                  <List>
+                    <ListItem>
+                      <FacultyIdLost
+                        data={data}
+                        searchQuery={searchQuery}
+                        handleViewAccount={handleViewAccount}
+                        currentPage={currentPage}
+                        handlePageClick={handlePageClick}
+                      />
+                    </ListItem>
+                  </List>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Container>
           {selectedAccount && (
             <ModalAffidavit
               isOpen={modalOpen}

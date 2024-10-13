@@ -2,7 +2,6 @@
 
 const accountsModel = require("../models/AccountModels");
 
-
 // RESPONSIBLE TO GET A SINGLE ACCOUNT
 exports.getAccounts = async (req, res) => {
   const accountId = req.params.id;
@@ -66,50 +65,27 @@ exports.updateAccounts = async (req, res) => {
 
 // RESPONSIBLE TO ADD ACCOUNT
 exports.addAccount = async (req, res) => {
-    try {
-      const accountData = req.body;
-  
-      // if (accountData.password !== accountData.confirmpassword) {
-      //   return res.status(400).json({
-      //     success: false,
-      //     message: "Passwords do not match",
-      //   });
-      // }
-  
-      // const existingUsername = await accountsModel.findOne({
-      //   username: accountData.username.toLowerCase(),
-      // });
-  
-      // if (existingUsername) {
-      //   return res.status(409).json({
-      //     success: false,
-      //     message: "Username is already taken",
-      //   });
-      // }
-  
-   
-  
-   
-  
-      // CREATE AND ADD ACCOUNT TO THE DATABASE
-      const account = await accountsModel.create(accountData);
-  
-      // Return success response
-      return res.status(201).json({
-        success: true,
-        message: "Account added successfully",
-        data: account,
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        success: false,
-        message: "Failed to add user",
-        error: error.message, // Include the error message for debugging
-      });
-    }
+  try {
+    const accountData = req.body;
+
+    // CREATE AND ADD ACCOUNT TO THE DATABASE
+    const account = await accountsModel.create(accountData);
+
+    // Return success response
+    return res.status(201).json({
+      success: true,
+      message: "Account added successfully",
+      data: account,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to add user",
+      error: error.message, // Include the error message for debugging
+    });
+  }
 };
-  
 
 exports.deleteUser = async (req, res) => {
   const accountId = req.params.id;
@@ -126,9 +102,6 @@ exports.deleteUser = async (req, res) => {
         .json({ success: false, message: "Account not found" });
     }
   } catch (error) {
-    
-    res
-      .status(500)
-      .json({ success: false, message: error.message});
+    res.status(500).json({ success: false, message: error.message });
   }
 };

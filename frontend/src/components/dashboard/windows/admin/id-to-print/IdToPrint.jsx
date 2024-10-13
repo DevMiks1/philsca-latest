@@ -251,7 +251,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                       />
                     </div>
                     <div className="w-full absolute bottom-0">
-                      <p class="signature text-[.700rem]">SIGNATURE</p>
+                      <p className="signature text-[.700rem]">SIGNATURE</p>
                     </div>
                   </div>
                   <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[90px]">
@@ -264,7 +264,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     </div>
                     <div className="w-full absolute bottom-0">
                       <p className="font-bold">MR. DARBY P ESBERANZATE</p>
-                      <p class="signature-registrar text-[.700rem] bottom-0">
+                      <p className="signature-registrar text-[.700rem] bottom-0">
                         College Registrar
                       </p>
                     </div>

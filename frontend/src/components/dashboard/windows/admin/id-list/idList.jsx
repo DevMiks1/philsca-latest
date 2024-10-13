@@ -16,6 +16,7 @@ import {
   ListItem,
   Button,
   Text,
+  Container,
 } from "@chakra-ui/react";
 import IdToPrint from "../../admin/id-to-print/IdToPrint";
 import { EmailModal } from "../../admin/email/EmailModal";
@@ -315,68 +316,72 @@ export default function StudIDList() {
           </Box>
         </Flex>
       </Box>
+      <Container maxW="container.xl" p={4}>
+        <Tabs>
+          <TabList py={10} px={5} bg="blue.600" shadow="md">
+            <Tab _selected={{ borderColor: "white" }} color="white">
+              STUDENTS
+            </Tab>
+            <Tab color="white">STAFFS</Tab>
+            <Tab color="white">FACULTIES</Tab>
+            <Spacer />
+          </TabList>
 
-      <Tabs colorScheme="purple" variant="enclosed">
-        <TabList py={10} px={5}>
-          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Students</Tab>
-          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Staff</Tab>
-          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Faculty</Tab>
-        </TabList>
+          <TabPanels>
+            <TabPanel>
+              <List>
+                <ListItem>
+                  <StudentId
+                    data={data}
+                    filterCriteria={filterCriteria}
+                    selectedProgram={selectedProgram}
+                    searchQuery={searchQuery}
+                    handleViewClick={handleViewClick}
+                    handleOpenMail={handleOpenMail}
+                    handleApprovedOpen={handleApprovedOpen}
+                    currentPage={currentPage}
+                    handlePageClick={handlePageClick}
+                  />
+                </ListItem>
+              </List>
+            </TabPanel>
 
-        <TabPanels>
-          <TabPanel>
-            <List>
-              <ListItem>
-                <StudentId
-                  data={data}
-                  filterCriteria={filterCriteria}
-                  selectedProgram={selectedProgram}
-                  searchQuery={searchQuery}
-                  handleViewClick={handleViewClick}
-                  handleOpenMail={handleOpenMail}
-                  handleApprovedOpen={handleApprovedOpen}
-                  currentPage={currentPage}
-                  handlePageClick={handlePageClick}
-                />
-              </ListItem>
-            </List>
-          </TabPanel>
+            <TabPanel>
+              <List>
+                <ListItem>
+                  <StaffId
+                    data={data}
+                    filterCriteria={filterCriteria}
+                    handleApprovedOpen={handleApprovedOpen}
+                    searchQuery={searchQuery}
+                    handleOpenMail={handleOpenMail}
+                    handleViewClick={handleViewClick}
+                    currentPage={currentPage}
+                    handlePageClick={handlePageClick}
+                  />
+                </ListItem>
+              </List>
+            </TabPanel>
 
-          <TabPanel>
-            <List>
-              <ListItem>
-                <StaffId
-                  data={data}
-                  filterCriteria={filterCriteria}
-                  handleApprovedOpen={handleApprovedOpen}
-                  searchQuery={searchQuery}
-                  handleOpenMail={handleOpenMail}
-                  handleViewClick={handleViewClick}
-                  currentPage={currentPage}
-                  handlePageClick={handlePageClick}
-                />
-              </ListItem>
-            </List>
-          </TabPanel>
-
-          <TabPanel>
-            <List>
-              <ListItem>
-                <FacultyId
-                  data={data}
-                  filterCriteria={filterCriteria}
-                  searchQuery={searchQuery}
-                  handleApprovedOpen={handleApprovedOpen}
-                  handleOpenMail={handleOpenMail}
-                  handleViewClick={handleViewClick}
-                  currentPage={currentPage}
-                  handlePageClick={handlePageClick}
-                />
-              </ListItem>
-            </List>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+            <TabPanel>
+              <List>
+                <ListItem>
+                  <FacultyId
+                    data={data}
+                    filterCriteria={filterCriteria}
+                    searchQuery={searchQuery}
+                    handleApprovedOpen={handleApprovedOpen}
+                    handleOpenMail={handleOpenMail}
+                    handleViewClick={handleViewClick}
+                    currentPage={currentPage}
+                    handlePageClick={handlePageClick}
+                  />
+                </ListItem>
+              </List>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Container>
 
       {selectedStudent && (
         <IdToPrint

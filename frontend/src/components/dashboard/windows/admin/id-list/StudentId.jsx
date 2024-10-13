@@ -14,10 +14,13 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
+  Flex,
+  Tooltip,
+  Text,
+  IconButton,
 } from "@chakra-ui/react";
 import ReactPaginate from "react-paginate";
 import { useData } from "../../../../context/FetchAccountContext";
@@ -33,7 +36,7 @@ const StudentId = ({
   handlePageClick,
 }) => {
   const { data, setData } = useData();
-  const studentsPerPage = 4;
+  const studentsPerPage = 6;
 
   // Filter students based on role
   const filteredStudentsId = data.filter(
@@ -60,71 +63,100 @@ const StudentId = ({
 
   // Pagination logic
   const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
-  const displayedStudents = filteredStudents.slice(
+
+  const displayStudents = filteredStudents.slice(
     currentPage * studentsPerPage,
     (currentPage + 1) * studentsPerPage
   );
 
-  const displayStudents = displayedStudents.map((student) => (
-    <Tr key={student._id}>
-      <Td>
-        {student.firstname} {student.lastname}
-      </Td>
-      <Td>{student.course}</Td>
-      <Td>
-        <Button
-          mr={5}
-          size="sm"
-          leftIcon={<ViewIcon />}
-          onClick={() => handleViewClick(student)}
-        >
-          View
-        </Button>
-        {!student.isIdIssued && (
-          <Button
-            mr={5}
-            size="sm"
-            leftIcon={<CheckIcon />}
-            onClick={() => handleApprovedOpen(student)}
-          >
-            Approved
-          </Button>
-        )}
-        {student.isIdIssued && (
-          <Button
-            size="sm"
-            leftIcon={<EmailIcon />}
-            onClick={() => handleOpenMail(student)}
-          >
-            Email
-          </Button>
-        )}
-      </Td>
-    </Tr>
-  ));
-
   return (
     <>
-      <TableContainer mb={4}>
-        <Table variant="simple">
-          <Thead>
+      <TableContainer
+        borderRadius="lg"
+        boxShadow="md"
+        overflow="hidden"
+        variant="simple"
+      >
+        <Table size="sm">
+          <Thead bg="blue.700">
             <Tr>
-              <Th>Name</Th>
-              <Th>Course</Th>
-              <Th>Action</Th>
+              <Th color="white" fontWeight="bold">
+                Student ID
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Name
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Course
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Actions
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
             {displayStudents.length > 0 ? (
-              displayStudents
+              displayStudents.map((account) => (
+                <Tr
+                  key={account._id}
+                  _hover={{ bg: "orange.400", color: "white" }}
+                  transition="background-color 0.2s"
+                >
+                  <Td>{account.schoolid}</Td>
+                  <Td>{`${account.firstname || ""} ${
+                    account.middlename || ""
+                  } ${account.lastname || ""} ${account.suffix || ""}`}</Td>
+                  <Td>{account.course || ""}</Td>
+                  <Td>
+                    <Flex gap={2}>
+                      <Tooltip label="View" aria-label="View">
+                        <IconButton
+                          size="sm"
+                          colorScheme="blue"
+                          icon={<ViewIcon />}
+                          onClick={() => handleViewClick(account)}
+                          View
+                        />
+                      </Tooltip>
+                      {!account.isIdIssued && (
+                        <Tooltip label="Approved ID" aria-label="apprroved-id">
+                          <IconButton
+                            size="sm"
+                            icon={<CheckIcon />}
+                            colorScheme="orange"
+                            onClick={() => handleApprovedOpen(account)}
+                            aria-label="approved-id"
+                          >
+                            Approved
+                          </IconButton>
+                        </Tooltip>
+                      )}
+
+                      {account.isIdIssued && (
+                        <Tooltip label="Email" aria-label="email">
+                          <IconButton
+                            size="sm"
+                            colorScheme="orange"
+                            icon={<EmailIcon />}
+                            onClick={() => handleOpenMail(account)}
+                            aria-label="email" // Add an aria-label for accessibility
+                          >
+                            Email
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </Flex>
+                  </Td>
+                </Tr>
+              ))
             ) : (
               <Tr>
-                <Td colSpan={3} textAlign="center">
-                  <Text fontSize="20px" fontWeight="bold" pt={20}>
-                    {filterCriteria === "issued"
-                      ? "There are no issued IDs for now."
-                      : "There are no non-issued IDs for now."}
-                  </Text>
+                <Td colSpan={4}>
+                  <Flex justify="center" align="center" minHeight="150px">
+                    <Text fontSize="1.5rem" fontWeight="bold" color="gray.600">
+                      No Students Display
+                    </Text>
+                  </Flex>
                 </Td>
               </Tr>
             )}
@@ -133,7 +165,7 @@ const StudentId = ({
       </TableContainer>
 
       {pageCount > 1 && (
-        <Box h="10vh" pt={10}>
+        <Box pt="1rem">
           <ReactPaginate
             pageCount={pageCount}
             pageRangeDisplayed={3}

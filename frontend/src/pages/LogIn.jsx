@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
@@ -17,11 +19,24 @@ import {
   FormHelperText,
   Select,
   Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  ModalCloseButton,
+  Flex,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useAuth } from "../components/context/Auth";
 import bgImage from "../assets/bg2-1024x574.jpg";
 import logo from "../assets/philscalogo.png";
+import { login } from "../components/api/Login";
+import OTPInput from "../components/Otp";
+import useAuthStore from "../modules/auth";
+import { verifyOtp } from "../components/api/otpVerify";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -34,9 +49,15 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("");
   const [allUser, setAllUser] = useState([]);
-  const [isSigningIn, setIsSigningIn] = useState(false);
-  const [errors, setErrors] = useState({});
-  const auth = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isVerifyOtpLoading, setIsVerifyOtpLoading] = useState(false);
+  const [otp, setOtp] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const userToSignIn = allUser.find((user) => user.email === email);
+
+  // Zustand token state and setter
+  const token = useAuthStore((state) => state.token);
+  const setToken = useAuthStore((state) => state.setToken);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -44,26 +65,7 @@ const LogIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      signIn();
-    } else {
-      setErrors(validationErrors);
-    }
-  };
-
-  const validateForm = () => {
-    const errors = {};
-    if (!email) {
-      errors.email = "Email is required";
-    }
-    if (!password) {
-      errors.password = "Password is required";
-    }
-    if (!role) {
-      errors.role = "Role is required";
-    }
-    return errors;
+    signIn();
   };
 
   const handleChange = (e) => {
@@ -84,59 +86,116 @@ const LogIn = () => {
   };
 
   const signIn = async () => {
-    const userToSignIn = allUser.find((user) => user.email === email);
-    console.log(userToSignIn);
-    if (userToSignIn) {
-      const stored = {
-        _id: userToSignIn._id,
-        firstname: userToSignIn.firstname,
-        suffix: userToSignIn.suffix,
-        lastname: userToSignIn.lastname,
-        role: userToSignIn.role,
-        picture: userToSignIn.picture,
+    if (!role || !email || !password) {
+      toast({
+        title: "Fill all the fields",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+    if (!userToSignIn) {
+      toast({
+        title: "No accounts found",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+
+    if (userToSignIn.email !== email || userToSignIn.password !== password) {
+      toast({
+        title: "Invalid credentials",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const body = {
+        email: email,
+        password: password,
       };
-      console.log(stored);
       if (
         userToSignIn.password === password &&
         userToSignIn.role === role.toLowerCase()
       ) {
-        try {
-          auth.login(stored);
-          toast({
-            title: "Successfully Logged In",
-            status: "success",
-            duration: 2000,
-            isClosable: true,
-            position: "bottom",
-          });
-          navigate("/face", { replace: true }); // Redirect to face recognition
-        } catch (error) {
-          console.error("Authentication error:", error);
-          toast({
-            title: "Error during authentication",
-            status: "error",
-            duration: 2000,
-            isClosable: true,
-            position: "bottom",
-          });
-        }
-      } else {
-        toast({
-          title: "Password does not match or check the role",
-          status: "warning",
-          duration: 4000,
-          isClosable: true,
-          position: "bottom",
-        });
+        const response = await login({ body });
+        onOpen(); // Open OTP modal
       }
-    } else {
+    } catch (error) {
       toast({
-        title: "User not Found",
-        status: "warning",
+        title: "Error during authentication",
+        status: "error",
         duration: 2000,
         isClosable: true,
         position: "bottom",
       });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // OTP verification handler
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+
+    setIsVerifyOtpLoading(true);
+
+    // Check if the OTP is complete
+    if (otp.length < 6) {
+      // Change this based on your OTP length
+      toast({
+        title: "OTP is incomplete",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      setIsVerifyOtpLoading(false);
+      return;
+    }
+
+    try {
+      const body = {
+        userId: userToSignIn._id,
+        otpCode: otp,
+      };
+      const response = await verifyOtp({
+        body,
+      });
+
+      // Store token in localStorage and update Zustand store
+      localStorage.setItem("token", response.token);
+      setToken(response.token);
+
+      toast({
+        title: "OTP verified successfully",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+
+      // navigate("/dashboard"); // Navigate to dashboard or appropriate page
+    } catch (error) {
+      toast({
+        title: "Failed to verify OTP",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+    } finally {
+      setIsVerifyOtpLoading(false);
     }
   };
 
@@ -161,7 +220,7 @@ const LogIn = () => {
     };
 
     fetchData();
-  }, []);
+  }, [globalUrl]);
 
   if (loading) {
     return (
@@ -241,7 +300,7 @@ const LogIn = () => {
         </Text>
         <form onSubmit={handleSubmit}>
           <Stack spacing={4}>
-            <FormControl isInvalid={errors.role}>
+            <FormControl>
               <Select
                 name="role"
                 placeholder="Select role"
@@ -253,64 +312,84 @@ const LogIn = () => {
                 <option value="staff">Staff</option>
                 <option value="admin">Admin</option>
               </Select>
-              {errors.role && (
-                <FormHelperText color="red.500">{errors.role}</FormHelperText>
-              )}
             </FormControl>
 
-            <FormControl isRequired isInvalid={errors.email}>
+            <FormControl>
               <FormLabel color="purple.500">Email</FormLabel>
               <Input
                 type="text"
                 name="email"
-                placeholder="admincocomartin@gmail.com"
+                placeholder="Enter your email"
                 onChange={handleChange}
                 value={email}
               />
-              {errors.email ? (
-                <FormHelperText color="red.500">{errors.email}</FormHelperText>
-              ) : (
-                <FormHelperText>Input a valid email</FormHelperText>
-              )}
             </FormControl>
 
-            <FormControl isRequired>
+            <FormControl>
               <FormLabel color="purple.500">Password</FormLabel>
               <InputGroup>
                 <Input
                   type={showPassword ? "text" : "password"}
                   name="password"
+                  placeholder="********"
                   onChange={handleChange}
                   value={password}
                 />
-                <InputRightElement w="4.5rem">
-                  <Box
-                    onClick={handleShowPassword}
-                    _hover={{ cursor: "pointer", color: "#3182CE" }}
-                    fontSize="2xl"
-                    mb={2}
-                  >
+                <InputRightElement>
+                  <Button onClick={handleShowPassword} variant="link">
                     {showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                  </Box>
+                  </Button>
                 </InputRightElement>
               </InputGroup>
             </FormControl>
 
-            <FormControl>
-              <Button
-                width="100%"
-                bg="purple.400"
-                textColor="white"
-                mt="30px"
-                isLoading={isSigningIn}
-                type="submit"
-              >
-                Login
-              </Button>
-            </FormControl>
+            <Button
+              isLoading={isLoading}
+              loadingText="Signing in..."
+              colorScheme="purple"
+              size="md"
+              type="submit"
+              mb={4}
+            >
+              Log In
+            </Button>
           </Stack>
         </form>
       </Box>
+
+      {/* OTP Modal */}
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Enter OTP</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex flexDir="column" justify="center" align="center" pt="20px">
+              <VStack>
+                <OTPInput otp={otp} setOtp={setOtp} />
+                <Text>Please enter the 6-digit code sent to your email.</Text>
+              </VStack>
+            </Flex>
+          </ModalBody>
+          <ModalFooter
+            display="flex" // Enables flexbox layout
+            justifyContent="center" // Centers content horizontally
+            alignItems="center" // Centers content vertically (useful if you have multiple items)
+            // Ensures the footer takes the full width
+            padding="1.5rem" // Optional: adds padding for spacing
+          >
+            <Button
+              colorScheme="purple"
+              width="100%"
+              onClick={handleVerifyOtp}
+              isLoading={isVerifyOtpLoading}
+              loadingText="Verifying..."
+            >
+              Verify
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

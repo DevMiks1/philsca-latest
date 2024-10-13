@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useData } from "../../../../context/FetchAccountContext";
-import { useAuth } from "../../../../context/Auth";
 import {
   Avatar,
   Card,
@@ -13,13 +12,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 import logo from "../../../../../assets/philscalogo.png";
+import useAuthStore from "../../../../../modules/auth";
 
 const AccountTempoId = () => {
-  const { data, setData } = useData();
-  const auth = useAuth();
-  const authId = auth.user._id;
+  const { data } = useData();
+  const { userId } = useAuthStore();
+
   const accountLogin = () => {
-    return data.find((d) => d._id === authId);
+    return data.find((d) => d._id === userId);
   };
   const user = accountLogin();
 
@@ -196,7 +196,7 @@ const AccountTempoId = () => {
             <div className="absolute -top-[4rem] left-[5rem]">
               <img src={user.signature} alt="signature" />
             </div>
-            <p class="signature ">SIGNATURE</p>
+            <p className="signature ">SIGNATURE</p>
           </div>
           <div className="text-center text-[.900rem] pb-[2.5rem] relative">
             <div className="absolute -top-[4.5rem] left-[5rem]">
@@ -205,7 +205,9 @@ const AccountTempoId = () => {
             <div className="absolute -top-[1.5rem] left-0 right-0 mx-auto">
               <p className="font-bold">MR. DARBY P ESBERANZATE</p>
             </div>
-            <p class="signature-registrar text-[.700rem] ">College Registrar</p>
+            <p className="signature-registrar text-[.700rem] ">
+              College Registrar
+            </p>
           </div>
         </CardBody>
       </Card>

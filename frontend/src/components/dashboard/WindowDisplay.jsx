@@ -32,7 +32,7 @@ export const WindowDisplay = ({ tab, accountLogin }) => {
         studlistid: idList,
         graphsandanalytics: GraphsAndAnalytics,
         reports: idLost,
-        settings: Setting,
+        profile: Setting,
       };
       setDisplay(components[tab] || null);
     } else if (["student", "faculty", "staff"].includes(role)) {

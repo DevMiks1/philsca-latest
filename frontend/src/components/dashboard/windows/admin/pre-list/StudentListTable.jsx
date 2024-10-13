@@ -9,15 +9,16 @@ import {
 } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Flex,
   IconButton,
   Table,
+  TableContainer,
   Tbody,
   Td,
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -32,7 +33,7 @@ const StudentListTable = ({
 }) => {
   const { data, loading } = useData();
   const [currentPage, setCurrentPage] = useState(0);
-  const studentsPerPage = 4;
+  const studentsPerPage = 6;
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
@@ -48,7 +49,6 @@ const StudentListTable = ({
 
   const handleDeleteAccounts = (id) => {
     handleDeleteAccount(id);
-    console.log(id);
     if (
       currentPage >= Math.ceil((filteredStudents.length - 1) / studentsPerPage)
     ) {
@@ -60,46 +60,7 @@ const StudentListTable = ({
 
   const displayStudents = filteredStudents
     .reverse()
-    .slice(currentPage * studentsPerPage, (currentPage + 1) * studentsPerPage)
-    .map((account) => (
-      <Tr key={account._id}>
-        <Td>{account.schoolid}</Td>
-        <Td>{`${account.firstname} ${account.suffix} ${account.lastname}`}</Td>
-        <Td>{account.course}</Td>
-
-        <Td>
-          <Flex gap={2}>
-          <IconButton
-            colorScheme="blue"
-            aria-label="View"
-            onClick={() => {
-              handleViewAccounts(account._id);
-            }}
-            size="lg"
-            icon={<ViewIcon />}
-          />
-          <IconButton
-            colorScheme="green"
-            aria-label="Edit"
-            onClick={() => {
-              handleEditAccounts(account._id);
-            }}
-            size="lg"
-            icon={<EditIcon />}
-          />
-          <IconButton
-            colorScheme="red"
-            aria-label="Delete"
-            onClick={() => {
-              handleDeleteAccounts(account._id);
-            }}
-            size="lg"
-            icon={<DeleteIcon />}
-          />
-          </Flex>
-        </Td>
-      </Tr>
-    ));
+    .slice(currentPage * studentsPerPage, (currentPage + 1) * studentsPerPage);
 
   return (
     <>
@@ -109,40 +70,102 @@ const StudentListTable = ({
         </Flex>
       ) : (
         <Box as="section">
-          <Box h="60vh" overflow="auto">
-            <Table variant="simple" w="100%">
-              <Thead>
-                <Tr>
-                  <Th>Student ID</Th>
-                  <Th w="25%">Name</Th>
-                  <Th w="15%">Course</Th>
-
-                  <Th>Actions</Th>
-                </Tr>
-              </Thead>
-              <Tbody overflowX="auto">
-                {displayStudents.length > 0 ? (
-                  <>{displayStudents}</>
-                ) : (
-                  <Flex
-                    justify="center"
-                    align="center"
-                    pos="absolute"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                  >
-                    <Text fontSize="1.5rem" fontWeight="bold">
-                      No Accouts Display
-                    </Text>
-                  </Flex>
-                )}
-              </Tbody>
-            </Table>
+          <Box overflow="auto">
+            <TableContainer
+              borderRadius="lg"
+              boxShadow="md"
+              overflow="hidden"
+              variant="simple"
+            >
+              <Table size="sm">
+                <Thead bg="blue.700">
+                  <Tr>
+                    <Th color="white" fontWeight="bold">
+                      Student ID
+                    </Th>
+                    <Th color="white" fontWeight="bold">
+                      Name
+                    </Th>
+                    <Th color="white" fontWeight="bold">
+                      Course
+                    </Th>
+                    <Th color="white" fontWeight="bold">
+                      Actions
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {displayStudents.length > 0 ? (
+                    displayStudents.map((account) => (
+                      <Tr
+                        key={account._id}
+                        _hover={{ bg: "orange.400", color: "white" }}
+                        transition="background-color 0.2s"
+                      >
+                        <Td>{account.schoolid}</Td>
+                        <Td>{`${account.firstname || ""} ${
+                          account.middlename || ""
+                        } ${account.lastname || ""} ${
+                          account.suffix || ""
+                        }`}</Td>
+                        <Td>{account.course || ""}</Td>
+                        <Td>
+                          <Flex gap={2}>
+                            <Tooltip label="View" aria-label="View">
+                              <IconButton
+                                size="sm"
+                                colorScheme="blue"
+                                aria-label="View"
+                                onClick={() => handleViewAccounts(account._id)}
+                                icon={<ViewIcon />}
+                              />
+                            </Tooltip>
+                            <Tooltip label="Edit" aria-label="Edit">
+                              <IconButton
+                                size="sm"
+                                colorScheme="orange"
+                                aria-label="Edit"
+                                onClick={() => handleEditAccounts(account._id)}
+                                icon={<EditIcon />}
+                              />
+                            </Tooltip>
+                            <Tooltip label="Delete" aria-label="Delete">
+                              <IconButton
+                                size="sm"
+                                colorScheme="red"
+                                aria-label="Delete"
+                                onClick={() =>
+                                  handleDeleteAccounts(account._id)
+                                }
+                                icon={<DeleteIcon />}
+                              />
+                            </Tooltip>
+                          </Flex>
+                        </Td>
+                      </Tr>
+                    ))
+                  ) : (
+                    <Tr>
+                      <Td colSpan={4}>
+                        <Flex justify="center" align="center" minHeight="150px">
+                          <Text
+                            fontSize="1.5rem"
+                            fontWeight="bold"
+                            color="gray.600"
+                          >
+                            No Students Display
+                          </Text>
+                        </Flex>
+                      </Td>
+                    </Tr>
+                  )}
+                </Tbody>
+              </Table>
+            </TableContainer>
           </Box>
 
           {pageCount > 1 && (
-            <Box h="10vh">
+            <Box pt="1rem">
               <ReactPaginate
                 pageCount={pageCount}
                 pageRangeDisplayed={3}

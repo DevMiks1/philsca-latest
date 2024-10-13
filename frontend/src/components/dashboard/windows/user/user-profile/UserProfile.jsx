@@ -1,13 +1,20 @@
 /** @format */
 
 import React from "react";
-import StudentProfile from "./Profile";
+import InfoProfile from "./info-profile/InfoProfile";
 import AccountTempoId from "./TemporaryId";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import {
+  Container,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
 
-const AccountSetting = () => {
+const UserProfile = () => {
   return (
-    <div className="ml-4">
+    <Container maxW="container.xl" p={5}>
       <Tabs size="sm" variant="enclosed">
         <TabList>
           <Tab>Profile</Tab>
@@ -15,15 +22,15 @@ const AccountSetting = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <StudentProfile />
+            <InfoProfile />
           </TabPanel>
           <TabPanel>
             <AccountTempoId />
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </div>
+    </Container>
   );
 };
 
-export default AccountSetting;
+export default UserProfile;

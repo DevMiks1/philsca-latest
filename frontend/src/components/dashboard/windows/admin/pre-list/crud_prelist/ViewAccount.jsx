@@ -75,59 +75,68 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
           <div>
             {" "}
             <div className="mx-4">
-              <div class="flex ">
-                <p class="w-[35%] text-[.950rem] font-[500]">Student ID</p>
-                <p class="w-[65%] text-[.900rem] font-[400] text-uppercase">
+              <div className="flex ">
+                <p className="w-[35%] text-[.950rem] font-[500]">Student ID</p>
+                <p className="w-[65%] text-[.900rem] font-[400] text-uppercase">
                   {account.schoolid || "EMPTY"}
                 </p>
               </div>
-              <div class="flex mx-">
-                <p class="w-[35%] text-[.950rem] font-[500]">Name</p>
-                <p class="w-[65%] text-[.900rem] font-[400]">
-                  {`${account.firstname} ${account.middlename} ${account.lastname} ${account.suffix} ` ||
-                    "EMPTY"}
+              <div className="flex mx-">
+                <p className="w-[35%] text-[.950rem] font-[500]">Name</p>
+                <p className="w-[65%] text-[.900rem] font-[400]">
+                  {`${account.firstname ? account.firstname : ""} ${
+                    account.middlename ? account.middlename : ""
+                  } ${account.lastname ? account.lastname : ""} ${
+                    account.suffix ? account.suffix : ""
+                  } `}
                 </p>
               </div>
-              <div class="flex">
-                <p class="w-[35%] text-[.950rem] font-[500]">Birthdate</p>
-                <p class="w-[65%] text-[.900rem] font-[400]">
+              <div className="flex">
+                <p className="w-[35%] text-[.950rem] font-[500]">Birthdate</p>
+                <p className="w-[65%] text-[.900rem] font-[400]">
                   {formattedDate || "EMPTY"}
                 </p>
               </div>
 
-              <div class="flex">
-                <p class="w-[35%] text-[.950rem] font-[500]">Course</p>
-                <p class="w-[65%] text-[.900rem] font-[400] uppercase">
+              <div className="flex">
+                <p className="w-[35%] text-[.950rem] font-[500]">Course</p>
+                <p className="w-[65%] text-[.900rem] font-[400] uppercase">
                   {account.course || "EMPTY"}
                 </p>
               </div>
-              <div class="flex">
-                <p class="w-[35%] text-[.950rem] font-[500]">Schoolyear</p>
-                <p class="w-[65%] text-[.900rem] font-[400]">
+              <div className="flex">
+                <p className="w-[35%] text-[.950rem] font-[500]">Schoolyear</p>
+                <p className="w-[65%] text-[.900rem] font-[400]">
                   {account.schoolyear || "EMPTY"}
                 </p>
               </div>
-              <div class="flex">
-                <p class="w-[35%] text-[.950rem] font-[500]">ContactNumber</p>
-                <p class="w-[65%] text-[.900rem] font-[400]">
+              <div className="flex">
+                <p className="w-[35%] text-[.950rem] font-[500]">
+                  ContactNumber
+                </p>
+                <p className="w-[65%] text-[.900rem] font-[400]">
                   {account.contactnumber || "EMPTY"}
                 </p>
               </div>
-              <div class="flex">
-                <p class="w-[35%] text-[.950rem] font-[500]">ContactPerson</p>
-                <p class="w-[65%] text-[.900rem] font-[400]">
+              <div className="flex">
+                <p className="w-[35%] text-[.950rem] font-[500]">
+                  ContactPerson
+                </p>
+                <p className="w-[65%] text-[.900rem] font-[400]">
                   {account.contactperson || "EMPTY"}
                 </p>
               </div>
-              <div class="flex">
-                <p class="w-[35%] text-[.950rem] font-[500]">ContactPerson No.</p>
-                <p class="w-[65%] text-[.900rem] font-[400]">
+              <div className="flex">
+                <p className="w-[35%] text-[.950rem] font-[500]">
+                  ContactPerson No.
+                </p>
+                <p className="w-[65%] text-[.900rem] font-[400]">
                   {account.contactpersonnumber || "EMPTY"}
                 </p>
               </div>
-              <div class="flex mb-5">
-                <p class="w-[35%] text-[.950rem] font-[500] ">Address</p>
-                <p class="w-[65%] text-[.900rem] font-[400]">
+              <div className="flex mb-5">
+                <p className="w-[35%] text-[.950rem] font-[500] ">Address</p>
+                <p className="w-[65%] text-[.900rem] font-[400]">
                   {account.address || "EMPTY"}
                 </p>
               </div>
@@ -136,81 +145,88 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
         )}
         {employee && (
           <div className="mx-4">
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">Staff ID</p>
-              <p class="w-[65%] text-[.900rem] font-[400] text-uppercase">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">Staff ID</p>
+              <p className="w-[65%] text-[.900rem] font-[400] text-uppercase">
                 {account.schoolid || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">Name</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
-                {`${account.firstname} ${account.middlename} ${account.lastname} ${account.suffix} ` || "EMPTY"}
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">Name</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
+                {`${account.firstname} ${account.middlename} ${account.lastname} ${account.suffix} ` ||
+                  "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">Birthdate</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">Birthdate</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {formattedDate || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">Position</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">Position</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.position || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">Designation</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">Designation</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.designation || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">HGT</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">HGT</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.hgt || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">WGT</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">WGT</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.wgt || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">SSS</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">SSS</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.sss || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">TIN</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">TIN</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.tin || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">Contact Number</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">
+                Contact Number
+              </p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.contactnumber || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">Contact Person</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">
+                Contact Person
+              </p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.contactperson || "EMPTY"}
               </p>
             </div>
-            <div class="flex">
-              <p class="w-[35%] text-[.950rem] font-[500]">ContactPerson No.</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex">
+              <p className="w-[35%] text-[.950rem] font-[500]">
+                ContactPerson No.
+              </p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.contactpersonnumber || "EMPTY"}
               </p>
             </div>
-            <div class="flex ">
-              <p class="w-[35%] text-[.950rem] font-[500] ">Address</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex ">
+              <p className="w-[35%] text-[.950rem] font-[500] ">Address</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.address || "EMPTY"}
               </p>
             </div>
@@ -236,15 +252,15 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
         </Flex>
         {students && (
           <div className="mx-4 pb-5">
-            <div class="flex ">
-              <p class="w-[35%] text-[.950rem] font-[500] ">Email</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex ">
+              <p className="w-[35%] text-[.950rem] font-[500] ">Email</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.email || "EMPTY"}
               </p>
             </div>
-            <div class="flex ">
-              <p class="w-[35%] text-[.950rem] font-[500] ">Password</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex ">
+              <p className="w-[35%] text-[.950rem] font-[500] ">Password</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.password || "EMPTY"}
               </p>
             </div>
@@ -252,22 +268,20 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
         )}
         {employee && (
           <div className="mx-4 pb-5">
-            <div class="flex ">
-              <p class="w-[35%] text-[.950rem] font-[500] ">Email</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex ">
+              <p className="w-[35%] text-[.950rem] font-[500] ">Email</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.email || "EMPTY"}
               </p>
             </div>
-            <div class="flex ">
-              <p class="w-[35%] text-[.950rem] font-[500] ">Password</p>
-              <p class="w-[65%] text-[.900rem] font-[400]">
+            <div className="flex ">
+              <p className="w-[35%] text-[.950rem] font-[500] ">Password</p>
+              <p className="w-[65%] text-[.900rem] font-[400]">
                 {account.password || "EMPTY"}
               </p>
             </div>
           </div>
         )}
-
-        
       </ModalContent>
     </Modal>
   );

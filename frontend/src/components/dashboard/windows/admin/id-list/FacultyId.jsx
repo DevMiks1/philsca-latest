@@ -1,6 +1,12 @@
 /** @format */
 
-import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EmailIcon,
+  ViewIcon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -12,12 +18,14 @@ import {
   Th,
   Thead,
   Tr,
+  Flex,
+  Tooltip,
+  IconButton,
 } from "@chakra-ui/react";
 import ReactPaginate from "react-paginate";
 import { useData } from "../../../../context/FetchAccountContext";
 
 const FacultyId = ({
-  
   filterCriteria,
   searchQuery,
   handleViewClick,
@@ -28,13 +36,11 @@ const FacultyId = ({
 }) => {
   const { data, setData } = useData();
 
-  const facultyPerPage = 4;
+  const facultyPerPage = 6;
 
   const filteredFacultyId = data.filter(
     (account) => account.role === "faculty"
   );
-  console.log(data);
-  console.log(filteredFacultyId);
   const pageCount = Math.ceil(filteredFacultyId.length / facultyPerPage);
 
   const filteredFacuty = filteredFacultyId
@@ -48,69 +54,101 @@ const FacultyId = ({
       return filterCriteria === "issued"
         ? faculty.isIdIssued
         : !faculty.isIdIssued;
-    })
-    .slice(currentPage * facultyPerPage, (currentPage + 1) * facultyPerPage);
-  console.log(filteredFacuty);
-  const displayFaculty = filteredFacuty.map((faculty) => (
-    <Tr key={faculty._id}>
-      <Td>
-        {faculty.firstname} {faculty.lastname}
-      </Td>
-      <Td>{faculty.course}</Td>
-      <Td>
-        <Button
-          size="sm"
-          mr={5}
-          leftIcon={<ViewIcon />}
-          onClick={() => handleViewClick(faculty)}
-        >
-          View
-        </Button>
-        {!faculty.isIdIssued && (
-          <Button
-          mr={5}
-          size="sm"
-          leftIcon={<CheckIcon  />}
-          onClick={() => handleApprovedOpen(faculty)}
-        >
-          Approved
-        </Button>
-        )}
-        {faculty.isIdIssued && (
-          <Button
-          size="sm"
-          leftIcon={<EmailIcon />}
-          onClick={() => handleOpenMail(faculty)}
-        >
-          Email
-        </Button>
-        )}
-      </Td>
-    </Tr>
-  ));
+    });
+
+  const displayFaculty = filteredFacuty.slice(
+    currentPage * facultyPerPage,
+    (currentPage + 1) * facultyPerPage
+  );
 
   return (
     <>
-      <TableContainer mb={4}>
-        <Table variant="simple">
-          <Thead>
+      <TableContainer
+        borderRadius="lg"
+        boxShadow="md"
+        overflow="hidden"
+        variant="simple"
+      >
+        <Table size="sm">
+          <Thead bg="blue.700">
             <Tr>
-              <Th>Name</Th>
-              <Th>Course</Th>
-              <Th>Action</Th>
+              <Th color="white" fontWeight="bold">
+                Faculty ID
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Name
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Positon
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Actions
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
             {displayFaculty.length > 0 ? (
-              displayFaculty
+              displayFaculty.map((account) => (
+                <Tr
+                  key={account._id}
+                  _hover={{ bg: "orange.400", color: "white" }}
+                  transition="background-color 0.2s"
+                >
+                  <Td>{account.schoolid}</Td>
+                  <Td>{`${account.firstname || ""} ${
+                    account.middlename || ""
+                  } ${account.lastname || ""} ${account.suffix || ""}`}</Td>
+                  <Td>{account.position || ""}</Td>
+                  <Td>
+                    <Flex gap={2}>
+                      <Tooltip label="View" aria-label="View">
+                        <IconButton
+                          size="sm"
+                          colorScheme="blue"
+                          icon={<ViewIcon />}
+                          onClick={() => handleViewClick(account)}
+                          View
+                        />
+                      </Tooltip>
+                      {!account.isIdIssued && (
+                        <Tooltip label="Approved ID" aria-label="apprroved-id">
+                          <IconButton
+                            size="sm"
+                            icon={<CheckIcon />}
+                            colorScheme="orange"
+                            onClick={() => handleApprovedOpen(account)}
+                            aria-label="approved-id"
+                          >
+                            Approved
+                          </IconButton>
+                        </Tooltip>
+                      )}
+
+                      {account.isIdIssued && (
+                        <Tooltip label="Email" aria-label="email">
+                          <IconButton
+                            size="sm"
+                            colorScheme="orange"
+                            icon={<EmailIcon />}
+                            onClick={() => handleOpenMail(account)}
+                            aria-label="email" // Add an aria-label for accessibility
+                          >
+                            Email
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </Flex>
+                  </Td>
+                </Tr>
+              ))
             ) : (
               <Tr>
-                <Td colSpan={3} textAlign="center">
-                  <Text fontSize="20px" fontWeight="bold" pt={20}>
-                    {filterCriteria === "issued"
-                      ? "There are no issued IDs for now."
-                      : "There are no non-issued IDs for now."}
-                  </Text>
+                <Td colSpan={4}>
+                  <Flex justify="center" align="center" minHeight="150px">
+                    <Text fontSize="1.5rem" fontWeight="bold" color="gray.600">
+                      No Faculties Display
+                    </Text>
+                  </Flex>
                 </Td>
               </Tr>
             )}

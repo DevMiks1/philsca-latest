@@ -13,6 +13,9 @@ import {
   Flex,
   useDisclosure,
   Spacer,
+  Tooltip,
+  IconButton,
+  Container,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import StudentListTable from "./StudentListTable";
@@ -21,9 +24,10 @@ import ViewAccount from "./crud_prelist/ViewAccount";
 import EditAccount from "./crud_prelist/EditAccount";
 import InstructorListTable from "./InstructorListTable";
 import StaffListTable from "./StaffListTable";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, AttachmentIcon } from "@chakra-ui/icons";
 import GenerateAccount from "./crud_prelist/GenerateAccount";
 import { useData } from "../../../../context/FetchAccountContext";
+import UploadAccount from "./crud_prelist/UploadAccount";
 
 const PreList = () => {
   // const [accounts, setAccounts] = useState([]);
@@ -57,6 +61,12 @@ const PreList = () => {
     onClose: onDeleteClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isUploadOpen,
+    onOpen: onUploadOpen,
+    onClose: onUploadClose,
+  } = useDisclosure(); // For the upload modal
+
   const handleViewAccount = (accountId) => {
     const account = data.find((acc) => acc._id === accountId);
     setViewAccount(account);
@@ -84,61 +94,84 @@ const PreList = () => {
 
   return (
     <>
-      <Tabs colorScheme="purple" variant="enclosed">
-        <TabList py={10} px={5} bg="#e9e8df" shadow="md">
-          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Students</Tab>
-          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Faculty</Tab>
-          <Tab _selected={{ color: "blue.700", bg: "#FFD700" }}>Staff</Tab>
-          <Spacer />
-          <Button
-            bg="blue.700"
-            color="white"
-            _hover={{ bg: "blue.600" }}
-            leftIcon={<AddIcon />}
-            onClick={handleGenerateModalOpen}
-          >
-            Generate Account
-          </Button>
-        </TabList>
-
-        <TabPanels>
-          <TabPanel>
-            <List>
-              <ListItem>
-                <StudentListTable
-                  handleDeleteAccount={handleDeleteAccount}
-                  handleViewAccount={handleViewAccount}
-                  handleEditAccount={handleEditAccount}
+      <Container maxW="container.xl" p={4}>
+        <Tabs>
+          <TabList py={10} px={5} bg="blue.600" shadow="md">
+            <Tab _selected={{ borderColor: "white" }} color="white">
+              STUDENTS
+            </Tab>
+            <Tab color="white">FACULTIES</Tab>
+            <Tab color="white">STAFFS</Tab>
+            <Spacer />
+            <Flex gap={2}>
+              <Tooltip label="Upload" aria-label="Upload tooltip">
+                <IconButton
+                  bg="orange.400"
+                  color="white"
+                  _hover={{ bg: "orange.500" }}
+                  icon={<AttachmentIcon />} // Use only the icon
+                  onClick={onUploadOpen} // Open the upload modal
+                  aria-label="Upload"
                 />
-              </ListItem>
-            </List>
-          </TabPanel>
+              </Tooltip>
 
-          <TabPanel>
-            <List>
-              <ListItem>
-                <InstructorListTable
-                  handleDeleteAccount={handleDeleteAccount}
-                  handleViewAccount={handleViewAccount}
-                  handleEditAccount={handleEditAccount}
+              <Tooltip
+                label="Generate Account"
+                aria-label="Generate Account tooltip"
+              >
+                <IconButton
+                  bg="orange.400"
+                  color="white"
+                  _hover={{ bg: "orange.500" }}
+                  icon={<AddIcon />} // Use only the icon
+                  onClick={handleGenerateModalOpen} // Open modal for generating account
+                  aria-label="Generate Account"
                 />
-              </ListItem>
-            </List>
-          </TabPanel>
+              </Tooltip>
+            </Flex>
+          </TabList>
 
-          <TabPanel>
-            <List>
-              <ListItem>
-                <StaffListTable
-                  handleDeleteAccount={handleDeleteAccount}
-                  handleViewAccount={handleViewAccount}
-                  handleEditAccount={handleEditAccount}
-                />
-              </ListItem>
-            </List>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+          <TabPanels>
+            <TabPanel>
+              <List>
+                <ListItem>
+                  <StudentListTable
+                    handleDeleteAccount={handleDeleteAccount}
+                    handleViewAccount={handleViewAccount}
+                    handleEditAccount={handleEditAccount}
+                  />
+                </ListItem>
+              </List>
+            </TabPanel>
+
+            <TabPanel>
+              <List>
+                <ListItem>
+                  <InstructorListTable
+                    handleDeleteAccount={handleDeleteAccount}
+                    handleViewAccount={handleViewAccount}
+                    handleEditAccount={handleEditAccount}
+                  />
+                </ListItem>
+              </List>
+            </TabPanel>
+
+            <TabPanel>
+              <List>
+                <ListItem>
+                  <StaffListTable
+                    handleDeleteAccount={handleDeleteAccount}
+                    handleViewAccount={handleViewAccount}
+                    handleEditAccount={handleEditAccount}
+                  />
+                </ListItem>
+              </List>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Container>
+
+      <UploadAccount isOpen={isUploadOpen} onClose={onUploadClose} />
 
       {deleteAccount && (
         <DeleteAccountModal

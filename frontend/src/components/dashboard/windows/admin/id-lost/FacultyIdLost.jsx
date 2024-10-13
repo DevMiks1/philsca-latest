@@ -1,9 +1,17 @@
 /** @format */
 
-import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, EmailIcon, ViewIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EmailIcon,
+  ViewIcon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Flex,
+  IconButton,
   Table,
   TableContainer,
   Tbody,
@@ -11,13 +19,13 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from "@chakra-ui/react";
 import ReactPaginate from "react-paginate";
 import { useData } from "../../../../context/FetchAccountContext";
 
 const FacultyIdLost = ({
-  
   searchQuery,
   handleViewAccount,
   currentPage,
@@ -41,46 +49,73 @@ const FacultyIdLost = ({
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
     })
     .slice(currentPage * facultyPerPage, (currentPage + 1) * facultyPerPage);
-  const displayFaculty = filteredFacuty.map((faculty) => (
-    <Tr key={faculty._id}>
-      <Td>
-        {faculty.firstname} {faculty.lastname}
-      </Td>
-      <Td>{faculty.position}</Td>
-      <Td>
-        <Button
-          size="sm"
-          mr={5}
-          leftIcon={<ViewIcon />}
-          onClick={() => handleViewAccount(faculty)}
-        >
-          View
-        </Button>
-        
-      </Td>
-    </Tr>
-  ));
+
+  const displayFaculty = filteredFacuty.slice(
+    currentPage * facultyPerPage,
+    (currentPage + 1) * facultyPerPage
+  );
 
   return (
     <>
-      <TableContainer mb={4}>
-        <Table variant="simple">
-          <Thead>
+      <TableContainer
+        borderRadius="lg"
+        boxShadow="md"
+        overflow="hidden"
+        variant="simple"
+      >
+        <Table size="sm">
+          <Thead bg="blue.700">
             <Tr>
-              <Th>Name</Th>
-              <Th>Position</Th>
-              <Th>Action</Th>
+              <Th color="white" fontWeight="bold">
+                Student ID
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Name
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Course
+              </Th>
+              <Th color="white" fontWeight="bold">
+                Actions
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
-            {displayFaculty.length > 0 ? (
-              displayFaculty
+            {facultyPerPage.length > 0 ? (
+              facultyPerPage.map((account) => (
+                <Tr
+                  key={account._id}
+                  _hover={{ bg: "orange.400", color: "white" }}
+                  transition="background-color 0.2s"
+                >
+                  <Td>{account.schoolid}</Td>
+                  <Td>{`${account.firstname || ""} ${
+                    account.middlename || ""
+                  } ${account.lastname || ""} ${account.suffix || ""}`}</Td>
+                  <Td>{account.position || ""}</Td>
+                  <Td>
+                    <Flex gap={2}>
+                      <Tooltip label="View" aria-label="View">
+                        <IconButton
+                          size="sm"
+                          colorScheme="blue"
+                          icon={<ViewIcon />}
+                          onClick={() => handleViewAccount(account)}
+                          View
+                        />
+                      </Tooltip>
+                    </Flex>
+                  </Td>
+                </Tr>
+              ))
             ) : (
               <Tr>
-                <Td colSpan={3} textAlign="center">
-                  <Text fontSize="20px" fontWeight="bold" pt={20}>
-                  There is no Report Lost ID for Faculty
-                  </Text>
+                <Td colSpan={4}>
+                  <Flex justify="center" align="center" minHeight="150px">
+                    <Text fontSize="1.5rem" fontWeight="bold" color="gray.600">
+                      No Faculty ID Lost Display
+                    </Text>
+                  </Flex>
                 </Td>
               </Tr>
             )}

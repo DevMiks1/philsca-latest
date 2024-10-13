@@ -7,51 +7,35 @@ import DashBoard from "../pages/Dashboard";
 import ProtectedRoutes from "../components/utils/ProtectedRoutes";
 import { useAuth } from "../components/context/Auth";
 import PageNotFound from "../pages/PageNotFound";
-import Face from "../pages/Face";
+import useAuthStore from "../modules/auth"; // Path to your authStore
 
 const AllRoutes = () => {
   const { user, logout } = useAuth();
   const [isFaceRecognized, setIsFaceRecognized] = useState(true);
   const navigate = useNavigate();
-
+  const fetchUserData = useAuthStore((state) => state.fetchUserData);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
   useEffect(() => {
-    if (user === null) {
-      navigate("/", { replace: true });
-      setIsFaceRecognized(false);
-    } else if (user && isFaceRecognized) {
-      navigate("/dashboard", { replace: true });
-    } else if (user && !isFaceRecognized) {
-      navigate("/face", { replace: true });
+    // Check and fetch user data when the app mounts
+    if (isAuthenticated) {
+      fetchUserData();
     }
-  }, [user, isFaceRecognized, navigate]);
+  }, [isAuthenticated, fetchUserData]);
 
   return (
     <Routes>
-      <Route path="/" element={<LogIn />} />
+      <Route
+        path="/"
+        element={isAuthenticated ? <Navigate to="/dashboard" /> : <LogIn />}
+        // element={<LogIn />}
+      />
+      {/* <Route path="/" element={<LogIn />} /> */}
       <Route
         path="/dashboard"
-        element={
-          user && isFaceRecognized ? (
-            <DashBoard />
-          ) : (
-            <Navigate to="/face" replace />
-          )
-        }
-        // element={<DashBoard /> }
+        element={isAuthenticated ? <DashBoard /> : <Navigate to="/" />}
       />
-      <Route
-        path="/face"
-        element={
-          user && isFaceRecognized ? (
-            <Navigate to="/dashboard" replace />
-          ) : (
-            <Face onFaceRecognized={() => setIsFaceRecognized(true)} />
-          )
-        }
-      />
-      <Route element={<ProtectedRoutes />}>
-        <Route path="*" element={<PageNotFound />} />
-      </Route>
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
