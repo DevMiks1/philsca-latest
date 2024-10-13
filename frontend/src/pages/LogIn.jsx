@@ -285,27 +285,39 @@ const LogIn = () => {
         alignItems="center"
         justifyContent="center"
         bg="white"
-        p="30px"
+        p="40px" // Increased padding for a more spacious feel
         rounded="20px"
         width="350px"
         position="absolute"
         top="50%"
         left="50%"
         transform="translate(-50%, -50%)"
-        shadow="4xl"
+        shadow="lg" // Changed shadow for a more subtle effect
         zIndex={1}
       >
-        <Text fontSize="2xl" fontWeight="bold" mb="4" color="purple.500">
-          Login
+        <Text fontSize="2xl" fontWeight="bold" mb="6" color="blue.600">
+          Log In
         </Text>
         <form onSubmit={handleSubmit}>
-          <Stack spacing={4}>
+          <Stack spacing={5}>
+            {" "}
+            {/* Increased spacing for better separation */}
             <FormControl>
+              <FormLabel color="blue.600" mb="1">
+                Role
+              </FormLabel>{" "}
+              {/* Added a label for better clarity */}
               <Select
                 name="role"
-                placeholder="Select role"
+                placeholder="Select your role"
                 onChange={handleChange}
                 value={role}
+                bg="blue.50"
+                borderColor="blue.300"
+                _focus={{
+                  borderColor: "orange.300",
+                  boxShadow: "0 0 0 1px orange.300",
+                }}
               >
                 <option value="student">Student</option>
                 <option value="faculty">Faculty</option>
@@ -313,20 +325,28 @@ const LogIn = () => {
                 <option value="admin">Admin</option>
               </Select>
             </FormControl>
-
             <FormControl>
-              <FormLabel color="purple.500">Email</FormLabel>
+              <FormLabel color="blue.600" mb="1">
+                Email
+              </FormLabel>
               <Input
                 type="text"
                 name="email"
                 placeholder="Enter your email"
                 onChange={handleChange}
                 value={email}
+                bg="blue.50"
+                borderColor="blue.300"
+                _focus={{
+                  borderColor: "orange.300",
+                  boxShadow: "0 0 0 1px orange.300",
+                }}
               />
             </FormControl>
-
             <FormControl>
-              <FormLabel color="purple.500">Password</FormLabel>
+              <FormLabel color="blue.600" mb="1">
+                Password
+              </FormLabel>
               <InputGroup>
                 <Input
                   type={showPassword ? "text" : "password"}
@@ -334,22 +354,32 @@ const LogIn = () => {
                   placeholder="********"
                   onChange={handleChange}
                   value={password}
+                  bg="blue.50"
+                  borderColor="blue.300"
+                  _focus={{
+                    borderColor: "orange.300",
+                    boxShadow: "0 0 0 1px orange.300",
+                  }}
                 />
                 <InputRightElement>
-                  <Button onClick={handleShowPassword} variant="link">
+                  <Button
+                    onClick={handleShowPassword}
+                    variant="link"
+                    colorScheme="blue"
+                  >
                     {showPassword ? <ViewOffIcon /> : <ViewIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-
             <Button
               isLoading={isLoading}
               loadingText="Signing in..."
-              colorScheme="purple"
+              colorScheme="orange"
               size="md"
               type="submit"
               mb={4}
+              _hover={{ bg: "orange.500", color: "white" }}
             >
               Log In
             </Button>
