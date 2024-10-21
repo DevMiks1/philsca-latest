@@ -20,11 +20,11 @@ import {
 } from "@chakra-ui/react";
 import IdToPrint from "../../admin/id-to-print/IdToPrint";
 import { EmailModal } from "../../admin/email/EmailModal";
-import ApprovedModal from "./ApprovedId";
 import { useData } from "../../../../context/FetchAccountContext";
 import StudentId from "./StudentId";
 import StaffId from "./StaffId";
 import FacultyId from "./FacultyId";
+import IssuedId from "./IssuedId";
 
 export default function StudIDList() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -393,7 +393,7 @@ export default function StudIDList() {
         />
       )}
       {approved && (
-        <ApprovedModal
+        <IssuedId
           isOpen={isaAprovedModalOpen}
           onClose={handleCloseApprovedModal}
           approved={approved}

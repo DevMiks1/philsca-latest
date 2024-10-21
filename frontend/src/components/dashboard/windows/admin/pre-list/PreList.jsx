@@ -28,6 +28,7 @@ import { AddIcon, AttachmentIcon } from "@chakra-ui/icons";
 import GenerateAccount from "./crud_prelist/GenerateAccount";
 import { useData } from "../../../../context/FetchAccountContext";
 import UploadAccount from "./crud_prelist/UploadAccount";
+import useAuthStore from "../../../../../modules/auth";
 
 const PreList = () => {
   // const [accounts, setAccounts] = useState([]);
@@ -35,8 +36,9 @@ const PreList = () => {
   const [viewAccount, setViewAccount] = useState(null);
   const [editAccount, setEditAccount] = useState(null);
   const [generateAccount, setGenerateAccount] = useState(null);
-  const { data, loading, setData } = useData();
-  console.log(deleteAccount);
+  const { data } = useData();
+  const { userId } = useAuthStore();
+
   // const [loading, setLoading] = useState(true);
   const {
     isOpen: isViewOpen,
@@ -92,6 +94,11 @@ const PreList = () => {
     onGenerateOpen();
   };
 
+  const accountLogin = () => {
+    return data.find((d) => d._id === userId);
+  };
+  const userLogin = accountLogin();
+
   return (
     <>
       <Container maxW="container.xl" p={4}>
@@ -103,32 +110,36 @@ const PreList = () => {
             <Tab color="white">FACULTIES</Tab>
             <Tab color="white">STAFFS</Tab>
             <Spacer />
-            <Flex gap={2}>
-              <Tooltip label="Upload" aria-label="Upload tooltip">
-                <IconButton
-                  bg="orange.400"
-                  color="white"
-                  _hover={{ bg: "orange.500" }}
-                  icon={<AttachmentIcon />} // Use only the icon
-                  onClick={onUploadOpen} // Open the upload modal
-                  aria-label="Upload"
-                />
-              </Tooltip>
+            {userLogin.roleLevel !== "3" ? (
+              <Flex gap={2}>
+                <Tooltip label="Upload" aria-label="Upload tooltip">
+                  <IconButton
+                    bg="orange.400"
+                    color="white"
+                    _hover={{ bg: "orange.500" }}
+                    icon={<AttachmentIcon />} // Use only the icon
+                    onClick={onUploadOpen} // Open the upload modal
+                    aria-label="Upload"
+                  />
+                </Tooltip>
 
-              <Tooltip
-                label="Generate Account"
-                aria-label="Generate Account tooltip"
-              >
-                <IconButton
-                  bg="orange.400"
-                  color="white"
-                  _hover={{ bg: "orange.500" }}
-                  icon={<AddIcon />} // Use only the icon
-                  onClick={handleGenerateModalOpen} // Open modal for generating account
-                  aria-label="Generate Account"
-                />
-              </Tooltip>
-            </Flex>
+                <Tooltip
+                  label="Generate Account"
+                  aria-label="Generate Account tooltip"
+                >
+                  <IconButton
+                    bg="orange.400"
+                    color="white"
+                    _hover={{ bg: "orange.500" }}
+                    icon={<AddIcon />} // Use only the icon
+                    onClick={handleGenerateModalOpen} // Open modal for generating account
+                    aria-label="Generate Account"
+                  />
+                </Tooltip>
+              </Flex>
+            ) : (
+              <></>
+            )}
           </TabList>
 
           <TabPanels>

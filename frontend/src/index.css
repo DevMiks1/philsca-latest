@@ -117,3 +117,9 @@ canvas {
   height: 2px; /* Thickness of the underline */
   background-color: black; /* Color of the underline */
 }
+
+@media print {
+  @page {
+    margin: 20mm; /* Adjust the top, bottom, left, and right margins */
+  }
+}

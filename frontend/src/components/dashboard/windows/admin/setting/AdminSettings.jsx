@@ -39,20 +39,19 @@ import { fetchAccountAPI, updateAccountAPI } from "../../../../api/AccountsApi";
 import { useAuth } from "../../../../context/Auth";
 import { useData } from "../../../../context/FetchAccountContext";
 import useAuthStore from "../../../../../modules/auth";
+import axios from "axios";
 
 export default function Settings() {
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
     firstname: "",
     middlename: "",
     lastname: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-
+  const [images, setImages] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const auth = useAuth();
   const { userId } = useAuthStore();
   const { data, loading, setData } = useData();
 
@@ -67,44 +66,118 @@ export default function Settings() {
       firstname: user?.firstname || "", // Safely set the firstname if user is defined
       middlename: user?.middlename || "", // Safely set the middlename if user is defined
       lastname: user?.lastname || "", // Safely set the lastname if user is defined
-      password: user?.password || "", // Safely set the password if user is defined
     }));
   }, [user]);
 
+  const uploadFiles = async () => {
+    try {
+      let cloudName = "dijhxviqe"; // Your Cloudinary cloud name
+      const imageUrls = [];
+
+      // If no images are selected, skip upload
+      if (images.length === 0) {
+        console.log("No images to upload, proceeding with user update");
+        return null; // Return early
+      }
+
+      // Upload images
+      for (const image of images) {
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "uploadNews"); // Your upload preset
+        const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+        const res = await axios.post(api, data);
+        const secure_url = res.data.secure_url; // Corrected to access res.data
+        imageUrls.push(secure_url);
+      }
+
+      // Return uploaded image URLs
+      return imageUrls;
+    } catch (error) {
+      console.error("Upload failed:", error);
+      toast({
+        title: "Upload Failed",
+        description: error.message,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom",
+      });
+      throw error; // Rethrow to handle in submit
+    }
+  };
+
   const handleSubmit = async () => {
     setIsLoading(true);
-    const body = {
-      email: formData.email,
-      password: formData.password,
-      firstname: formData.firstname,
-      middlename: formData.middlename,
-      lastname: formData.lastname,
-    };
     try {
-      const response = await updateAccountAPI({
-        _id: user._id,
-        body: body,
-      });
+      const uploadedImages = await uploadFiles();
 
-      if (response) {
-        const updatedData = data.map((el) =>
-          el._id === user._id ? { ...el, ...body } : el
-        );
-        setData(updatedData);
-        toast({
-          title: "Updated Successfully",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-          position: "top",
-        });
-        onClose(); // Close the modal after successful update
-      }
+      const uploadData = {
+        picture: uploadedImages ? uploadedImages[0] : user.picture, // Use uploaded image or fallback to existing
+        email: formData.email,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        middlename: formData.middlename,
+      };
+
+      // Send data to the server
+      await fetchUploadImage(uploadData);
+
+      toast({
+        title: "Updated Successfully",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom",
+      });
+      onClose();
     } catch (error) {
-      console.log("Error:", error);
+      console.error(error);
+      toast({
+        title: "An error occurred",
+        description: "Failed to update",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom",
+      });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const fetchUploadImage = async (uploadData) => {
+    const updatedUser = {
+      picture: uploadData.picture || "",
+      email: formData.email,
+      firstname: formData.firstname,
+      lastname: formData.lastname,
+      middlename: formData.middlename,
+    };
+
+    try {
+      const response = await updateAccountAPI({
+        _id: user._id,
+        body: updatedUser,
+      });
+      if (response) {
+        if (response) {
+          const updatedData = data.map((el) =>
+            el._id === user._id ? { ...el, ...updatedUser } : el
+          );
+          setData(updatedData);
+          onClose(); // Close the modal after successful update
+        }
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFiles = e.target.files[0];
+    setImages([selectedFiles]);
   };
   return (
     <>
@@ -150,10 +223,6 @@ export default function Settings() {
                       <ListIcon as={InfoIcon} color="#FFD700" />
                       Email: {user.email}
                     </ListItem>
-                    <ListItem>
-                      <ListIcon as={InfoIcon} color="#FFD700" />
-                      Password: {user.password}
-                    </ListItem>
                   </List>
                 </CardBody>
 
@@ -188,32 +257,16 @@ export default function Settings() {
               <ModalCloseButton color="white" />
 
               <ModalBody maxW="480px" p={6}>
-                <FormControl isRequired mb={4}>
-                  <FormLabel color="blue.600">Email</FormLabel>
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    focusBorderColor="orange.400"
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
-                </FormControl>
-
-                <FormControl isRequired mb={4}>
-                  <FormLabel color="blue.600">New Password</FormLabel>
-                  <Input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    focusBorderColor="orange.400"
-                    onChange={(e) =>
-                      setFormData({ ...formData, password: e.target.value })
-                    }
-                  />
-                </FormControl>
+                {/* Display existing photo if available */}
+                {user.picture && (
+                  <div className="flex justify-center mb-4">
+                    <img
+                      className="max-h-[150px] rounded"
+                      src={user.picture}
+                      alt="Current profile"
+                    />
+                  </div>
+                )}
 
                 <FormControl isRequired mb={4}>
                   <FormLabel color="blue.600">First Name</FormLabel>
@@ -256,6 +309,58 @@ export default function Settings() {
                     }
                   />
                 </FormControl>
+
+                {/* Other form fields remain the same... */}
+                <div className="container mx-auto pt-10">
+                  <form className="">
+                    <div className="flex flex-col justify-center">
+                      <div className="md:col-span-4 h-full">
+                        <div className="flex flex-col justify-center items-center gap-3 p-5 border border-dashed border-black h-full w-[100%] dark:bg-white">
+                          {images.length > 0 ? (
+                            <div
+                              className="flex flex-col justify-center items-center gap-3 text-center h-[170px]"
+                              style={{
+                                wordWrap: "break-word",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              <img
+                                className="mx-auto max-h-[150px]"
+                                src={URL.createObjectURL(images[0])}
+                                alt={images[0].name}
+                              />
+                              {images.map((image) => {
+                                return <p key={image.name}>{image.name}</p>;
+                              })}
+                            </div>
+                          ) : (
+                            <div className="flex flex-col justify-center items-center">
+                              <span className="text-[4rem]">
+                                <i className="fa-solid fa-folder-open"></i>
+                              </span>
+                              <p className="font-semibold text-center">
+                                Upload your image here
+                              </p>
+                            </div>
+                          )}
+
+                          <label
+                            htmlFor="image-upload"
+                            className="custom-file-upload"
+                          >
+                            Choose Files
+                            <input
+                              type="file"
+                              id="image-upload"
+                              accept="image/*"
+                              onChange={handleFileChange}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </ModalBody>
 
               <ModalFooter>

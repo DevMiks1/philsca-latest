@@ -15,38 +15,45 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useData } from "../../../../context/FetchAccountContext";
-import { updateAccountAPI } from "../../../../api/AccountsApi";
+import useAuthStore from "../../../../../modules/auth";
+import { issuedId } from "../../../../api/issuedId";
 
-const ApprovedModal = ({ isOpen, approved, onClose }) => {
-  console.log(approved);
+const IssuedId = ({ isOpen, approved, onClose }) => {
+  const { userId } = useAuthStore();
+
   const { data, setData } = useData();
   const [isLoading, setIsLoading] = useState(false);
 
   const toast = useToast();
 
-  const handleToApproved = async () => {
+  const accountLogin = () => {
+    return data.find((d) => d._id === userId);
+  };
+
+  const userLogin = accountLogin();
+
+  const handleIssuedId = async () => {
     setIsLoading(true);
+    const body = { userId: approved._id, issuedBy: userLogin._id };
     try {
-      const response = await updateAccountAPI({
-        body: { isIdIssued: true },
-        _id: approved._id,
+      const response = await issuedId({
+        body,
       });
 
-      if (response) {
-        const updatedData = data.map((el) =>
-          el._id === approved._id ? { ...el, isIdIssued: true } : el
-        );
-        setData(updatedData);
-        toast({
-          title: "Success",
-          description: "Status Approved",
-          status: "success",
-          duration: 5000,
-          position: "top",
-          isClosable: true,
-        });
-        onClose();
-      }
+      const updatedUser = response.data;
+      const updatedData = data.map((user) =>
+        user._id === updatedUser._id ? { ...user, ...updatedUser } : user
+      );
+      setData(updatedData);
+      toast({
+        title: "Success",
+        description: " Issued ID",
+        status: "success",
+        duration: 5000,
+        position: "top",
+        isClosable: true,
+      });
+      onClose();
     } catch (error) {
       toast({
         title: "Error",
@@ -59,6 +66,7 @@ const ApprovedModal = ({ isOpen, approved, onClose }) => {
       setIsLoading(false);
     }
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -69,19 +77,19 @@ const ApprovedModal = ({ isOpen, approved, onClose }) => {
           fontWeight="bold"
           color="blue.600"
         >
-          Approved ID
+          Issued ID
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Text textAlign="center" fontSize="1.1rem" pb={5} color="gray.700">
-            {` Are you sure you want to approve the ID of ${approved.email}`}
+            {` Are you sure you want to issued the ID of ${approved.email}`}
           </Text>
           <Flex justify="center" gap={4}>
             <Button
               bg="blue.500"
               color="white"
               _hover={{ bg: "orange.400", color: "white" }}
-              onClick={handleToApproved}
+              onClick={handleIssuedId}
               isLoading={isLoading}
               borderRadius="md"
               boxShadow="sm"
@@ -108,4 +116,4 @@ const ApprovedModal = ({ isOpen, approved, onClose }) => {
   );
 };
 
-export default ApprovedModal;
+export default IssuedId;

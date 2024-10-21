@@ -80,8 +80,13 @@ const DashBoard = () => {
               icon: FaTh,
             },
             {
-              tabName: "reports",
+              tabName: "id-lost",
               label: "ID Lost Record",
+              icon: FaExclamationTriangle,
+            },
+            {
+              tabName: "reports",
+              label: "Report",
               icon: FaExclamationTriangle,
             },
             // { tabName: "settings", label: "Settings", icon: FaCog },

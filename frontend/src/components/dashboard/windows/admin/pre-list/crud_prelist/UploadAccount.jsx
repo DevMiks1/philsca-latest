@@ -18,6 +18,7 @@ import { uploadAccount } from "../../../../../api/uploadAccount";
 
 const UploadAccount = ({ isOpen, onClose }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
   // Handle file selection
@@ -30,13 +31,15 @@ const UploadAccount = ({ isOpen, onClose }) => {
 
   // Handle upload confirmation
   const handleUploadConfirm = async () => {
+    setIsLoading(true);
     if (selectedFile) {
       try {
         // Call the API to upload the account
         const response = await uploadAccount(selectedFile);
         toast({
           title: "Upload Successful",
-          description: "Accounts have been uploaded successfully.",
+          description:
+            "Accounts successfully uploaded,  Reload page to reflect changes",
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -51,6 +54,8 @@ const UploadAccount = ({ isOpen, onClose }) => {
           duration: 5000,
           isClosable: true,
         });
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -79,6 +84,7 @@ const UploadAccount = ({ isOpen, onClose }) => {
             colorScheme="blue"
             onClick={handleUploadConfirm}
             disabled={!selectedFile}
+            isLoading={isLoading}
           >
             Confirm Upload
           </Button>

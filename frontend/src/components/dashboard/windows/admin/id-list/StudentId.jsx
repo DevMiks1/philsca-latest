@@ -119,15 +119,15 @@ const StudentId = ({
                         />
                       </Tooltip>
                       {!account.isIdIssued && (
-                        <Tooltip label="Approved ID" aria-label="apprroved-id">
+                        <Tooltip label="Issued ID" aria-label="issued-id">
                           <IconButton
                             size="sm"
                             icon={<CheckIcon />}
                             colorScheme="orange"
                             onClick={() => handleApprovedOpen(account)}
-                            aria-label="approved-id"
+                            aria-label="issued-id"
                           >
-                            Approved
+                            Issued ID
                           </IconButton>
                         </Tooltip>
                       )}

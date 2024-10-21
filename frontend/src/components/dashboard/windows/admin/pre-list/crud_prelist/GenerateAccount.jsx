@@ -67,6 +67,7 @@ const GenerateAccount = React.memo(({ isOpen, onClose }) => {
       message: "",
       address: "",
       schoolid: schoolid,
+      roleLevel: "4",
     };
 
     try {

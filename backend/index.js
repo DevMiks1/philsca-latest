@@ -41,6 +41,8 @@ const logout = require("./routes/logout");
 app.use("/philsca", logout);
 const uploadAccount = require("./routes/uploadAccount");
 app.use("/philsca", uploadAccount);
+const issuedId = require("./routes/issuedId");
+app.use("/philsca", issuedId);
 
 app.listen(port, () => {
   console.log(`You are connecting to port ${port}`);

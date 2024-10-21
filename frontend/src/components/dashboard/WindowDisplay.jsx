@@ -12,6 +12,8 @@ const GraphsAndAnalytics = React.lazy(() =>
 const Setting = React.lazy(() =>
   import("./windows/admin/setting/AdminSettings")
 );
+const Reports = React.lazy(() => import("./windows/admin/reports/Reports"));
+
 const UserProfile = React.lazy(() =>
   import("./windows/user/user-profile/UserProfile")
 );
@@ -31,7 +33,8 @@ export const WindowDisplay = ({ tab, accountLogin }) => {
         prelist: PreList,
         studlistid: idList,
         graphsandanalytics: GraphsAndAnalytics,
-        reports: idLost,
+        idLost: idLost,
+        reports: Reports,
         profile: Setting,
       };
       setDisplay(components[tab] || null);
