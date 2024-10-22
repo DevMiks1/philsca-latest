@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import { Box, useToast } from "@chakra-ui/react";
 import logo from "../../../../../assets/philscalogo.png";
 import ReactToPrint from "react-to-print";
+import RegistrarSignature from "../../../../../assets/registrar_signature.png";
 import {
   Modal,
   ModalOverlay,
@@ -254,11 +255,12 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                       <p className="signature text-[.700rem]">SIGNATURE</p>
                     </div>
                   </div>
+
                   <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[90px]">
                     <div className="absolute top-0 h-[60px]">
                       <img
-                        src={student.signature}
-                        alt="signature"
+                        src={RegistrarSignature}
+                        alt="registrar signature"
                         className="h-full w-full"
                       />
                     </div>

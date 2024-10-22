@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import logo from "../../../../../assets/philscalogo.png";
 import useAuthStore from "../../../../../modules/auth";
+import RegistrarSignature from "../../../../../assets/registrar_signature.png";
 
 const AccountTempoId = () => {
   const { data } = useData();
@@ -192,22 +193,35 @@ const AccountTempoId = () => {
             THIS CARD IS NON-TRANSFERABLE IT MUST BE WORN WHILE INSIDE THE
             CAMPUS PREMISES.
           </p>
-          <div className="text-center text-[.900rem] pb-[4rem] relative">
-            <div className="absolute -top-[4rem] left-[5rem]">
-              <img src={user.signature} alt="signature" />
+          <div className="flex flex-col">
+            <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[70px]">
+              <div className="absolute top-0 h-[60px]">
+                <img
+                  src={user.signature}
+                  alt="signature"
+                  className="h-full w-full"
+                />
+              </div>
+              <div className="w-full absolute bottom-0">
+                <p className="signature text-[.700rem]">SIGNATURE</p>
+              </div>
             </div>
-            <p className="signature ">SIGNATURE</p>
-          </div>
-          <div className="text-center text-[.900rem] pb-[2.5rem] relative">
-            <div className="absolute -top-[4.5rem] left-[5rem]">
-              <img src={user.signature} alt="signature" />
+
+            <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[90px]">
+              <div className="absolute top-0 h-[60px]">
+                <img
+                  src={RegistrarSignature}
+                  alt="registrar signature"
+                  className="h-full w-full"
+                />
+              </div>
+              <div className="w-full absolute bottom-0">
+                <p className="font-bold">MR. DARBY P ESBERANZATE</p>
+                <p className="signature-registrar text-[.700rem] bottom-0">
+                  College Registrar
+                </p>
+              </div>
             </div>
-            <div className="absolute -top-[1.5rem] left-0 right-0 mx-auto">
-              <p className="font-bold">MR. DARBY P ESBERANZATE</p>
-            </div>
-            <p className="signature-registrar text-[.700rem] ">
-              College Registrar
-            </p>
           </div>
         </CardBody>
       </Card>
