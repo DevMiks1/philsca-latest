@@ -6,8 +6,7 @@ module.exports = async function (req, res, next) {
   // Fetch token from cookies
 
   const token = req.cookies.token;
-
-  console.log("Incoming cookies:", req.cookies);
+  console.log(req, "req");
   if (!token) {
     return res.status(401).json({ message: "No token, authorization denied" });
   }
