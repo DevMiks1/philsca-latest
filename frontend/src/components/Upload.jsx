@@ -74,8 +74,6 @@ export const Upload = () => {
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
-
-      console.log("Files upload success");
     } catch (error) {
       console.error("Upload failed:", error);
       setLoading(false);
@@ -102,12 +100,6 @@ export const Upload = () => {
         },
         body: JSON.stringify(body),
       });
-
-      if (res.ok) {
-        console.log("Data saved successfully");
-      } else {
-        console.log("Error saving data");
-      }
     } catch (error) {
       console.log("Error:", error);
     }
@@ -149,21 +141,21 @@ export const Upload = () => {
         </Flex>
       ) : (
         <section className="font-poppins">
-          <Flex key={allUsers[0]?._id} gap={5} className="mb-6">
+          <Flex gap={5} className="mb-6">
             <FormControl>
               <FormLabel className="text-blue-600">Firstname</FormLabel>
               <Input
                 name="firstname"
-                defaultValue={allUsers[0]?.firstname || ""}
+                defaultValue={user.firstname ? user.firstname : ""}
                 readOnly
                 className="border border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </FormControl>
             <FormControl>
-              <FormLabel className="text-blue-600">Suffix</FormLabel>
+              <FormLabel className="text-blue-600">Middlename</FormLabel>
               <Input
                 name="suffix"
-                defaultValue={allUsers[0]?.suffix || ""}
+                defaultValue={user.middlename ? user.middlename : ""}
                 readOnly
                 className="border border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
@@ -172,7 +164,7 @@ export const Upload = () => {
               <FormLabel className="text-blue-600">Lastname</FormLabel>
               <Input
                 name="lastname"
-                defaultValue={allUsers[0]?.lastname || ""}
+                defaultValue={user.lastname ? user.lastname : ""}
                 readOnly
                 className="border border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
               />

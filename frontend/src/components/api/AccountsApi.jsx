@@ -56,7 +56,6 @@ export const updateAccountAPI = async ({ body, _id }) => {
       JSON.stringify(body),
       { headers }
     );
-    console.log("Update response:", response.data.newData); // Log the response data
     return response.data; // Assuming you want to return the updated data
   } catch (error) {
     console.error("Error updating account:", error);

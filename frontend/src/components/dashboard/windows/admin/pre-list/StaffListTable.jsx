@@ -50,7 +50,6 @@ const StaffListTable = ({
 
   const handleDeleteAccounts = (id) => {
     handleDeleteAccount(id);
-    console.log(id);
     if (currentPage >= Math.ceil((filteredStaff.length - 1) / staffPerPage)) {
       setCurrentPage(Math.max(0, currentPage - 1));
     }

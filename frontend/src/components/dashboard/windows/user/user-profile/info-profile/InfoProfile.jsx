@@ -161,7 +161,6 @@ const InfoProfile = ({}) => {
         navigate("/dashboard");
       }, 2000);
 
-      console.log("Files upload success");
     } catch (error) {
       console.error("Upload failed:", error);
     }

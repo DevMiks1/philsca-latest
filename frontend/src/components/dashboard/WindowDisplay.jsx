@@ -33,7 +33,7 @@ export const WindowDisplay = ({ tab, accountLogin }) => {
         prelist: PreList,
         studlistid: idList,
         graphsandanalytics: GraphsAndAnalytics,
-        idLost: idLost,
+        idlost: idLost,
         reports: Reports,
         profile: Setting,
       };

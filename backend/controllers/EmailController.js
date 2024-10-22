@@ -8,7 +8,6 @@ exports.sendEmail = async (req, res) => {
     subject,
     text
   };
-  console.log(mailOptions);
   try {
     const info = await transporter.sendMail(mailOptions);
     res.status(200).send({ message: 'Email sent', response: info.response });

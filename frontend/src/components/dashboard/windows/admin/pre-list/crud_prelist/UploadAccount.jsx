@@ -44,7 +44,6 @@ const UploadAccount = ({ isOpen, onClose }) => {
           duration: 5000,
           isClosable: true,
         });
-        console.log("Upload response:", response);
         onClose(); // Close the modal after successful upload
       } catch (error) {
         toast({

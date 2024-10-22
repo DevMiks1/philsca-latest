@@ -50,7 +50,6 @@ const InstructorListTable = ({
 
   const handleDeleteAccounts = (id) => {
     handleDeleteAccount(id);
-    console.log(id);
     if (
       currentPage >= Math.ceil((filteredFaculty.length - 1) / facultyPerPage)
     ) {

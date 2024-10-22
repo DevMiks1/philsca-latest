@@ -76,7 +76,14 @@ export default function Settings() {
 
       // If no images are selected, skip upload
       if (images.length === 0) {
-        console.log("No images to upload, proceeding with user update");
+        toast({
+          title: "Upload Failed",
+          description: "No images to upload, proceeding with user update",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "bottom",
+        });
         return null; // Return early
       }
 

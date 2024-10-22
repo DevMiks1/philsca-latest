@@ -5,7 +5,6 @@ exports.logout = async (req, res) => {
   try {
     // Assuming you have a way to access the user session or user data
     const userId = req.user.id; // Example of getting the user ID from the request
-    console.log(userId);
     // Clear OTP-related fields in your user database
     const data = await User.findByIdAndUpdate(
       userId,

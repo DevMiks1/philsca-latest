@@ -45,7 +45,6 @@ const EditAccount = ({ isOpen, onClose, account }) => {
     if (account) {
       setFormData(account);
     }
-    console.log(account);
   }, [account]);
 
   const handleChange = (e) => {

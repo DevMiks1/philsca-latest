@@ -76,7 +76,6 @@ const ChangePassword = ({ onClose }) => {
       const response = await updateAccountAPI({ _id: userLogin?._id, body });
       if (response) {
         const updatedPassword = response.newData.password; // Renamed for clarity
-        console.log(response.newData);
         setNewPassword(updatedPassword);
         toast({
           title: "Successfully Changed Password",

@@ -38,8 +38,6 @@ const FacultyIdLost = ({
   const filteredFacultyId = data.filter(
     (account) => account.role === "faculty" && account.affidavit
   );
-  console.log(data);
-  console.log(filteredFacultyId);
   const pageCount = Math.ceil(filteredFacultyId.length / facultyPerPage);
 
   const filteredFacuty = filteredFacultyId

@@ -61,7 +61,6 @@ export default function StudIDList() {
   };
 
   const handleOpenMail = (student) => {
-    console.log(student);
     setMail(student);
     setMailModalOpen(true);
   };
