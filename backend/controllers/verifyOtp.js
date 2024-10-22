@@ -51,6 +51,7 @@ exports.verifyOtp = async (req, res) => {
     const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
       expiresIn: "1h", // Token valid for 1 hour
     });
+    console.log(token, "verifyOtp");
 
     // Set token in HTTP-only cookie
     res.cookie("token", token, {
