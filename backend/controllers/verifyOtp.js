@@ -57,7 +57,7 @@ exports.verifyOtp = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true, // Cookie cannot be accessed via JavaScript
       secure: true, // Cookie is only sent over HTTPS
-      sameSite: "Lax", // Helps prevent CSRF attacks
+      sameSite: "None", // Helps prevent CSRF attacks
     });
 
     // Respond with success message
