@@ -11,7 +11,6 @@ const headers = {
 };
 
 export const verifyOtp = async ({ body }) => {
-  console.log(body);
   try {
     const response = await axios.post(
       `${globalUrl}/philsca/verify-otp`,

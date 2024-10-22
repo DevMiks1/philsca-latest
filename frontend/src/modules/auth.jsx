@@ -18,14 +18,13 @@ const useAuthStore = create((set, get) => ({
       const response = await auth(); // This could be a GET request to fetch user data
       if (response.data.token === get().token) {
         set({ userId: response.data.userId, token: response.data.token });
-        console.log(get().userId);
 
         localStorage.setItem("token", response.data.token); // Store the token if available
       } else {
         get().clearAuth();
       }
     } catch (error) {
-      console.error("Fetch user data error:", error);
+      console.error("error authentication:", error);
       get().clearAuth();
     }
   },
