@@ -20,6 +20,7 @@ export const auth = async () => {
 
       { headers, withCredentials: true }
     );
+    console.log("Response Data:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error authentication:", error);
