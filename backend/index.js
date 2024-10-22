@@ -11,7 +11,7 @@ const app = express();
 const port = 8400 || 5001;
 
 const corsOptions = {
-  origin: "http://localhost:3000", // Allow requests from this origin
+  origin: "https://philscasystem.vercel.app", // Allow requests from this origin
   credentials: true, // Allow cookies and credentials
 };
 
