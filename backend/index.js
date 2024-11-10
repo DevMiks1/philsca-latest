@@ -11,8 +11,8 @@ const app = express();
 const port = 8400 || 5001;
 
 const corsOptions = {
-  origin: "https://philscaonlineidsystem.vercel.app",
-  // origin: "http://localhost:3000",
+  // origin: "https://philscaonlineidsystem.vercel.app",
+  origin: "http://localhost:3000",
   credentials: true, // Allow cookies and credentials
 };
 
