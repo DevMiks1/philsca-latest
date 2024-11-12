@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import { Box, useToast } from "@chakra-ui/react";
 import logo from "../../../../../assets/philscalogo.png";
-import Test from "../../../../../assets/shanks.jpg";
 import PhilscaLogoCircle from "../../../../../assets/philsca-logo-circle.png";
 import ReactToPrint from "react-to-print";
 import RegistrarSignature from "../../../../../assets/registrar_signature.png";
@@ -242,7 +241,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                               />
                             ) : (
                               <img
-                                src={Test}
+                                src={student.picture}
                                 alt="profile"
                                 className="h-[130px] w-[130px]"
                               />
