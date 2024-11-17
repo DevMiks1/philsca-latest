@@ -296,29 +296,37 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
 
                   {student.role === "staff" ? (
                     <>
-                      <div className="flex flex-col justify-center items-center  bg-white text-black">
-                        {!student.firstname || !student.lastname ? (
-                          <p>N/A</p>
-                        ) : (
-                          <p className="uppercase text-[1.1rem] font-bold">{`${student.firstname} ${student.middlename} ${student.lastname}`}</p>
-                        )}
-                        <p class="text-black text-[.9rem]">EMPLOYEE NAME</p>
-                        {student.schoolid === "" ? (
-                          <p>N/A</p>
-                        ) : (
-                          <p className="uppercase text-[1.1rem] font-bold">
-                            {student.schoolid}
+                      <div className="flex flex-col justify-center items-center custom-bg text-black">
+                        <div className="text-content">
+                          {!student.firstname || !student.lastname ? (
+                            <p>N/A</p>
+                          ) : (
+                            <p className="uppercase text-[1.1rem] font-bold">
+                              {`${student.firstname} ${student.middlename} ${student.lastname}`}
+                            </p>
+                          )}
+                          <p className="text-black text-[.9rem]">
+                            EMPLOYEE NAME
                           </p>
-                        )}
-                        <p class="text-black text-[.9rem]">EMPLOYEE NUMBER</p>
-                        {student.position === "" ? (
-                          <p>N/A</p>
-                        ) : (
-                          <p className="uppercase text-[1.1rem] font-bold">
-                            {student.position}
+                          {student.schoolid === "" ? (
+                            <p>N/A</p>
+                          ) : (
+                            <p className="uppercase text-[1.1rem] font-bold">
+                              {student.schoolid}
+                            </p>
+                          )}
+                          <p className="text-black text-[.9rem]">
+                            EMPLOYEE NUMBER
                           </p>
-                        )}
-                        <p class="text-black text-[.9rem]">POSITION</p>
+                          {student.position === "" ? (
+                            <p>N/A</p>
+                          ) : (
+                            <p className="uppercase text-[1.1rem] font-bold">
+                              {student.position}
+                            </p>
+                          )}
+                          <p className="text-black text-[.9rem]">POSITION</p>
+                        </div>
                       </div>
                     </>
                   ) : (

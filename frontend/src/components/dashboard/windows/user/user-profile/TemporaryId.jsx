@@ -52,7 +52,9 @@ const AccountTempoId = () => {
           border="2px"
           borderRadius="lg"
           mb={4}
-          w="320px"
+          // w="320px"
+          w="212px"
+          h="331px"
           p={0}
         >
           <CardBody p={0}>
