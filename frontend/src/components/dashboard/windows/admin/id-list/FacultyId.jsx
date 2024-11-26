@@ -36,7 +36,7 @@ const FacultyId = ({
 }) => {
   const { data, setData } = useData();
 
-  const facultyPerPage = 6;
+  const facultyPerPage = 50;
 
   const filteredFacultyId = data.filter(
     (account) => account.role === "faculty"

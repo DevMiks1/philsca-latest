@@ -18,18 +18,37 @@ body {
   padding: 0;
 }
 
+.id-header {
+  font-family: sans-serif;
+  text-align: center;
+  color: #FDE047;
+}
+.name {
+  font-family: arial;
+  font-size: 15px;
+}
+
+ .schoold-id, .program {
+  font-family: arial;
+  font-size: 14.4px;
+}
+
 .id-background {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+#birthDate, #case-emergency, #important, #content, #personnel-back-card {
+  font-family: arial bold;
 }
 .custom-bg {
   background-image: url("../src/assets/id-background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 110%;
-  background-position: center calc(100% - 3px);
+  background-size: 160%;
+  background-position: center calc(100%);
   position: relative;
 }
 
@@ -119,7 +138,7 @@ canvas {
 .signature {
   position: relative;
   display: inline-block;
-  font-size: 16px;
+  font-size: 10px;
   font-weight: bold;
   text-align: center;
   width: 70%;
@@ -136,7 +155,7 @@ canvas {
 .signature-registrar {
   position: relative;
   display: inline-block;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: bold;
   text-align: center;
   width: 70%;

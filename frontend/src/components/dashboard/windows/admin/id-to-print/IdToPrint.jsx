@@ -63,31 +63,36 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
               border="2px"
               borderRadius="lg"
               mb={4}
-              w="320px"
+              w="207px"
+              h='326px'
             >
               <CardBody p={0}>
                 <div>
                   <div className="flex flex-col items-center">
                     {student.role === "student" || student.role === "staff" ? (
                       <>
-                        <p className="text-[.9rem] text-white">
+                        <p className="text-[.8rem] text-white">
                           Republic of the Philippines
                         </p>
-
-                        <p className="text-[.9rem] text-yellow-300">
+                      {student.role === 'student' ? (<><p className=" id-header  text-[.812rem]">
+                          PHILIPPINE STATE COLLEGE <span className="block">OF AERONAUTICS</span>
+                        </p></>) : student.role === 'staff' ? (<>
+                          <p className=" id-header  text-[.5rem]">
                           PHILIPPINE STATE COLLEGE OF AERONAUTICS
                         </p>
+                        </>) : (<> </>)}
+                        
 
-                        <p className="text-white text-[.9rem] pb-2">
+                        <p className="text-white text-[.6rem] pb-2">
                           Piccio Garden, Villamor. Pasay City
                         </p>
                       </>
                     ) : (
                       <>
-                        <p className="text-[.9rem] text-white">
+                        <p className="text-[.6rem]  text-white">
                           Republic of the Philippines
                         </p>
-                        <p className="text-[.9rem] text-yellow-300">
+                        <p className="text-[.5rem] id-header">
                           PHILIPPINE STATE COLLEGE OF AERONAUTICS
                         </p>
                       </>
@@ -114,10 +119,8 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                               />
                               {student.role === "student" ? (
                                 <>
-                                  {" "}
-                                  <Text fontSize="md" color="yellow.400">
-                                    SY-2023-2024
-                                  </Text>
+                                  
+                                  <p className="text-yellow-300 text-[.8rem]">SY-2023-2024</p>
                                 </>
                               ) : (
                                 <></>
@@ -130,7 +133,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
 
                         {student.role === "student" ? (
                           <>
-                            <Stack align="center">
+                            <Stack align="center" justify="center">
                               {student.picture === "" ? (
                                 <Avatar
                                   src={student.picture}
@@ -141,15 +144,14 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                                 <Image
                                   src={student.picture}
                                   alt="profile"
-                                  boxSize="150px"
-                                  mr={4}
+                                  boxSize="100px"
+                                 
                                 />
                               )}
                               {student.role === "student" ? (
                                 <>
-                                  <Text fontSize="sm" color="yellow.400">
-                                    1st Sem. / 2nd Sem.
-                                  </Text>
+                                  
+                                  <p className="text-yellow-300 text-[.7rem]">1st Sem./2nd Sem.</p>
                                 </>
                               ) : (
                                 <></>
@@ -196,7 +198,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                               <Image
                                 src={student.picture}
                                 alt="profile"
-                                boxSize="150px"
+                                boxSize="100px"
                                 mr={4}
                               />
                             )}
@@ -212,79 +214,82 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     <>
                       {" "}
                       <div>
-                        <div className="flex justfiy-between">
-                          <div className="h-[70px] w-[70px]">
+                        <div className="flex justfiy-between px-2">
+                          <div className="h-[50px] w-[40px]">
                             <img
                               src={logo}
                               alt="Philsca Logo"
                               className="w-full h-full"
                             />
                           </div>
-                          <div className="mt-5 text-[.9rem] text-white">
+                          <div className="mt-5 text-[.6rem] text-white">
                             <p>Piccio Garden, Villamor. Pasay City</p>
                           </div>
                         </div>
-                        <div className="flex justify-between  ml-5 px-3">
-                          <div className="h-[100px] ">
+                        <div className="flex justify-between gap-2 px-3">
+                          <div >
                             <img
                               src={PhilscaLogoCircle}
                               alt=""
-                              className="h-[100px] w-full"
+                              className="h-[90px] w-full"
                             />
                           </div>
-                          <div className="h-[130px]justify-end">
+                          <div >
                             {student.picture === "" ? (
                               <Avatar
                                 src={student.picture}
                                 alt="profile"
-                                boxSize="100px"
+                                boxSize="90px"
                               />
                             ) : (
                               <img
                                 src={student.picture}
                                 alt="profile"
-                                className="h-[130px] w-[130px]"
+                                className="h-[90px] w-80px]"
                               />
                             )}
                           </div>
                         </div>
-                        <div className="flex flex-col justify-center items-center  mt-3">
+                        <div className="flex flex-col justify-center items-center text-white ">
+                          
                           {student.firstname === "" &&
                           student.lastname === "" ? (
-                            <p class="text-white">N/A</p>
+                            <p class="text-white text-[.9rem]">N/A</p>
                           ) : (
-                            <Heading
-                              size="md"
-                              color="white"
-                            >{`${student.firstname} ${student.middlename} ${student.lastname}`}</Heading>
+                            
+
+                            <h3 className="text-[.9rem]" 
+                            
+                          >{`${student.firstname} ${student.middlename} ${student.lastname}`}</h3>
                           )}
-                          <p class="text-yellow-300 text-[.9rem]">
+                          <p class="text-yellow-300 text-[.7rem]">
                             Employee Name
                           </p>
                           {student.schoolid === "" ? (
-                            <p class="text-white ">N/A</p>
+                            <p class="text-white text-[.9rem]">N/A</p>
                           ) : (
-                            <Text fontSize="lg" color="white">
-                              {student.schoolid}
-                            </Text>
+                            
+                            <p className="text-[.9rem]">
+                            {student.schoolid}
+                          </p>
                           )}
-                          <p class="text-yellow-300 text-[.9rem]">ID Number</p>
+                          <p class="text-yellow-300 text-[.7rem]">ID Number</p>
                           {student.position === "" ? (
-                            <p class="text-white">N/A</p>
+                            <p class="text-white text-[.9rem]">N/A</p>
                           ) : (
-                            <Text fontSize="lg" color="white">
-                              {student.position}
-                            </Text>
+                           
+                            <p className=" text-[.9rem]">
+                            {student.position}
+                          </p>
                           )}
-                          <p class="text-yellow-300 text-[.9rem]">Positions</p>
+                          <p class="text-yellow-300 text-[.7rem]">Positions</p>
                           {student.designation === "" ? (
-                            <p class="text-white ">N/A</p>
+                            <p class="text-white text-[.9rem]">N/A</p>
                           ) : (
-                            <Text fontSize="lg" color="white">
-                              {student.designation}
-                            </Text>
+                            
+                            <p className="text-[.9rem]">{student.designation}</p>
                           )}
-                          <p class="text-yellow-300 text-[.9rem]">
+                          <p class="text-yellow-300 text-[.7rem]">
                             Designation
                           </p>
                         </div>
@@ -296,36 +301,36 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
 
                   {student.role === "staff" ? (
                     <>
-                      <div className="flex flex-col justify-center items-center custom-bg text-black">
+                      <div className="flex flex-col justify-center items-center custom-bg text-black h-[146px] ">
                         <div className="text-content">
                           {!student.firstname || !student.lastname ? (
-                            <p>N/A</p>
+                            <p className="text-[.9rem]">N/A</p>
                           ) : (
-                            <p className="uppercase text-[1.1rem] font-bold">
+                            <p className="uppercase text-[.9rem] font-bold">
                               {`${student.firstname} ${student.middlename} ${student.lastname}`}
                             </p>
                           )}
-                          <p className="text-black text-[.9rem]">
+                          <p className="text-black text-[.7rem]">
                             EMPLOYEE NAME
                           </p>
                           {student.schoolid === "" ? (
-                            <p>N/A</p>
+                            <p className="text-[.9rem]">N/A</p>
                           ) : (
-                            <p className="uppercase text-[1.1rem] font-bold">
+                            <p className="uppercase text-[.9rem] font-bold">
                               {student.schoolid}
                             </p>
                           )}
-                          <p className="text-black text-[.9rem]">
+                          <p className="text-black text-[.7rem]">
                             EMPLOYEE NUMBER
                           </p>
                           {student.position === "" ? (
-                            <p>N/A</p>
+                            <p className="text-[.9rem]">N/A</p>
                           ) : (
-                            <p className="uppercase text-[1.1rem] font-bold">
+                            <p className="uppercase text-[.9rem] font-bold">
                               {student.position}
                             </p>
                           )}
-                          <p className="text-black text-[.9rem]">POSITION</p>
+                          <p className="text-black text-[.7rem]">POSITION</p>
                         </div>
                       </div>
                     </>
@@ -335,47 +340,40 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
 
                   {student.role === "student" ? (
                     <>
-                      <Stack
-                        align="center"
-                        justify="center"
-                        bg="white"
-                        p="10px"
-                        rounded="lg"
-                        borderColor="yellow.400"
-                        w="80"
-                        mb={3}
-                      >
-                        {student.firstname === "" && student.lastname === "" ? (
-                          <Text>N/A</Text>
+
+                    <div className="border border-orange-500 flex flex-col items-center justify-center  m-4 bg-white font-bold">
+                    {student.firstname === "" && student.lastname === "" ? (
+                          <p className="name">N/A</p>
                         ) : (
-                          <Heading
-                            size="md"
-                            color="black"
-                          >{`${student.firstname} ${student.middlename} ${student.lastname}`}</Heading>
+                          <h3 className="name"
+                            
+                          >{`${student.firstname} ${student.middlename} ${student.lastname}`}</h3>
                         )}
 
                         {student.schoolid === "" ? (
-                          <Text>N/A</Text>
+                          <p className="school-id">N/A</p>
                         ) : (
-                          <Text fontSize="lg" color="black">
+                          <p className="school-id">
                             {student.schoolid}
-                          </Text>
+                          </p>
                         )}
 
                         {student.role === "student" ? (
                           <>
                             {student.course === "" ? (
-                              <Text>N/A</Text>
+                              <p className="program">N/A</p>
                             ) : (
-                              <Text fontSize="lg" color="black">
+                              <p className="program">
                                 {student.course}
-                              </Text>
+                              </p>
                             )}
                           </>
                         ) : (
                           <></>
                         )}
-                      </Stack>
+
+                    </div>
+                      
                     </>
                   ) : (
                     <></>
@@ -385,38 +383,39 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
             </Card>
 
             {/* Back Card */}
-            <Card maxW="sm" border="2px" borderRadius="lg" w="320px">
+            <Card maxW="sm" border="2px" borderRadius="lg" w="207px"
+              h='326px'>
               {student.role === "student" ? (
                 <>
                   <CardBody px={2}>
-                    <div className="flex gap-3 pb-2 items-center">
-                      <span className="text-[.9rem] font-[400]">
+                    <div className="flex gap-2 pb-2 items-center text-[.6rem] font-bold" id="birthDate">
+                      <span className=" ">
                         DATE OF BIRTH:{" "}
                       </span>
-                      <p className="font-bold">
+                      <p >
                         {student.birthdate ? formattedDate : "N/A"}
                       </p>
                     </div>
-                    <div className="border-2 border-black">
-                      <div className="bg-black text-white">
-                        <p className="px-2">IN CASE OF EMERGENCY PLS. NOTIFY</p>
+                    <div className="border-2 border-black " id="case-emergency">
+                      <div className="bg-black text-white p-1">
+                        <p className=" text-[.6rem] py-1">IN CASE OF EMERGENCY PLS. NOTIFY</p>
                       </div>
-                      <div className="px-2">
-                        <div className="flex gap-2">
-                          <p className=" font-[400]">Name: </p>
-                          <p className=" font-[600]">
+                      <div className="px-2 text-[.7rem] ">
+                        <div className="flex gap-1 font-bold">
+                          <p>Name: </p>
+                          <p >
                             {student.contactperson || "N/A"}
                           </p>
                         </div>
-                        <div className="flex gap-2">
-                          <p className=" font-[400]">Address: </p>
-                          <p className=" font-[600]">
+                        <div className="flex gap-1 font-bold">
+                          <p >Address: </p>
+                          <p >
                             {student.address || "N/A"}
                           </p>
                         </div>
-                        <div className="flex gap-2">
-                          <p className=" font-[400]">Tel. No.: </p>
-                          <p className=" font-[600]">
+                        <div className="flex gap-1 font-bold">
+                          <p >Tel. No.: </p>
+                          <p >
                             {student.contactpersonnumber
                               ? formatPhoneNumber(student.contactpersonnumber)
                               : "N/A"}
@@ -425,16 +424,16 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                       </div>
                     </div>
 
-                    <p className="pt-[1.5rem] text-[1.2rem] font-[600] text-center">
+                    <p className="pt-[.8rem] text-[.9rem] font-[600] text-center" id="important">
                       IMPORTANT
                     </p>
-                    <p className="px-2 font-[500] pb-[3.5rem]">
+                    <p className="px-1 text-[.6rem] font-[600] " id="content">
                       THIS CARD IS NON-TRANSFERABLE IT MUST BE WORN WHILE INSIDE
                       THE CAMPUS PREMISES.
                     </p>
                     <div className="flex flex-col">
-                      <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[70px]">
-                        <div className="absolute top-0 h-[60px]">
+                      <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[50px]">
+                        <div className="absolute top-0 h-[40px]">
                           <img
                             src={student.signature}
                             alt="signature"
@@ -442,12 +441,12 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                           />
                         </div>
                         <div className="w-full absolute bottom-0">
-                          <p className="signature text-[.700rem]">SIGNATURE</p>
+                          <p className="signature ">SIGNATURE</p>
                         </div>
                       </div>
 
-                      <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[90px]">
-                        <div className="absolute top-0 h-[60px]">
+                      <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[60px]">
+                        <div className="absolute top-0 h-[40px]">
                           <img
                             src={RegistrarSignature}
                             alt="registrar signature"
@@ -455,8 +454,8 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                           />
                         </div>
                         <div className="w-full absolute bottom-0">
-                          <p className="font-bold">MR. DARBY P ESBERANZATE</p>
-                          <p className="signature-registrar text-[.700rem] bottom-0">
+                          <p className="font-bold text-[.7rem]">MR. DARBY P ESBERANZATE</p>
+                          <p className="signature-registrar  bottom-0">
                             College Registrar
                           </p>
                         </div>
@@ -466,43 +465,43 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                 </>
               ) : (
                 <CardBody px={2}>
-                  <div class="grid grid-cols-3 border-2 border-black w-full">
+                  <div class="grid grid-cols-3 border-2 border-black w-full text-[.5rem] " id="personnel-back-card">
                     <div class="border-r-2 border-black text-center">
-                      <p className="text-left text-[.9rem] font-bold">HEIGHT</p>
+                      <p className="text-left  font-bold">HEIGHT</p>
                       <p> {student.hgt ? student.hgt : "N/A"}</p>
                     </div>
                     <div class="border-r-2 border-black text-center">
-                      <p className="text-left text-[.9rem] font-bold pl-1">
+                      <p className="text-left  font-bold pl-1">
                         BIRTHDATE
                       </p>
                       <p> {student.birthdate ? formattedDate : "N/A"}</p>
                     </div>
                     <div class="text-center">
-                      <p className="text-left text-[.9rem] font-bold pl-1">
+                      <p className="text-left  font-bold pl-1">
                         WEIGHT
                       </p>
                       <p> {student.wgt ? student.wgt : "N/A"}</p>
                     </div>
                   </div>
-                  <div className="border-2 border-black">
-                    <p className="px-2">IN CASE OF EMERGENCY PLS. NOTIFY</p>
+                  <div className="border-2 border-black font-[600] "  id="personnel-back-card">
+                    <p className="px-2 text-[.7rem]">In case of emergency pls., notify:</p>
 
-                    <div className="px-2">
+                    <div className="px-2 text-[.6rem]">
                       <div className="flex gap-2">
-                        <p className=" font-[400]">Name: </p>
-                        <p className=" font-[600]">
+                        <p >Name: </p>
+                        <p >
                           {student.contactperson || "N/A"}
                         </p>
                       </div>
                       <div className="flex gap-2">
-                        <p className=" font-[400]">Address: </p>
-                        <p className=" font-[600]">
+                        <p >Address: </p>
+                        <p >
                           {student.address || "N/A"}
                         </p>
                       </div>
                       <div className="flex gap-2">
-                        <p className=" font-[400]">Tel. No.: </p>
-                        <p className=" font-[600]">
+                        <p >Tel. No.: </p>
+                        <p >
                           {student.contactpersonnumber
                             ? formatPhoneNumber(student.contactpersonnumber)
                             : "N/A"}
@@ -510,13 +509,13 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                       </div>
                     </div>
                   </div>
-                  <div className="flex">
-                    <div className="w-[50%] p-1 text-[.9rem] font-[500]">
+                  <div className="flex font-[600]" id="personnel-back-card"  >
+                    <div className="w-[50%] p-1 text-[.5rem]">
                       THIS IS TO CERTIFY THAT THE PERSON WHOSE PHOTO AND
                       SIGNATURE APPEAR ON THIS CARD IS AN EMPLOYEE OF THIS
                       COLLEGE.
                     </div>
-                    <div className="w-[50%]">
+                    <div className="w-[50%] text-[.5rem] ">
                       <div class="flex flex-col border-2 border-black w-full">
                         <div class=" border-b border-black">
                           <p class="text-left font-bold">GSIS</p>
@@ -535,8 +534,8 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     </div>
                   </div>
                   <div className="flex flex-col">
-                    <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[70px]">
-                      <div className="absolute top-0 h-[60px]">
+                    <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[50px]">
+                      <div className="absolute top-0 h-[40px]">
                         <img
                           src={student.signature}
                           alt="signature"
@@ -544,12 +543,12 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                         />
                       </div>
                       <div className="w-full absolute bottom-0">
-                        <p className="signature text-[.700rem]">SIGNATURE</p>
+                        <p className="signature">SIGNATURE</p>
                       </div>
                     </div>
 
-                    <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[90px]">
-                      <div className="absolute top-0 h-[60px]">
+                    <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[60px]">
+                      <div className="absolute top-0 h-[40px]">
                         <img
                           src={RegistrarSignature}
                           alt="registrar signature"
@@ -557,7 +556,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                         />
                       </div>
                       <div className="w-full absolute bottom-0">
-                        <p className="font-bold">DR. MARWIN M. DELACRUZ</p>
+                        <p className="font-bold text-[.7rem]">DR. MARWIN M. DELACRUZ</p>
                         <p className="signature-registrar text-[.6rem] bottom-0">
                           COLLEGE PRESIDENT
                         </p>

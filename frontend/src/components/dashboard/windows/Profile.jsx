@@ -43,9 +43,9 @@ const Profile = ({ handleTabChange }) => {
   // };
 
   const fullName = useMemo(() => {
-    const firstName = userLogin?.firstName || "";
+    const firstName = userLogin?.firstname || "";
     const middleName = userLogin?.middlename || "";
-    const lastName = userLogin?.lastName || "";
+    const lastName = userLogin?.lastname || "";
     const suffix = userLogin?.suffix || "";
 
     const name = `${firstName} ${middleName} ${lastName} ${suffix}`.trim();

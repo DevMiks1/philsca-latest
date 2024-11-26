@@ -33,7 +33,7 @@ const FacultyIdLost = ({
 }) => {
   const { data, setData } = useData();
 
-  const facultyPerPage = 4;
+  const facultyPerPage = 50;
 
   const filteredFacultyId = data.filter(
     (account) => account.role === "faculty" && account.affidavit

@@ -34,7 +34,7 @@ const InstructorListTable = ({
 }) => {
   const { data, loading, setData } = useData();
   const [currentPage, setCurrentPage] = useState(0);
-  const facultyPerPage = 4;
+  const facultyPerPage = 50;
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);

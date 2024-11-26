@@ -35,7 +35,7 @@ const StaffId = ({
   handlePageClick,
 }) => {
   const { data } = useData();
-  const staffPerPage = 6;
+  const staffPerPage = 50;
 
   const filteredStaffId = data.filter((account) => account.role === "staff");
   const pageCount = Math.ceil(filteredStaffId.length / staffPerPage);

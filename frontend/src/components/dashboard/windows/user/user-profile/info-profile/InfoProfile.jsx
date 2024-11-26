@@ -74,9 +74,9 @@ const InfoProfile = ({}) => {
   };
   const user = accountLogin();
   const fullName = useMemo(() => {
-    const firstName = user?.firstName || "";
+    const firstName = user?.firstname || "";
     const middleName = user?.middlename || "";
-    const lastName = user?.lastName || "";
+    const lastName = user?.lastname || "";
     const suffix = user?.suffix || "";
 
     const name = `${firstName} ${middleName} ${lastName} ${suffix}`.trim();
