@@ -333,11 +333,11 @@ const AccountTempoId = () => {
 
               {user.role === "student" ? (
                 <>
-                   <div className="border border-orange-500 flex flex-col items-center justify-center  m-4 bg-white font-bold">
+                   <div className="border border-orange-500 flex flex-col items-center justify-center m-2 bg-white font-bold">
                     {user.firstname === "" && user.lastname === "" ? (
                           <p className="name">N/A</p>
                         ) : (
-                          <h3 className="name"
+                          <h3 className="name text-center"
                             
                           >{`${user.firstname} ${user.middlename} ${user.lastname}`}</h3>
                         )}
@@ -389,24 +389,24 @@ const AccountTempoId = () => {
         </div>
         <div className="border-2 border-black " id="case-emergency">
           <div className="bg-black text-white p-1">
-            <p className=" text-[.6rem] py-1">IN CASE OF EMERGENCY PLS. NOTIFY</p>
+            <p className=" text-[.6rem] ">IN CASE OF EMERGENCY PLS. NOTIFY</p>
           </div>
-          <div className="px-2 text-[.7rem] ">
+          <div className="px-1 text-[.7rem] ">
             <div className="flex gap-1 font-bold">
               <p>Name: </p>
-              <p >
+              <p className="text-[.6rem]">
                 {user.contactperson || "N/A"}
               </p>
             </div>
-            <div className="flex gap-1 font-bold">
+            <div className="flex gap-1 font-bold ">
               <p >Address: </p>
-              <p >
+              <p className="text-[.6rem]">
                 {user.address || "N/A"}
               </p>
             </div>
             <div className="flex gap-1 font-bold">
               <p >Tel. No.: </p>
-              <p >
+              <p className="text-[.6rem]">
                 {user.contactpersonnumber
                   ? formatPhoneNumber(user.contactpersonnumber)
                   : "N/A"}
@@ -459,7 +459,7 @@ const AccountTempoId = () => {
       <div className="grid grid-cols-3 border-2 border-black w-full text-[.5rem] " id="personnel-back-card">
         <div className="border-r-2 border-black text-center">
           <p className="text-left  font-bold">HEIGHT</p>
-          <p> {user.hgt ? user.hgt : "N/A"}</p>
+          <p className="text-[.7rem]"> {user.hgt ? user.hgt : "N/A"}</p>
         </div>
         <div className="border-r-2 border-black text-center">
           <p className="text-left  font-bold pl-1">
@@ -468,31 +468,31 @@ const AccountTempoId = () => {
           <p> {user.birthdate ? formattedDate : "N/A"}</p>
         </div>
         <div className="text-center">
-          <p className="text-left  font-bold pl-1">
+          <p className="text-left  font-bold pl-1 ">
             WEIGHT
           </p>
-          <p> {user.wgt ? user.wgt : "N/A"}</p>
+          <p className="text-[.7rem]"> {user.wgt ? user.wgt : "N/A"}</p>
         </div>
       </div>
       <div className="border-2 border-black font-[600] "  id="personnel-back-card">
-        <p className="px-2 text-[.7rem]">In case of emergency pls., notify:</p>
+        <p className="px-1 text-[.7rem]">In case of emergency pls., notify:</p>
 
-        <div className="px-2 text-[.6rem]">
+        <div className="px-1 text-[.6rem]">
           <div className="flex gap-2">
             <p >Name: </p>
-            <p >
+            <p className="text-[.6rem]">
               {user.contactperson || "N/A"}
             </p>
           </div>
           <div className="flex gap-2">
             <p >Address: </p>
-            <p >
+            <p className="text-[.6rem]">
               {user.address || "N/A"}
             </p>
           </div>
           <div className="flex gap-2">
             <p >Tel. No.: </p>
-            <p >
+            <p className="text-[.6rem]">
               {user.contactpersonnumber
                 ? formatPhoneNumber(user.contactpersonnumber)
                 : "N/A"}
@@ -501,7 +501,7 @@ const AccountTempoId = () => {
         </div>
       </div>
       <div className="flex font-[600]" id="personnel-back-card"  >
-        <div className="w-[50%] p-1 text-[.5rem]">
+        <div className="w-[50%] p-1 text-[.4rem]">
           THIS IS TO CERTIFY THAT THE PERSON WHOSE PHOTO AND
           SIGNATURE APPEAR ON THIS CARD IS AN EMPLOYEE OF THIS
           COLLEGE.
@@ -539,13 +539,7 @@ const AccountTempoId = () => {
         </div>
 
         <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[60px]">
-          <div className="absolute top-0 h-[40px]">
-            <img
-              src={RegistrarSignature}
-              alt="registrar signature"
-              className="h-full w-full"
-            />
-          </div>
+          
           <div className="w-full absolute bottom-0">
             <p className="font-bold text-[.7rem]">DR. MARWIN M. DELACRUZ</p>
             <p className="signature-registrar text-[.6rem] bottom-0">

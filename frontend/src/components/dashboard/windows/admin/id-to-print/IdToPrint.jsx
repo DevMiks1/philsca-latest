@@ -343,9 +343,9 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
 
                     <div className="border border-orange-500 flex flex-col items-center justify-center  m-4 bg-white font-bold">
                     {student.firstname === "" && student.lastname === "" ? (
-                          <p className="name">N/A</p>
+                          <p className="name text-center">N/A</p>
                         ) : (
-                          <h3 className="name"
+                          <h3 className="name text-center"
                             
                           >{`${student.firstname} ${student.middlename} ${student.lastname}`}</h3>
                         )}
@@ -468,7 +468,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                   <div class="grid grid-cols-3 border-2 border-black w-full text-[.5rem] " id="personnel-back-card">
                     <div class="border-r-2 border-black text-center">
                       <p className="text-left  font-bold">HEIGHT</p>
-                      <p> {student.hgt ? student.hgt : "N/A"}</p>
+                      <p className="text-[.7rem]"> {student.hgt ? student.hgt : "N/A"}</p>
                     </div>
                     <div class="border-r-2 border-black text-center">
                       <p className="text-left  font-bold pl-1">
@@ -480,28 +480,28 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                       <p className="text-left  font-bold pl-1">
                         WEIGHT
                       </p>
-                      <p> {student.wgt ? student.wgt : "N/A"}</p>
+                      <p className="text-[.7rem]">  {student.wgt ? student.wgt : "N/A"}</p>
                     </div>
                   </div>
                   <div className="border-2 border-black font-[600] "  id="personnel-back-card">
-                    <p className="px-2 text-[.7rem]">In case of emergency pls., notify:</p>
+                    <p className="px-1 text-[.7rem]">In case of emergency pls., notify:</p>
 
-                    <div className="px-2 text-[.6rem]">
+                    <div className="px-1 text-[.6rem]">
                       <div className="flex gap-2">
                         <p >Name: </p>
-                        <p >
+                        <p className="text-[.6rem]">
                           {student.contactperson || "N/A"}
                         </p>
                       </div>
                       <div className="flex gap-2">
                         <p >Address: </p>
-                        <p >
+                        <p className="text-[.6rem]">
                           {student.address || "N/A"}
                         </p>
                       </div>
                       <div className="flex gap-2">
                         <p >Tel. No.: </p>
-                        <p >
+                        <p className="text-[.6rem]">
                           {student.contactpersonnumber
                             ? formatPhoneNumber(student.contactpersonnumber)
                             : "N/A"}
@@ -510,7 +510,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     </div>
                   </div>
                   <div className="flex font-[600]" id="personnel-back-card"  >
-                    <div className="w-[50%] p-1 text-[.5rem]">
+                    <div className="w-[50%] p-1 text-[.4rem]">
                       THIS IS TO CERTIFY THAT THE PERSON WHOSE PHOTO AND
                       SIGNATURE APPEAR ON THIS CARD IS AN EMPLOYEE OF THIS
                       COLLEGE.
