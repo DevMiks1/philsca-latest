@@ -60,14 +60,14 @@ const AccountTempoId = () => {
           <CardBody p={0}>
             <div>
               <div className="flex flex-col items-center">
-                {user.role === "student" || user.role === "staff" ? (
+                {user.role === "student" || user.role === "cos_employee" ? (
                   <>
                   <p className="text-[.8rem] text-white">
                     Republic of the Philippines
                   </p>
                 {user.role === 'student' ? (<><p className=" id-header  text-[.812rem]">
                     PHILIPPINE STATE COLLEGE <span className="block">OF AERONAUTICS</span>
-                  </p></>) : user.role === 'staff' ? (<>
+                  </p></>) : user.role === 'cos_employee' ? (<>
                     <p className=" id-header  text-[.5rem]">
                     PHILIPPINE STATE COLLEGE OF AERONAUTICS
                   </p>
@@ -159,7 +159,7 @@ const AccountTempoId = () => {
               ) : (
                 <></>
               )}
-              {user.role === "staff" ? (
+              {user.role === "cos_employee" ? (
                 <>
                   <Stack
                     direction="row"
@@ -203,7 +203,7 @@ const AccountTempoId = () => {
                 <></>
               )}
 
-              {user.role === "faculty" ? (
+              {user.role === "permanent_employee" ? (
                 <>
                   {" "}
                   <div>
@@ -292,7 +292,7 @@ const AccountTempoId = () => {
                 <></>
               )}
 
-              {user.role === "staff" ? (
+              {user.role === "cos_employee" ? (
                 <>
                   <div className="flex flex-col justify-center items-center custom-bg text-black h-[146px] ">
                         <div className="text-content">
@@ -474,7 +474,7 @@ const AccountTempoId = () => {
           <p className="text-[.7rem]"> {user.wgt ? user.wgt : "N/A"}</p>
         </div>
       </div>
-      <div className="border-2 border-black font-[600] "  id="personnel-back-card">
+      <div className="border-2 border-black font-[600] h-[80px]"  id="personnel-back-card" >
         <p className="px-1 text-[.7rem]">In case of emergency pls., notify:</p>
 
         <div className="px-1 text-[.6rem]">

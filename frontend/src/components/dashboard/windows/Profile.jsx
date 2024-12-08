@@ -65,11 +65,17 @@ const Profile = ({ handleTabChange }) => {
           <Box p={3} color="white">
             <Text fontWeight="semibold">{fullName}</Text>
             <Text fontSize="sm" color="gray.300">
-              {userLogin?.role === "admin"
-                ? "Administrator"
-                : userLogin?.role === "faculty" || userLogin?.role === "staff"
-                ? "Employees"
-                : "Students"}
+            {userLogin?.role === "admin" && userLogin.roleLevel ===' 1'
+              ? "Administrator"
+              : userLogin?.role === 'admin' && userLogin.roleLevel === '2'
+              ? 'Head'
+              : userLogin?.role === 'admin' && userLogin.roleLevel === '3'
+              ? 'Sub Staff'
+              : userLogin?.role === "student" && userLogin.roleLevel === '4'
+              ? "Student"
+              : userLogin?.role === "permanent_employee" && userLogin.roleLevel === '4' 
+              ? "Permanent Employee"
+              :  userLogin?.role === "cos_employee" && userLogin.roleLevel === '4' ? 'COS Employee' : ''}
             </Text>
           </Box>
           <Divider color="white" />

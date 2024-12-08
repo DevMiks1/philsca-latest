@@ -69,14 +69,14 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
               <CardBody p={0}>
                 <div>
                   <div className="flex flex-col items-center">
-                    {student.role === "student" || student.role === "staff" ? (
+                    {student.role === "student" || student.role === "cos_employee" ? (
                       <>
                         <p className="text-[.8rem] text-white">
                           Republic of the Philippines
                         </p>
                       {student.role === 'student' ? (<><p className=" id-header  text-[.812rem]">
                           PHILIPPINE STATE COLLEGE <span className="block">OF AERONAUTICS</span>
-                        </p></>) : student.role === 'staff' ? (<>
+                        </p></>) : student.role === 'cos_employee' ? (<>
                           <p className=" id-header  text-[.5rem]">
                           PHILIPPINE STATE COLLEGE OF AERONAUTICS
                         </p>
@@ -166,7 +166,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                   ) : (
                     <></>
                   )}
-                  {student.role === "staff" ? (
+                  {student.role === "cos_employee" ? (
                     <>
                       <Stack
                         direction="row"
@@ -210,7 +210,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     <></>
                   )}
 
-                  {student.role === "faculty" ? (
+                  {student.role === "permanent_employee" ? (
                     <>
                       {" "}
                       <div>
@@ -299,7 +299,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     <></>
                   )}
 
-                  {student.role === "staff" ? (
+                  {student.role === "cos_employee" ? (
                     <>
                       <div className="flex flex-col justify-center items-center custom-bg text-black h-[146px] ">
                         <div className="text-content">
@@ -341,7 +341,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                   {student.role === "student" ? (
                     <>
 
-                    <div className="border border-orange-500 flex flex-col items-center justify-center  m-4 bg-white font-bold">
+                    <div className="border border-orange-500 flex flex-col items-center justify-center m-2 bg-white font-bold">
                     {student.firstname === "" && student.lastname === "" ? (
                           <p className="name text-center">N/A</p>
                         ) : (
@@ -398,24 +398,24 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     </div>
                     <div className="border-2 border-black " id="case-emergency">
                       <div className="bg-black text-white p-1">
-                        <p className=" text-[.6rem] py-1">IN CASE OF EMERGENCY PLS. NOTIFY</p>
+                        <p className=" text-[.6rem]">IN CASE OF EMERGENCY PLS. NOTIFY</p>
                       </div>
-                      <div className="px-2 text-[.7rem] ">
+                      <div className="px-1 text-[.7rem] ">
                         <div className="flex gap-1 font-bold">
-                          <p>Name: </p>
-                          <p >
+                          <p >Name: </p>
+                          <p className="text-[.6rem]">
                             {student.contactperson || "N/A"}
                           </p>
                         </div>
                         <div className="flex gap-1 font-bold">
                           <p >Address: </p>
-                          <p >
+                          <p className="text-[.6rem]">
                             {student.address || "N/A"}
                           </p>
                         </div>
                         <div className="flex gap-1 font-bold">
-                          <p >Tel. No.: </p>
-                          <p >
+                          <p>Tel. No.: </p>
+                          <p  className="text-[.6rem]">
                             {student.contactpersonnumber
                               ? formatPhoneNumber(student.contactpersonnumber)
                               : "N/A"}
@@ -446,20 +446,20 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                       </div>
 
                       <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[60px]">
-                        <div className="absolute top-0 h-[40px]">
-                          <img
-                            src={RegistrarSignature}
-                            alt="registrar signature"
-                            className="h-full w-full"
-                          />
-                        </div>
-                        <div className="w-full absolute bottom-0">
-                          <p className="font-bold text-[.7rem]">MR. DARBY P ESBERANZATE</p>
-                          <p className="signature-registrar  bottom-0">
-                            College Registrar
-                          </p>
-                        </div>
-                      </div>
+            <div className="absolute top-0 h-[40px]">
+              <img
+                src={RegistrarSignature}
+                alt="registrar signature"
+                className="h-full w-full"
+              />
+            </div>
+            <div className="w-full absolute bottom-0">
+              <p className="font-bold text-[.7rem]">MR. DARBY P ESBERANZATE</p>
+              <p className="signature-registrar  bottom-0">
+                College Registrar
+              </p>
+            </div>
+          </div>
                     </div>
                   </CardBody>
                 </>
@@ -548,13 +548,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     </div>
 
                     <div className="text-center text-[.900rem]  relative flex flex-col items-center justify-center h-[60px]">
-                      <div className="absolute top-0 h-[40px]">
-                        <img
-                          src={RegistrarSignature}
-                          alt="registrar signature"
-                          className="h-full w-full"
-                        />
-                      </div>
+                      
                       <div className="w-full absolute bottom-0">
                         <p className="font-bold text-[.7rem]">DR. MARWIN M. DELACRUZ</p>
                         <p className="signature-registrar text-[.6rem] bottom-0">

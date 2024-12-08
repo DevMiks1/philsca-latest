@@ -41,9 +41,9 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
           <p className="font-[500] text-[1.3rem]">
             {account.role === "student"
               ? "Student"
-              : account.role === "faculty"
-              ? "Faculty"
-              : "Staff"}{" "}
+              : account.role === "permanent_employee"
+              ? "Permanent Employee"
+              : "Cos Employee"}{" "}
             Details Overview
           </p>
           <p className="font-[400] opacity-70">PHILSCA PHILIPPINES</p>

@@ -37,7 +37,7 @@ const StaffId = ({
   const { data } = useData();
   const staffPerPage = 50;
 
-  const filteredStaffId = data.filter((account) => account.role === "staff");
+  const filteredStaffId = data.filter((account) => account.role === "cos_employee");
   const pageCount = Math.ceil(filteredStaffId.length / staffPerPage);
 
   const filteredStaff = filteredStaffId
