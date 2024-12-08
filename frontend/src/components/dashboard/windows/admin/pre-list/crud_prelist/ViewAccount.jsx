@@ -29,7 +29,7 @@ const ViewAccount = ({ isOpen, onClose, account }) => {
   const formattedDate = date ? date.toISOString().split("T")[0] : "";
 
   const students = account.role === "student";
-  const employee = ["faculty", "staff"].includes(account.role);
+  const employee = ["permanent_employee", "cos_employee"].includes(account.role);
   const staff = ["staff"].includes(account.role);
   const faculty = ["faculty"].includes(account.role);
 

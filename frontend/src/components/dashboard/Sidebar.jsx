@@ -26,7 +26,7 @@ export const SideBar = ({ isOpen, renderLinks, renderUserLinks }) => {
         <Box p={5}>
           <Text fontSize="1.5rem">PHILSCA</Text>
           <Text>
-            {userLogin?.role === "admin" && userLogin.roleLevel ===' 1'
+            {userLogin?.role === "admin" && userLogin.roleLevel ==='1'
               ? "Administrator"
               : userLogin?.role === 'admin' && userLogin.roleLevel === '2'
               ? 'Head'
