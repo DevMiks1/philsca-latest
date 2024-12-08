@@ -141,6 +141,8 @@ canvas {
   font-size: 10px;
   font-weight: bold;
   text-align: center;
+  font-family: arial bold;
+
   width: 70%;
 }
 
@@ -158,6 +160,8 @@ canvas {
   font-size: 10px;
   font-weight: bold;
   text-align: center;
+  font-family: arial bold;
+
   width: 70%;
 }
 .signature-registrar::before {
