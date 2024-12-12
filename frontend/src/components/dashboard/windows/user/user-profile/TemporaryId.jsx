@@ -35,8 +35,6 @@ const AccountTempoId = () => {
   };
   const date = new Date(user.birthdate);
 
-  console.log(user.firstname, user.lastname);
-
   const formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",

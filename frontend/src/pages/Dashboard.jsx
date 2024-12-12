@@ -84,11 +84,16 @@ const DashBoard = () => {
               label: "ID Lost Record",
               icon: FaExclamationTriangle,
             },
-            {
-              tabName: "reports",
-              label: "Report",
-              icon: FaExclamationTriangle,
-            },
+            // Exclude the "Reports" tab only for admin users with levelRole 3
+            ...(user.levelRole !== 3 && user.role === "admin"
+              ? [
+                  {
+                    tabName: "reports",
+                    label: "Report",
+                    icon: FaExclamationTriangle,
+                  },
+                ]
+              : []),
             // { tabName: "settings", label: "Settings", icon: FaCog },
           ].map((item) => (
             <Link
@@ -116,7 +121,7 @@ const DashBoard = () => {
     }
     return null;
   };
-
+  
   const renderUserLinks = (user) => (
     <Box key={user._id}>
       {[
