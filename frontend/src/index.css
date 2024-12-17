@@ -141,7 +141,7 @@ canvas {
 .signature {
   position: relative;
   display: inline-block;
-  font-size: 10px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
   font-family: arial bold;
@@ -160,7 +160,7 @@ canvas {
 .signature-registrar {
   position: relative;
   display: inline-block;
-  font-size: 10px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
   font-family: arial bold;
