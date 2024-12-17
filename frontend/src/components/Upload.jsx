@@ -61,29 +61,29 @@ export const Upload = () => {
 
       const affidavitUrls = [];
       const receiptUrls = [];
-     // Upload images
-     for (const affidavit of affidavits) {
-      const data = new FormData();
-      data.append("file", affidavit);
-      data.append("upload_preset", "uploadNews");
-      const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+      // Upload images
+      for (const affidavit of affidavits) {
+        const data = new FormData();
+        data.append("file", affidavit);
+        data.append("upload_preset", "uploadNews");
+        const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
-      const res = await axios.post(api, data);
-      const secure_url = res.data.secure_url;
-      affidavitUrls.push(secure_url);
-    }
+        const res = await axios.post(api, data);
+        const secure_url = res.data.secure_url;
+        affidavitUrls.push(secure_url);
+      }
 
-    // Upload signatures
-    for (const receipt of receipts) {
-      const data = new FormData();
-      data.append("file", receipt);
-      data.append("upload_preset", "uploadNews");
-      const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+      // Upload signatures
+      for (const receipt of receipts) {
+        const data = new FormData();
+        data.append("file", receipt);
+        data.append("upload_preset", "uploadNews");
+        const api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
-      const res = await axios.post(api, data);
-      const secure_url = res.data.secure_url;
-      receiptUrls.push(secure_url);
-    }
+        const res = await axios.post(api, data);
+        const secure_url = res.data.secure_url;
+        receiptUrls.push(secure_url);
+      }
 
       // Prepare data to send
       const uploadData = {};
@@ -132,8 +132,6 @@ export const Upload = () => {
     }
   };
 
-  
-
   const handleSubmit = async () => {
     try {
       await uploadFiles();
@@ -145,8 +143,9 @@ export const Upload = () => {
         isClosable: true,
         position: "top",
       });
-      setAffidavits('')
-      setReceipts('')
+      setMessage("");
+      setAffidavits("");
+      setReceipts("");
     } catch (error) {
       console.error(error);
       toast({
@@ -157,7 +156,7 @@ export const Upload = () => {
         isClosable: true,
         position: "bottom",
       });
-    } 
+    }
   };
 
   const handleAffidavit = (e) => {
@@ -274,47 +273,47 @@ export const Upload = () => {
                     </label>
                   </div>
                   <div className="flex flex-col justify-center items-center border border-dashed border-orange-500 gap-3 p-5  h-full w-[100%] dark:bg-white">
-                      {receipts.length > 0 ? (
-                        <div
-                          className="flex flex-col justify-center items-center gap-3 text-center h-[170px]"
-                          style={{
-                            wordWrap: "break-word",
-                            wordBreak: "break-word",
-                          }}
-                        >
-                          <img
-                            className="mx-auto max-h-[150px]"
-                            src={URL.createObjectURL(receipts[0])}
-                            alt={receipts[0].name}
-                          />
-                          {receipts.map((rec) => {
-                            return <p key={rec.name}>{rec.name}</p>;
-                          })}
-                        </div>
-                      ) : (
-                        <div className="flex flex-col justify-center items-center">
-                          <span className="text-[4rem]">
-                            <i className="fa-solid fa-folder-open"></i>
-                          </span>
-                          <p className="font-semibold text-center">
-                            Upload your receipts here
-                          </p>
-                        </div>
-                      )}
-
-                      <label
-                        htmlFor="signature-upload"
-                        className="custom-file-upload"
+                    {receipts.length > 0 ? (
+                      <div
+                        className="flex flex-col justify-center items-center gap-3 text-center h-[170px]"
+                        style={{
+                          wordWrap: "break-word",
+                          wordBreak: "break-word",
+                        }}
                       >
-                        Choose Files
-                        <input
-                          type="file"
-                          accept="image/*"
-                          id="signature-upload"
-                          onChange={handleRecepit}
+                        <img
+                          className="mx-auto max-h-[150px]"
+                          src={URL.createObjectURL(receipts[0])}
+                          alt={receipts[0].name}
                         />
-                      </label>
-                    </div>
+                        {receipts.map((rec) => {
+                          return <p key={rec.name}>{rec.name}</p>;
+                        })}
+                      </div>
+                    ) : (
+                      <div className="flex flex-col justify-center items-center">
+                        <span className="text-[4rem]">
+                          <i className="fa-solid fa-folder-open"></i>
+                        </span>
+                        <p className="font-semibold text-center">
+                          Upload your receipts here
+                        </p>
+                      </div>
+                    )}
+
+                    <label
+                      htmlFor="signature-upload"
+                      className="custom-file-upload"
+                    >
+                      Choose Files
+                      <input
+                        type="file"
+                        accept="image/*"
+                        id="signature-upload"
+                        onChange={handleRecepit}
+                      />
+                    </label>
+                  </div>
                 </div>
 
                 <Box textAlign="center">

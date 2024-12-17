@@ -406,7 +406,7 @@ const AccountTempoId = () => {
                     />
                   </div>
                   <div className="w-full absolute bottom-0">
-                    <p className="signature ">SIGNATURE</p>
+                    <p className="signature text-[.626rem]">SIGNATURE</p>
                   </div>
                 </div>
 
@@ -422,7 +422,7 @@ const AccountTempoId = () => {
                     <p className="font-bold text-[.7rem]">
                       MR. DARBY P ESBERANZATE
                     </p>
-                    <p className="signature-registrar  bottom-0">
+                    <p className="signature-registrar text-[.626rem]  bottom-0">
                       College Registrar
                     </p>
                   </div>

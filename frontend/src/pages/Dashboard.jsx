@@ -59,7 +59,7 @@ const DashBoard = () => {
       const role = user.role;
 
       if (["permanent_employee", "cos_employee", "student"].includes(role)) {
-        setTab("reportid");
+        setTab("profile");
       } else {
         setTab("prelist");
       }
