@@ -63,8 +63,8 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
               border="2px"
               borderRadius="lg"
               mb={4}
-              w="520px"
-              h="558px"
+              w="207px"
+              h="326px"
             >
               <CardBody p={0}>
                 <div>
@@ -72,19 +72,19 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     {student.role === "student" ||
                     student.role === "cos_employee" ? (
                       <>
-                        <p className="text-[1.5rem] text-white">
+                        <p className="text-[.8rem] text-white">
                           Republic of the Philippines
                         </p>
                         {student.role === "student" ? (
                           <>
-                            <p className=" id-header  text-[1.6rem]">
+                            <p className=" id-header  text-[.812rem]">
                               PHILIPPINE STATE COLLEGE{" "}
                               <span className="block">OF AERONAUTICS</span>
                             </p>
                           </>
                         ) : student.role === "cos_employee" ? (
                           <>
-                            <p className=" id-header  text-[1.6rem]">
+                            <p className=" id-header  text-[.5rem]">
                               PHILIPPINE STATE COLLEGE OF AERONAUTICS
                             </p>
                           </>
@@ -92,7 +92,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                           <> </>
                         )}
 
-                        <p className="text-white text-[1rem] pb-2">
+                        <p className="text-white text-[.6rem] pb-2">
                           Piccio Garden, Villamor. Pasay City
                         </p>
                       </>
@@ -128,7 +128,7 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                               />
                               {student.role === "student" ? (
                                 <>
-                                  <p className="text-yellow-300 text-[1.3rem]">
+                                  <p className="text-yellow-300 text-[.8rem]">
                                     SY-2023-2024
                                   </p>
                                 </>
@@ -154,12 +154,12 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                                 <Image
                                   src={student.picture}
                                   alt="profile"
-                                  boxSize="200px"
+                                  boxSize="100px"
                                 />
                               )}
                               {student.role === "student" ? (
                                 <>
-                                  <p className="text-yellow-300 text-[1.3rem]">
+                                  <p className="text-yellow-300 text-[.7rem]">
                                     1st Sem./2nd Sem.
                                   </p>
                                 </>
@@ -342,17 +342,15 @@ export default function IdModal({ isOpen, onClose, data, setData, student }) {
                     <>
                       <div className="border border-orange-500 flex flex-col items-center justify-center m-2 bg-white font-bold">
                         {student.firstname === "" && student.lastname === "" ? (
-                          <p className="name text-center text-[1.3rem]">N/A</p>
+                          <p className="name text-center">N/A</p>
                         ) : (
-                          <h3 className="name text-center text-[1.3rem]">{`${student.firstname} ${student.middlename} ${student.lastname}`}</h3>
+                          <h3 className="name text-center">{`${student.firstname} ${student.middlename} ${student.lastname}`}</h3>
                         )}
 
                         {student.schoolid === "" ? (
-                          <p className="school-id text-[1.3rem]">N/A</p>
+                          <p className="school-id">N/A</p>
                         ) : (
-                          <p className="school-id text-[1.3rem]">
-                            {student.schoolid}
-                          </p>
+                          <p className="school-id">{student.schoolid}</p>
                         )}
 
                         {student.role === "student" ? (
