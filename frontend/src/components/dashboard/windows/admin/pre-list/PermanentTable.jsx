@@ -27,14 +27,14 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useData } from "../../../../context/FetchAccountContext";
 
-const StaffListTable = ({
+const InstructorListTable = ({
   handleDeleteAccount,
   handleViewAccount,
   handleEditAccount,
 }) => {
   const { data, loading, setData } = useData();
   const [currentPage, setCurrentPage] = useState(0);
-  const staffPerPage = 4;
+  const facultyPerPage = 50;
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
@@ -50,18 +50,19 @@ const StaffListTable = ({
 
   const handleDeleteAccounts = (id) => {
     handleDeleteAccount(id);
-    if (currentPage >= Math.ceil((filteredStaff.length - 1) / staffPerPage)) {
+    if (
+      currentPage >= Math.ceil((filteredFaculty.length - 1) / facultyPerPage)
+    ) {
       setCurrentPage(Math.max(0, currentPage - 1));
     }
   };
 
-  const filteredStaff = data.filter((account) => account.role === "staff");
+  const filteredFaculty = data.filter((account) => account.role === "permanent_employee");
+  const pageCount = Math.ceil(filteredFaculty.length / facultyPerPage);
 
-  const pageCount = Math.ceil(filteredStaff.length / staffPerPage);
-
-  const displayStaff = filteredStaff
+  const displayFaculty = filteredFaculty
     .reverse()
-    .slice(currentPage * staffPerPage, (currentPage + 1) * staffPerPage);
+    .slice(currentPage * facultyPerPage, (currentPage + 1) * facultyPerPage);
 
   return (
     <>
@@ -82,7 +83,7 @@ const StaffListTable = ({
                 <Thead bg="blue.700">
                   <Tr>
                     <Th color="white" fontWeight="bold">
-                      COS ID
+                      Permanent ID
                     </Th>
                     <Th color="white" fontWeight="bold">
                       Name
@@ -96,8 +97,8 @@ const StaffListTable = ({
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {displayStaff.length > 0 ? (
-                    displayStaff.map((account) => (
+                  {displayFaculty.length > 0 ? (
+                    displayFaculty.map((account) => (
                       <Tr
                         key={account._id}
                         _hover={{ bg: "orange.400", color: "white" }}
@@ -154,7 +155,7 @@ const StaffListTable = ({
                             fontWeight="bold"
                             color="gray.600"
                           >
-                            No COS Employee Display
+                            No Permanent Employee Display
                           </Text>
                         </Flex>
                       </Td>
@@ -166,7 +167,7 @@ const StaffListTable = ({
           </Box>
 
           {pageCount > 1 && (
-            <Box h="10vh">
+            <Box h="10vh" pt={20}>
               <ReactPaginate
                 pageCount={pageCount}
                 pageRangeDisplayed={3}
@@ -185,4 +186,4 @@ const StaffListTable = ({
   );
 };
 
-export default StaffListTable;
+export default InstructorListTable;

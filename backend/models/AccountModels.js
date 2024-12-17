@@ -11,7 +11,7 @@ const userSchema = new Schema({
 
   role: {
     type: String,
-    enum: ["student", "faculty", "staff", "admin"],
+    enum: ["student", "permanent_employee", "cos_employee", "admin"],
     required: true,
   },
   position: String,
@@ -36,6 +36,7 @@ const userSchema = new Schema({
     required: false,
   },
   affidavit: String,
+  receipt: String,
   schoolid: String,
 
   isIdIssued: Boolean,
